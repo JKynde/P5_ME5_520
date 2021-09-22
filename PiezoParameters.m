@@ -42,4 +42,7 @@ h_33=d_33/(S33E*epsilon33T); % Formel for h_33, som vi tror er Piezoelectric sti
 % Der er en antagelse at h_33 i Ultrasonic Nondestructive Evaluation
 % systems er den samme som i den artiklen hvor formlen for h_33 er fundet.
 
+%Geometri
+d = 0.001; %Plate thickness [m]
+
 
