@@ -34,6 +34,7 @@ S_33^E = 14.2;
 C_33^D = 16.6; % Elastic stiffness coefficient [10^10N/m^2]
 Q_m = 2000; % Mechanical quality factor
 
+ElectricCapacitance = 0.104; % Kapacitans af pladen i nanofarad.
 
 
 
