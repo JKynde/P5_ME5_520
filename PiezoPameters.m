@@ -1,0 +1,40 @@
+% Priezoelektriske Materiale konstanter (PIC181).
+rho = 7.8; % Densitet i [g/cm^3]
+PermittivityPolarizationDirection = 1200; % Relative permittivity in the polarization direction = episolen_33^T/epsilon_0
+PermittivityNormalDirection = 1500; % Relative permittivity in the norm direction epsilon_11^T/epsilon_0
+DielectricLossFactor = 3; % -||- i [10^(-3)]
+
+% Coupling factors
+k_p = 0.56;
+k_t = 0.46;
+k_31 = 0.32;
+k_33 = 66;
+k_15 = 0.63;
+
+% Piezoelectric Charge Coefficients [10^-12C/N)
+d_31 = -120;
+d_33 = 265;
+d_15 = 475;
+
+%Piezoelectric voltage Coefficients [10^-3Vm/N]
+g_31 = -11.2;
+g_33 = 25;
+
+    % Acousto-mechenical properties
+%Frequency coefficients [Hz*m]
+N_p = 2270;
+N_1 = 1640;
+N_3 = 2010;
+N_t = 2110;
+
+%Elastic compliance coefficients [10^-12m^2/N]
+S_11^T = 11.8;
+S_33^E = 14.2;
+
+C_33^D = 16.6; % Elastic stiffness coefficient [10^10N/m^2]
+Q_m = 2000; % Mechanical quality factor
+
+
+
+
+
