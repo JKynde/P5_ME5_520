@@ -1,5 +1,5 @@
 % Priezoelektriske Materiale konstanter (PIC181).
-rho = 7.8; % Densitet i [g/cm^3]
+rho_P = 7.8; % Densitet i [g/cm^3]
 epsilon_0 = 8.854*10^-12; % permittivity of free space [F/m]
 PermittivityPolarizationInDirection = 1200; % Relative permittivity in the polarization direction = epsilon_33^T/epsilon_0
 epsilon33T = PermittivityPolarizationInDirection*epsilon_0; %epsilon 33T skal bruges senere til at udregnes h_33, som vi skal bruge.
@@ -33,10 +33,10 @@ N_t = 2110;
 S11T = 11.8;
 S33E = 14.2;
 
-C33D = 16.6; % Elastic stiffness coefficient [10^10N/m^2]
+c33D = 16.6; % Elastic stiffness coefficient [10^10N/m^2]
 Q_m = 2000; % Mechanical quality factor
 
-ElectricCapacitance = 0.104; % Kapacitans af pladen i nanofarad.
+C_0 = 0.104; % Kapacitans af pladen i nanofarad.
 
 h_33=d_33/(S33E*epsilon33T); % Formel for h_33, som vi tror er Piezoelectric stiffness constant er regnet ud fra side 15 i https://link.springer.com/content/pdf/bbm%3A978-94-007-0579-1%2F1.pdf
 % Der er en antagelse at h_33 i Ultrasonic Nondestructive Evaluation
@@ -44,5 +44,6 @@ h_33=d_33/(S33E*epsilon33T); % Formel for h_33, som vi tror er Piezoelectric sti
 
 %Geometri
 d = 0.001; %Plate thickness [m]
+S = 0.001; % Plate area
 
 
