@@ -37,13 +37,15 @@ c33D = 16.6; % Elastic stiffness coefficient [10^10N/m^2]
 Q_m = 2000; % Mechanical quality factor
 
 C_0 = 0.104; % Kapacitans af pladen i nanofarad.
-
+areal = 1; % Areal, mangler tal
+l = 1; % længde, mangler tal
 h_33=d_33/(S33E*epsilon33T); % Formel for h_33, som vi tror er Piezoelectric stiffness constant er regnet ud fra side 15 i https://link.springer.com/content/pdf/bbm%3A978-94-007-0579-1%2F1.pdf
 % Der er en antagelse at h_33 i Ultrasonic Nondestructive Evaluation
 % systems er den samme som i den artiklen hvor formlen for h_33 er fundet.
 
-%Geometri
-d = 0.001; %Plate thickness [m]
-S = 0.001; % Plate area
+%Geometri af en enkelt piezoplade(vi har to. Ved ikke hvordan vi lige
+%modellerer det endnu)
+d = 0.002; %Plate thickness [m]
+S = (0.005/2)^2*pi; % Plate area
 
 
