@@ -48,6 +48,10 @@ S = (0.005/2)^2*pi; % Plate area
 
 %diverse
 ElasticModolusBacking = 2.1*10^11; %Backing materiale konstanter.[N/m^2]
-rho_b = 7800;%Backing densitet [kg/M^3]
+rho_b = 7800;%Backing densitet [kg/M^3]m
+
+% Oil parameters
+rho_oil = 800;
+v_sOil = 500;
 
 
