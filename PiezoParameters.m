@@ -1,5 +1,5 @@
 % Priezoelektriske Materiale konstanter (PIC181).
-rho_P = 7800; % Densitet i [g/cm^3]
+rho_P = 7800; % Densitet i [kg/m^3]
 epsilon_0 = 8.854*10^(-12); % permittivity of free space [F/m]
 PermittivityPolarizationInDirection = 1200; % Relative permittivity in the polarization direction = epsilon_33^T/epsilon_0
 epsilon33T = PermittivityPolarizationInDirection*epsilon_0; %epsilon 33T skal bruges senere til at udregnes h_33, som vi skal bruge.
