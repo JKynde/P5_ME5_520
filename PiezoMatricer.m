@@ -1,6 +1,8 @@
 clear 
 clc
+% Det her scribt bygger sittig matricen og S_VF=F/V
 Parameters;
+j = sqrt(-1);
 % input Parameters:
 V_in=300.
 f = 1*10^6; %frekvens

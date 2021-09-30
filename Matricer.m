@@ -2,7 +2,7 @@ function [F,TA] = Matricer(f,V_in)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 Parameters;
-
+j = sqrt(-1);
 omega = 2*pi*f; %Vinkelhastighed
 k=omega/v_0; % Wave number 
 TeA = [1/n n/j*omega*C_0;-j*omega*C_0 0]; % Elektrisk matrice
