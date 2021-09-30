@@ -14,9 +14,23 @@ for n=1:length(f) % For loop som fylder F_out med resultaterne af modellen
     F_out(n)=Matricer(f(n),V_in);
    
 end
+
 F_DB = 20*log10(abs(F_out));
+
 figure;
+
+t=tiledlayout(2,1);
+xlabel(t,'log spaced f values')
+
+nexttile
 semilogx(f,F_DB)
-figure;
+grid on
+title('Magnitude plot of F(\omega)')
+ylabel('Magnitude of F(dB)')
+
+nexttile
 semilogx(f,rad2deg(angle(F_out)))
+grid on
+title('Angle plot of F(\omega)')
+ylabel('Angle of F(^\circ)')
 
