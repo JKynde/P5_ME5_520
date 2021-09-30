@@ -13,7 +13,7 @@ DielectricLossFactor = 3; % -||- i [10^(-3)]
 k_p = 0.56;
 k_t = 0.46;
 k_31 = 0.32;
-k_33 = 66;
+k_33 = 0.66;
 k_15 = 0.63;
 
 % Piezoelectric Charge Coefficients [10^-12C/N)
