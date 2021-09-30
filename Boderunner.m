@@ -11,7 +11,7 @@ f = logspace(5,6.5,5000); % Lav en vektor logaritmisk fordelte indgange med n pu
 F_out = zeros(1,length(f)); % Lav en vektor med nuller lige så lang som vektor f.
 
 for n=1:length(f) % For loop som fylder F_out med resultaterne af modellen
-    
+   
     F_out(n)=Matricer(f(n),V_in,Tlmode);
    
 end
