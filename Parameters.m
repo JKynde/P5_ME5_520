@@ -51,14 +51,22 @@ Area = (0.005/2)^2*pi; % Plate area
 ElasticModolusBacking = 2.1*10^11; %Backing materiale konstanter.[N/m^2]
 rho_b = 7800;%Backing densitet [kg/M^3]m
 
+%Front layer parameters. Altså housingen ude foran.
+l_a = 3.2*10^(-3); %layer thickness [m]
+rho_f = 2700 ; %Densitet af front layer. [kg/m^3]
+ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet'
+
+
 % Oil parameters
-rho_oil = 800;
-v_sOil = 500;
+rho_oil = 800; % Densitet af olien [kg/m^3]
+v_sOil = 1500; % Lydens hastighed i olien.
 
 %Calculated parameters
 v_0 = sqrt(c33D/rho_P); % wave speed of compressional waves in the piezoelectric plate
 v_0b = sqrt(ElasticModolusBacking/rho_b); % Wave speed of compressional waves in the backing material
+v_0f = sqrt(ElasticModolusFront/rho_f); % Wave speed of compressional waves in the front layer
 n=h_33*C_0; % ElectricMatrix parameter.
 Z0a = rho_P*v_0*Area; % plane wave acoustic impedance of the piezoelectric plate.
 Zba = rho_b*v_0b*Area; % <- vides ikke endnu, men det er: Corresponding acoustic impedance of the backing Z_b^A Vi gætter foreløbigt på =rho_backing*v_0,backing*S Problemet er at der står den er afhængig af frekvens. Plus den er cone-shaped.
+Z0a_f = rho_f*v_0f*Area; % Acoustic impedance front layer ;
 ZrAa =v_sOil*rho_oil*Area; % Acoustic impedance of radiating medium. In this case the oil
