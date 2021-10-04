@@ -26,12 +26,12 @@ xlabel(t,'log spaced f values')
 nexttile
 semilogx(f,F_DB)
 grid on
-title('Magnitude plot of F(\omega)')
+title('Magnitude plot of F(f)')
 ylabel('Magnitude of F(dB)')
 
 nexttile
 semilogx(f,rad2deg(angle(F_out)))
 grid on
-title('Angle plot of F(\omega)')
+title('Angle plot of F(f)')
 ylabel('Angle of F(^\circ)')
 
