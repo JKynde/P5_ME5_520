@@ -1,4 +1,4 @@
-function [F,TA] = Matricer(f,V_in,Tlmode)
+function [F,v_t] = Matricer(f,V_in,Tlmode)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 Parameters;
@@ -19,6 +19,9 @@ end
 SvIA = 1/(ZrAa*TA(2,1)+TA(2,2)); % v_t/I_in 
 ZinAe = (ZrAa*TA(1,1)+TA(1,2))/(ZrAa*TA(2,1)+TA(2,2)); % V_in/I_in
 S_VF = ZrAa*SvIA/ZinAe;   % F/V_in whoohoooo
+S_vV = SvIA / ZinAe ; % v_t/V_in Transducer speed over input voltage.
+v_t = V_in * S_vV ; 
 F = V_in*S_VF; % Force from input voltage.
+
 end
 

@@ -45,7 +45,8 @@ h_33=d_33/(S33E*epsilon33T); % Formel for h_33, som vi tror er Piezoelectric sti
 %Geometri af en enkelt piezoplade(vi har to. Ved ikke hvordan vi lige
 %modellerer det endnu)
 d_p = 0.002; %Plate thickness [m]
-Area = (0.005/2)^2*pi; % Plate area
+r_transducer = 0.005/2;
+Area = (r_transducer)^2*pi; % Plate area
 
 %Backing
 ElasticModolusBacking = 2.1*10^11; %Backing materiale konstanter.[N/m^2]
