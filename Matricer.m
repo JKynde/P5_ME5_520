@@ -8,7 +8,7 @@ k=omega/v_0; % Wave number piezo.
 k_a = omega/v_0f;  % Wave number front layer
 TeA = [1/n n/j*omega*C_0;-j*omega*C_0 0]; % Elektrisk matrice
 TaA = 1/(Zba-j*Z0a*tan(k*d_p/2))*([Zba+j*Z0a*cot(k*d_p) (Z0a)^2+j*Z0a*Zba*cot(k*d_p)
-1 Zba-2*j*Z0a*tan(k*d_p/2)]); % Acoustic piezo matrix.
+1 Zba-2*j*Z0a*tan(k*d_p/2)]); % Acoustisk piezo matrice.
 Tl = [cos(k_a*l_a) -j*Z0a_f*sin(k_a*l_a) % Acoustic front layer matrix
 -j*sin(k_a*l_a)/Z0a_f cos(k_a*l_a)];% Front layer matrice
 if Tlmode==1
