@@ -1,4 +1,4 @@
-function [F,v_t] = Matricer(f,V_in,Tlmode)
+function [F,v_t,ZinAe] = Matricer(f,V_in,Tlmode)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 Parameters;
