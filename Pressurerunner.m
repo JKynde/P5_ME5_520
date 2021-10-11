@@ -22,7 +22,7 @@ end
 
 for i=1:length(t)
     hold on
-    plot(z,Wave(i,:))
+    plot(z,Wave(i,:)); axis([2*r_transducer  z(length(z)) -2*10^6 2*10^6 ]); 
     pause(0.1)
     
 end
