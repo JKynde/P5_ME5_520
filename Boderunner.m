@@ -24,13 +24,13 @@ t=tiledlayout(2,1);
 xlabel(t,'log spaced f values')
 
 nexttile
-semilogx(f,Z_DB)
+semilogx(f,F_DB)
 grid on
 title('Magnitude plot of F(f)')
 ylabel('Magnitude of F(dB)')
 
 nexttile
-semilogx(f,rad2deg(angle(Z_out)))
+semilogx(f,rad2deg(angle(F_out)))
 grid on
 title('Angle plot of F(f)')
 ylabel('Angle of F(^\circ)')
