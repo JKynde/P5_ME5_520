@@ -60,7 +60,7 @@ ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet'
 
 % Oil parameters
 rho_oil = 857; % Densitet af olien [kg/m^3]
-v_0Oil = 1500; % Lydens hastighed i olien.
+v_0Oil = 1493; % Lydens hastighed i olien.
 
 %Calculated parameters
 lambda = v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz
