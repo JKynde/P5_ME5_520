@@ -1,4 +1,4 @@
-clc
+clc %hi
 clear
 Parameters;
 f = 10^6;
