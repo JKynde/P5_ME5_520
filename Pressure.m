@@ -10,7 +10,7 @@ p_z =C*(rho_oil*v_0Oil*abs(v_t)*exp(j*k*z)); % Lige nu ikke ganget med C
 
 R_reflect = (-rho_f*v_0f+rho_oil*v_0Oil) / (rho_oil*v_0Oil + rho_f*v_0f);
 
-lambda = v_0Oil/10^6;
+
 Wave = (2.2569*10^5/(1-R_reflect^2))*sin( (2*pi/lambda)*z + omega*t) + (2.2569*10^5/(R_reflect*(1-R_reflect^2)))*sin( (2*pi/lambda)*z - omega*t);
 
 %Wave = 2*2.2569e+05*sin(2*pi*z/lambda)*cos(omega*t);

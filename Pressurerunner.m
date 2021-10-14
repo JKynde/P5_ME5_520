@@ -4,7 +4,7 @@ Parameters;
 f = 10^6;
 omega = 2*pi*f;
 t=[0:1*10^-8*2:2*10^-6];
-z=[r_transducer*2:0.0001:2*r_transducer+0.002]; 
+z=[r_transducer*2:0.0001:r_transducer*2+2*lambda]; %2*r_transducer+0.002
 p_z=zeros(length(t),length(z));
 Wave = zeros(length(t),length(z));
 C=zeros(1,length(z));
@@ -21,7 +21,7 @@ end
 
 
 for i=1:length(t)
-    hold on
+    hold off
     plot(z,Wave(i,:)); axis([2*r_transducer  z(length(z)) -2*10^6 2*10^6 ]); 
     pause(0.1)
     

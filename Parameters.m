@@ -63,6 +63,7 @@ rho_oil = 857; % Densitet af olien [kg/m^3]
 v_0Oil = 1500; % Lydens hastighed i olien.
 
 %Calculated parameters
+lambda = v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz
 v_0 = sqrt(c33D/rho_P); % wave speed of compressional waves in the piezoelectric plate
 v_0b = sqrt(ElasticModolusBacking/rho_b); % Wave speed of compressional waves in the backing material
 v_0f = sqrt(ElasticModolusFront/rho_f); % Wave speed of compressional waves in the front layer
