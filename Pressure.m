@@ -1,4 +1,4 @@
-function [p_z,C,Wavesum,F_z] = Pressure(z,omega,t)
+function [p_z,C,Wavesum,F_z,Wave1,Wave2] = Pressure(z,omega,t)
 %PREASSURE Summary of this function goes here
 %   Detailed explanation goes here
 %Defraction coefficient
