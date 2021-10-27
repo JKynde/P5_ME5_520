@@ -58,7 +58,7 @@ rho_f = 2700 ; %Densitet af front layer. [kg/m^3]
 ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet'
 
 %Partikle parameters: sat til luft for sjov for nu
-rho_p = 1.225; %kg/m^3
+rho_p = 1.225; %kg/m^3 %rho luft = 1.225
 v_0p = 340.19744;% m/s eller 761 i retard units  
 
 % Oil parameters
@@ -76,4 +76,5 @@ Zba = rho_b*v_0b*Area; % <- vides ikke endnu, men det er: Corresponding acoustic
 Z0a_f = rho_f*v_0f*Area; % Acoustic impedance front layer ;
 ZrAa =v_0Oil*rho_oil*Area; % Acoustic impedance of radiating medium. In this case the oil
 kappa_l=1/(rho_oil*v_0Oil^2); %Gorkov lort
-kappa_p = 1/(rho_p*v_0p^2);
+kappa_p = 1/(rho_p*v_0p^2); % mere gorkov lort
+R_reflect = (-rho_f*v_0f+rho_oil*v_0Oil) / (rho_oil*v_0Oil + rho_f*v_0f); % Reflection coefficient between transducer face and oil.
