@@ -70,7 +70,7 @@ title('Magnitude plot of F(f)')
 ylabel('Magnitude of F(dB)')
 
 nexttile
-semilogx(f,rad2deg(angle(v_out))) % Samme her
+semilogx(f,rad2deg(angle(v_out))) % Samme her .
 grid on
 title('Angle plot of F(f)')
 ylabel('Angle of F(^\circ)')
