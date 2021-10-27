@@ -3,7 +3,7 @@
 clc
 clear
 j = sqrt(-1);
-plotmode = 2; % 1 = F   2 = Z    3 = v
+plotmode = 1; % 1 = F   2 = Z    3 = v
 Parameters; % Først defineres alle parametre fra konstante Parameters.m
 V_in = 300*exp(j*deg2rad(0)); % Indgangs spændingsvisor.
 Tlmode = 1; % Tlmode til Matricer.m functionen. Der er om front layer matricen er ganget på. 1 for ja else ikke.
