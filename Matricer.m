@@ -12,7 +12,7 @@ TaA = 1/(Zba-j*Z0a*tan(k*d_p/2))*([Zba+j*Z0a*cot(k*d_p) (Z0a)^2+j*Z0a*Zba*cot(k*
 Tl = [cos(k_a*l_a) -j*Z0a_f*sin(k_a*l_a) % Acoustic front layer matrix
 -j*sin(k_a*l_a)/Z0a_f cos(k_a*l_a)];% Front layer matrice
 if Tlmode==1
-TA = (TeA)*(TaA)*Tl; % Total transfer matrix
+TA = ((TeA)*(TaA)*Tl); % Total transfer matrix
 else 
     TA=(TeA)*(TaA);% Total transfer matrix
 end
