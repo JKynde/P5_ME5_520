@@ -1,12 +1,8 @@
-function [U_ac] = Gorkov(Wave1A, Wave2A)
+function [U_AC_V, F_AC_V, F_AC] = Gorkov(Wave1A, Wave2A, z)
 %GORKOV Summary of this function goes here
 %   Detailed explanation goes here
 
 Parameters;
-syms r z t
-f_1 = 1 - kappa_p/kappa_l; % En konstant der skal bruges i gorkov. Burde nok være i parameters
-
-f_2 = (2*(rho_p-rho_oil)) / (2*rho_p + rho_oil); % Samme som f_1
 
 Wave1=Wave1A*sin(2*pi*z/lambda+omega*t); % Konstruerer den første trykbølge(venstre til højre). Burde måske være cos ifølge luke
 
