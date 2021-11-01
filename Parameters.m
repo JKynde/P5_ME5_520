@@ -18,7 +18,7 @@ k_15 = 0.63;
 
 % Piezoelectric Charge Coefficients [10^-12C/N)
 % d_31 = 2*-120*10^(-12);
-d_33 = 2*265*10^(-12);
+d_33 = 265*10^(-12);
 % d_15 = 2*475*10^(-12);
 
 %Piezoelectric voltage Coefficients [10^-3Vm/N]
@@ -78,7 +78,7 @@ Z0a_f = rho_f*v_0f*Area; % Acoustic impedance front layer ;
 ZrAa =v_0Oil*rho_oil*Area; % Acoustic impedance of radiating medium. In this case the oil
 kappa_l=1/(rho_oil*v_0Oil^2); %Gorkov lort
 kappa_p = 1/(rho_p*v_0p^2); % mere gorkov lort
-R_reflect = (-rho_f*v_0f+rho_oil*v_0Oil) / (rho_oil*v_0Oil + rho_f*v_0f); % Reflection coefficient between transducer face and oil.
+R_reflect = (rho_f*v_0f-rho_oil*v_0Oil) / (rho_oil*v_0Oil + rho_f*v_0f); % Reflection coefficient between transducer face and oil.
 V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel, bruges i gorkov
 f_1 = 1 - kappa_p/kappa_l; % En konstant der skal bruges i gorkov
 f_2 = (2*(rho_p-rho_oil)) / (2*rho_p + rho_oil); % Også en konstant der skal bruges i gorkov

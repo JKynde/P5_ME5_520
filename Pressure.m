@@ -11,17 +11,21 @@ p_z =(rho_oil*v_0Oil*abs(v_t)*exp(j*k*z)); % Lige nu ikke ganget med C, men elle
 
 P_tmax = abs(F)/Area;
 
-Wave1A =(P_tmax/(1-R_reflect^2)); % Her udregnes amplituderne for de to bølger der udgør den stående bølge
-Wave2A = (P_tmax/(R_reflect*(1-R_reflect^2))); % Deres amplituder regnes som en uende geometrisk række, som bliver ved med at blive reflekteret.
+Wave1A = P_tmax/(R_reflect*(1-R_reflect^2)); % Deres amplituder regnes som en uende geometrisk række, som bliver ved med at blive reflekteret.
+Wave2A =P_tmax/(1-R_reflect^2); % Her udregnes amplituderne for de to bølger der udgør den stående bølge
 
-Wave1P = Wave1A*sin( (2*pi/lambda)*z + omega*t); % Bølgerne laves.
-Wave2P = Wave2A*sin( (2*pi/lambda)*z - omega*t); 
+%Wave1P = Wave1A*sin( (2*pi/lambda)*z + omega*t); % Bølgerne laves.
+%Wave2P = Wave2A*sin( (2*pi/lambda)*z - omega*t); 
+Wave1P = Wave1A*exp(j*((2*pi/lambda)*z+omega*t));
+Wave2P = Wave2A*exp(j*((2*pi/lambda)*z-omega*t));
+%Wave1v = Wave1A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z + omega*t-pi/2);
+%Wave2v = Wave2A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z - omega*t-pi/2);
+Wave1v = 1/(rho_oil*v_0Oil) * Wave1A*exp(j*((2*pi/lambda)*z+omega*t));
+Wave2v = 1/(rho_oil*v_0Oil) * Wave2A*exp(j*((2*pi/lambda)*z-omega*t));
 
-Wave1v = Wave1A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z + omega*t - pi/2);
-Wave2v = Wave2A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z - omega*t - pi/2);
+WavesumP = real(Wave1P + Wave2P); %Standing wave equation. Summen af alle venstregående og højregående bølger.
+Wavesumv = real(Wave1v + Wave2v);
 
-WavesumP = Wave1P + Wave2P; %Standing wave equation. Summen af alle venstregående og højregående bølger.
-Wavesumv = Wave1v + Wave2v;
 %Wave = 2*2.2569e+05*sin(2*pi*z/lambda)*cos(omega*t);
 
 % Lukes approximeret metode hvor amplituden af den stående bølge er

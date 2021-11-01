@@ -38,12 +38,12 @@ end
 %    plot(z,Wavesum(i,:)); axis([2*r_transducer  z(length(z)) -2*10^6 2*10^6 ]); 
 %    pause(0.1)
 % end
+
     
-    
-    % Plot over Wave1, Wave 2 og Wavesum som de flytter sig gennem space.
+%     % Plot over Wave1, Wave 2 og Wavesum som de flytter sig gennem space.
 for i=1:length(t)
    hold off
-   plot(z,Wavesum(i,:),z,Wave1(i,:),z,Wave2(i,:)); axis([2*r_transducer  z(length(z)) -2*10^6 2*10^6 ]); 
+   plot(z,Wavesum(i,:),z,real(Wave1(i,:)),z,real(Wave2(i,:))); axis([2*r_transducer  z(length(z)) -2*10^6 2*10^6 ]); 
    pause(0.1)
 end
     
