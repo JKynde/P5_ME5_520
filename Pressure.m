@@ -1,4 +1,4 @@
-function [p_z,C,WavesumP, F_z,Wave1,Wave2,Wavesumv] = Pressure(z,omega,t,F,v_t)
+function [p_z,C,WavesumP, F_z,Wave1P,Wave2P,Wavesumv] = Pressure(z,omega,t,F,v_t)
 %PREASSURE Summary of this function goes here
 %   Detailed explanation goes here
 %Defraction coefficient
@@ -17,8 +17,8 @@ Wave2A = (P_tmax/(R_reflect*(1-R_reflect^2))); % Deres amplituder regnes som en 
 Wave1P = Wave1A*sin( (2*pi/lambda)*z + omega*t); % Bølgerne laves.
 Wave2P = Wave2A*sin( (2*pi/lambda)*z - omega*t); 
 
-Wave1v = Wave1A/(rho_oil*v_0oil) * sin ( (2*pi/lambda)*z + omega*t - pi/2);
-Wave2v = Wave2A/(rho_oil*v_0oil) * sin ( (2*pi/lambda)*z + omega*t - pi/2);
+Wave1v = Wave1A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z + omega*t - pi/2);
+Wave2v = Wave2A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z - omega*t - pi/2);
 
 WavesumP = Wave1P + Wave2P; %Standing wave equation. Summen af alle venstregående og højregående bølger.
 Wavesumv = Wave1v + Wave2v;
