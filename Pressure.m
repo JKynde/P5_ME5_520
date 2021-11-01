@@ -11,12 +11,16 @@ p_z =(rho_oil*v_0Oil*abs(v_t)*exp(j*k*z)); % Lige nu ikke ganget med C, men elle
 
 P_tmax = abs(F)/Area;
 
-Wave1A = P_tmax/(R_reflect*(1-R_reflect^2)); % Deres amplituder regnes som en uende geometrisk række, som bliver ved med at blive reflekteret.
-Wave2A =P_tmax/(1-R_reflect^2); % Her udregnes amplituderne for de to bølger der udgør den stående bølge
+Vaac = (2*nu_oil*omega^2)/(3*(v_0Oil^3));% Viscous acoustic attenuation coefficient.
+Vaac_one_trip=exp(-Vaac*d_heads);
+Decay_constant = R_reflect*Vaac_one_trip;
+
+Wave1A = P_tmax/(1-Decay_constant^2); % Deres amplituder regnes som en uende geometrisk række, som bliver ved med at blive reflekteret.
+Wave2A =Decay_constant*P_tmax/(1-Decay_constant^2); % Her udregnes amplituderne for de to bølger der udgør den stående bølge
 
 %Wave1P = Wave1A*sin( (2*pi/lambda)*z + omega*t); % Bølgerne laves.
 %Wave2P = Wave2A*sin( (2*pi/lambda)*z - omega*t); 
-Wave1P = Wave1A*exp(j*((2*pi/lambda)*z+omega*t));
+Wave1P = Wave1A*exp(j*((2*pi/lambda)*z+omega*t)); % Bølgerne laves som fasere
 Wave2P = Wave2A*exp(j*((2*pi/lambda)*z-omega*t));
 %Wave1v = Wave1A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z + omega*t-pi/2);
 %Wave2v = Wave2A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z - omega*t-pi/2);

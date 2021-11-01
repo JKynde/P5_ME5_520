@@ -52,7 +52,7 @@ hold on
 xlabel('Distance from transducer head')
 yyaxis left
 ylabel('Force on particle with given volume')
-plot(z,F_AC_V)
+plot(z,F_AC)
 yyaxis right 
 ylabel('Pressurefield at time = 0')
 plot(z,WavesumresP(1,:))

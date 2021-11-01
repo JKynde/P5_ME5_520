@@ -28,16 +28,16 @@ end
 
 % Plot over kraften af Lukes approximation sammen med trykket gange 2. Kraften samler sig i
 % antinodesne pga. kontrastfaktoren phi (kan ses i trujillu er negativ.
-plot(z,F_zprvol(:))
+%plot(z,F_zprvol(:))
 
 
 % Plot over wavesum med enten hold on eller off. on = alle tidssteps kan
 % ses samtidig. off = Der plottes hver tidsstep enkeltvis.
-% for i=1:length(t)
-%    hold on
-%    plot(z,Wavesum(i,:)); axis([2*r_transducer  z(length(z)) -2*10^6 2*10^6 ]); 
-%    pause(0.1)
-% end
+for i=1:length(t)
+   hold on
+   plot(z,Wavesum(i,:)); axis([2*r_transducer  z(length(z)) -2*10^6 2*10^6 ]); 
+   pause(0.1)
+end
 
     
 %     % Plot over Wave1, Wave 2 og Wavesum som de flytter sig gennem space.

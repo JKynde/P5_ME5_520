@@ -47,6 +47,7 @@ h_33=d_33/(S33E*epsilon33T); % Formel for h_33, som vi tror er Piezoelectric sti
 d_p = 0.002; %Plate thickness [m]
 r_transducer = 0.005/2;
 Area = (r_transducer)^2*pi; % Plate area
+d_heads = 44.8*10^-3; % Distance between transducer heads.
 
 %Backing
 ElasticModolusBacking = 2.1*10^11; %Backing materiale konstanter.[N/m^2]
@@ -62,9 +63,10 @@ rho_p = 1.225; %kg/m^3 %rho luft = 1.225
 v_0p = 340.19744;% m/s eller 761 i retard units 
 r_particle = 10^-4; % 0.1 mm, men det er rent gæt 4
 
-% Oil parameters
+% Oil parameters ISO vg-32 eller ISO vg-320 vi håber at det er det samme,
 rho_oil = 857; % Densitet af olien [kg/m^3]
 v_0Oil = 1493; % Lydens hastighed i olien.
+nu_oil = 313*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
 
 %Calculated parameters
 lambda = v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz
