@@ -18,7 +18,7 @@ F_zprvol=zeros(1,length(z)); % Vector for force pr. volume independent of time.
 for i=1:length(t) % Loop over time and distance
     
 for n=1:length(z)
-[p_z(i,n),C(n),Wavesum(i,n),F_zprvol(n),Wave1(i,n),Wave2(i,n)]=Pressure(z(n),omega,t(i),F,v_t); % Run pressure.m
+[p_z(i,n),C(n),Wavesum(i,n),F_zprvol(n),Wave1(i,n),Wave2(i,n),~]=Pressure(z(n),omega,t(i),F,v_t); % Run pressure.m
 end
 Progress=(i/length(t))*100;
 Progress

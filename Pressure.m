@@ -1,4 +1,4 @@
-function [p_z,C,Wavesum, F_z,Wave1,Wave2] = Pressure(z,omega,t,F,v_t)
+function [p_z,C,WavesumP, F_z,Wave1,Wave2,Wavesumv] = Pressure(z,omega,t,F,v_t)
 %PREASSURE Summary of this function goes here
 %   Detailed explanation goes here
 %Defraction coefficient
@@ -14,11 +14,14 @@ P_tmax = abs(F)/Area;
 Wave1A =(P_tmax/(1-R_reflect^2)); % Her udregnes amplituderne for de to bølger der udgør den stående bølge
 Wave2A = (P_tmax/(R_reflect*(1-R_reflect^2))); % Deres amplituder regnes som en uende geometrisk række, som bliver ved med at blive reflekteret.
 
-Wave1 = Wave1A*sin( (2*pi/lambda)*z + omega*t); % Bølgerne laves.
-Wave2 = Wave2A*sin( (2*pi/lambda)*z - omega*t);
+Wave1P = Wave1A*sin( (2*pi/lambda)*z + omega*t); % Bølgerne laves.
+Wave2P = Wave2A*sin( (2*pi/lambda)*z - omega*t); 
 
-Wavesum = Wave1 + Wave2; %Standing wave equation. Summen af alle venstregående og højregående bølger.
+Wave1v = Wave1A/(rho_oil*v_0oil) * sin ( (2*pi/lambda)*z + omega*t - pi/2);
+Wave2v = Wave2A/(rho_oil*v_0oil) * sin ( (2*pi/lambda)*z + omega*t - pi/2);
 
+WavesumP = Wave1P + Wave2P; %Standing wave equation. Summen af alle venstregående og højregående bølger.
+Wavesumv = Wave1v + Wave2v;
 %Wave = 2*2.2569e+05*sin(2*pi*z/lambda)*cos(omega*t);
 
 % Lukes approximeret metode hvor amplituden af den stående bølge er

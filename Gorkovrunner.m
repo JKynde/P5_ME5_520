@@ -1,14 +1,15 @@
 clc %hi hi
 clear
 Parameters;
-Tlmode=1;
-f=10^6;
-V_in=300;
-omega=2*pi*f;
+Tlmode=1; % Front lag eller ejjjj. Vi elsker voooores børn,
+f=10^6; % Frekvens
+V_in=300; % Spændingsfaser
+omega=2*pi*f; % Vinkelhastighed
 t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
-[F,v_t,~]=Matricer(f,V_in,Tlmode); %Henter
+
+[F,v_t,~]=Matricer(f,V_in,Tlmode); %Henter F og v fra matricer
 z=[r_transducer*2:0.0001*0.5:r_transducer*2+2*lambda]; %initaliserer afstandsvektoren fra 2 gange transducer radius, til 2 bølgelængder væk
-t_stepsize=10^-6/(2*t_steps); %Størrelsen af steppet i tiden
+t_stepsize=10^-6/(2*t_steps); %Størrelsen af steppet i tiden til simpsons rule i integral boy.
 t=[0:t_stepsize:10^(-6)-t_stepsize]; % initialize time vector t_start:t_step:t_end
 U_AC_V=zeros(length(z)); %Initialize primary radiation potential per volume vector 
 F_AC_V=zeros(length(z)); %Initialize force per volume on a particle vector
@@ -21,7 +22,9 @@ for n=1:length(z)
 end
 % Wavesumresianden=(Wavesumres^2)
 P_avg=zeros(1,length(z));
-% for n=1:length(z)
-%    P_avg=   % trykket som funktion af tid og afstand i anden, integreret over tiden, divideret med perioden  
-% end
+
+for n=1:length(z)
+   P_avg(n) = (1/(10^-6)*integralboy(Wavesumres(:,n),t_stepsize))^2; % trykket som funktion af tid og afstand i anden, integreret over tiden, divideret med perioden  
+end
+
    
