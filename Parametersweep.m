@@ -3,15 +3,15 @@ clc
 clear
 Parameters; % Først defineres alle parametre fra konstante Parameters.m
 % Lav en vektor logaritmisk fordelte indgange med n punkter.
-f = 10^6;
+f = 10^6; %Frekvens sat til 1 MHz
 Tlmode = 1;
 V_in = 300;
-sweep=linspace(16.6*10^9,16.6*10^11,10000); %syntax = (mindste orden af 10:Største orden af 10:antal punkter)
+sweep=logspace(17,21,10000); %syntax = (mindste orden af 10:Største orden af 10:antal punkter)
 F_out = zeros(length(sweep),1); %Output af loop
 %For brug af for loop skal sweep=parameter konstant + den skal kommenteres ud nedenfor
-%Der efter bestem størrelsen af sweep ved syntax
+%Derefter bestem størrelsen af sweep ved syntax
 for bruh=1:1:length(sweep)%Sweeper fra 1 til længde af matricen
-    c33D=sweep(bruh);
+    Z0a=sweep(bruh);
     
     %Definitions
     j = sqrt(-1);
@@ -24,34 +24,14 @@ for bruh=1:1:length(sweep)%Sweeper fra 1 til længde af matricen
     PermittivityNormalDirection = 1500; % Relative permittivity in the norm direction epsilon_11^T/epsilon_0
     DielectricLossFactor = 3; % -||- i [10^(-3)]
 
-    % Coupling factors
-    k_p = 0.56;
-    k_t = 0.46;
-    k_31 = 0.32;
-    k_33 = 0.66;
-    k_15 = 0.63;
-
     % Piezoelectric Charge Coefficients [10^-12C/N)
-    d_31 = -120*10^(-12);
     d_33 = 265*10^(-12);
-    d_15 = 475*10^(-12);
-
-    %Piezoelectric voltage Coefficients [10^-3Vm/N]
-    g_31 = -11.2*10^(-3);
-    g_33 = 25*10^(-3);
-
+    
         % Acousto-mechenical properties
-    %Frequency coefficients [Hz*m]
-    N_p = 2270;
-    N_1 = 1640;
-    N_3 = 2010;
-    N_t = 2110;
-
     %Elastic compliance coefficients [10^-12m^2/N]
     S11T = 11.8*10^(-12);
     S33E = 14.2*10^(-12);
-    %c33D = 16.6*10^10; % Elastic stiffness coefficient [10^10N/m^2]
-    Q_m = 2000; % Mechanical quality factor
+    c33D = 16.6*10^10; % Elastic stiffness coefficient [10^10N/m^2]
     C_0 = 0.104*10^(-9); % Kapacitans af pladen i nanofarad. Det er to af dem så det noget fuck endnu
     h_33=d_33/(S33E*epsilon33T); % Formel for h_33, som vi tror er Piezoelectric stiffness constant er regnet ud fra side 15 i https://link.springer.com/content/pdf/bbm%3A978-94-007-0579-1%2F1.pdf
     % Der er en antagelse at h_33 i Ultrasonic Nondestructive Evaluation
@@ -92,6 +72,28 @@ for bruh=1:1:length(sweep)%Sweeper fra 1 til længde af matricen
     ZrAa =v_0Oil*rho_oil*Area; % Acoustic impedance of radiating medium. In this case the oil
     kappa_l=1/(rho_oil*v_0Oil^2); %Gorkov lort
     kappa_p = 1/(rho_p*v_0p^2);
+    
+    
+   %% Parameter der ikke bliver brugt
+       %Frequency coefficients [Hz*m]
+    N_p = 2270;
+    N_1 = 1640;
+    N_3 = 2010;
+    N_t = 2110;
+        % Coupling factors
+    k_p = 0.56;
+    k_t = 0.46;
+    k_31 = 0.32;
+    k_33 = 0.66;
+    k_15 = 0.63;
+        %Piezoelectric voltage Coefficients [10^-3Vm/N]
+    g_31 = -11.2*10^(-3);
+    g_33 = 25*10^(-3);
+     % Piezoelectric Charge Coefficients [10^-12C/N)
+    d_31 = -120*10^(-12);
+    d_15 = 475*10^(-12);
+        %Elastic compliance coefficients [10^-12m^2/N]
+    Q_m = 2000; % Mechanical quality factor
 %% Matrice udregninger
     omega = 2*pi*f; %Vinkelhastighed
     k=omega/v_0; % Wave number piezo.
