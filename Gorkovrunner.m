@@ -120,7 +120,7 @@ F_AC_syms = F_AC_max*sin((2*pi/F_AC_lambda)*x-2*pi/F_AC_lambda * deltaZ); % Symb
 % udtryk for F_AC er ovenstående. 
 
 %plot(z,F_AC_ex,z,F_AC); % Plot til at sammenligne F_AC_ex og F_AC
-%vektorene.
+%vektorene
 else
 end
 
