@@ -2,7 +2,9 @@ clc %hi hi
 clear
 fprintf('Initializing \n')
 Parameters;
-generate_F_AC_ex_and_syms = 1; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
+%% Parametre og running options
+plotte = 1; % plotting option 1 = plot mellem F_AC og P-felt til t =0 - 2 = plot af F_AC_ex og F_AC
+generate_F_AC_ex_and_syms = 0; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
 Tlmode=1; % Front lag eller ejjjj. Vi elsker voooores børn,
 f=10^6; % Frekvens
 V_in=300; % Spændingsfaser
@@ -10,8 +12,8 @@ omega=2*pi*f; % Vinkelhastighed
 t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
 r_particle = 10^-4;
 V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel
-z_stepsize=1.2500e-05/10;
-
+z_stepsize=1.2500e-05/5; %Stepsize til z.
+%% Initialisering
 [F,v_t,~]=Matricer(f,V_in,Tlmode); %Henter F og v fra matricer
 z=[r_transducer*2:z_stepsize:r_transducer*2+2*lambda]; %initaliserer afstandsvektoren fra 2 gange transducer radius, til 2 bølgelængder væk
 t_stepsize=10^-6/(2*t_steps); %Størrelsen af steppet i tiden til simpsons rule i integral boy.
@@ -23,6 +25,8 @@ WavesumresP=zeros(length(t),length(z)); %Laver et array med alle værdier for tr
 Wavesumresv=zeros(length(t),length(z)); %Laver et array med alle værdier for hastighedsfeltet i både tid og afstand
 WavesumresP_squared=zeros(length(t),length(z)); % Til p^2
 Wavesumresv_squared=zeros(length(t),length(z)); % Til v^2
+
+%% Long ass nested forloop
 Progress=0;
 fprintf('Filling wavesumres and squaring \n')
 for n=1:length(z)
@@ -38,7 +42,7 @@ end
 
 
 % Wavesumresianden=(Wavesumres^2)
-
+%% Integration og differentiation
 P_avg=zeros(1,length(z));
 v_avg=zeros(1,length(z));
 fprintf('Integrating to find <p^2> and <v^2> \n')
@@ -50,19 +54,24 @@ fprintf('Calculating U_AC_V \n')
 for n=1:length(z)
    U_AC_V(n) = (f_2/(2*rho_oil*v_0Oil^2)*P_avg(n)-f_2*(3/4)*rho_oil*v_avg(n)); % Her udregnes gorkovs potential pr volumen af partikel
 end
+
+%% Plotting omkring F_AC
 fprintf('Differentiating \n')
 F_AC_V=-differentialboy(U_AC_V,z_stepsize);
 F_AC = F_AC_V*V_particle;
-% hold on 
-% xlabel('Distance from transducer head')
-% yyaxis left
-% ylabel('Force on particle with given volume')
-% plot(z,F_AC)
-% yyaxis right 
-% ylabel('Pressurefield at time = 0')
-% plot(z,WavesumresP(1,:))
+if plotte == 1
+hold on 
+xlabel('Distance from transducer head')
+yyaxis left
+ylabel('Force on particle with given volume')
+plot(z,F_AC)
+yyaxis right 
+ylabel('Pressurefield at time = 0')
+plot(z,WavesumresP(1,:)) 
+%plot (z,U_AC_V)
+end
 
-
+%% F_AC udtryksgenerator - Sinusbølge
 if generate_F_AC_ex_and_syms == 1
     
 % % F_AC function generator. F_AC antages at være en sinus funktion med
@@ -118,11 +127,16 @@ F_AC_ex = F_AC_max*sin((2*pi/F_AC_lambda)*z-2*pi/F_AC_lambda * deltaZ); % F_AC_e
 syms x
 F_AC_syms = F_AC_max*sin((2*pi/F_AC_lambda)*x-2*pi/F_AC_lambda * deltaZ); % Symbolic
 % udtryk for F_AC er ovenstående. 
-
-%plot(z,F_AC_ex,z,F_AC); % Plot til at sammenligne F_AC_ex og F_AC
+if plotte ==2
+    
+    
+plot(z,F_AC_ex,z,F_AC); % Plot til at sammenligne F_AC_ex og F_AC
 %vektorene
+end
+
 else
 end
+
 
 fprintf('Done \n')
 
