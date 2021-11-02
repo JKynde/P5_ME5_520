@@ -47,6 +47,7 @@ r_particle = 10^-4; % 0.1 mm, men det er rent gæt 4
 rho_oil = 857; % Densitet af olien [kg/m^3]
 v_0Oil = 1493; % Lydens hastighed i olien.
 nu_oil = 313*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
+mu_oil = nu_oil*rho_oil;
 
 %Calculated parameters
 lambda = v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz
@@ -64,23 +65,25 @@ R_reflect = (rho_f*v_0f-rho_oil*v_0Oil) / (rho_oil*v_0Oil + rho_f*v_0f); % Refle
 V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel, bruges i gorkov
 f_1 = 1 - kappa_p/kappa_l; % En konstant der skal bruges i gorkov
 f_2 = (2*(rho_p-rho_oil)) / (2*rho_p + rho_oil); % Også en konstant der skal bruges i gorkov
+Contrast_factor = (5*rho_p-2*rho_oil) / (2*rho_p+rho_oil) - kappa_p/kappa_l ; 
+
  %% Parameter der ikke bliver brugt
-       %Frequency coefficients [Hz*m]
-    N_p = 2270;
-    N_1 = 1640;
-    N_3 = 2010;
-    N_t = 2110;
-        % Coupling factors
-    k_p = 0.56;
-    k_t = 0.46;
-    k_31 = 0.32;
-    k_33 = 0.66;
-    k_15 = 0.63;
-        %Piezoelectric voltage Coefficients [10^-3Vm/N]
-    g_31 = -11.2*10^(-3);
-    g_33 = 25*10^(-3);
-     % Piezoelectric Charge Coefficients [10^-12C/N)
-    d_31 = -120*10^(-12);
-    d_15 = 475*10^(-12);
-        %Elastic compliance coefficients [10^-12m^2/N]
-    Q_m = 2000; % Mechanical quality factor
+%        %Frequency coefficients [Hz*m]
+%     N_p = 2270;
+%     N_1 = 1640;
+%     N_3 = 2010;
+%     N_t = 2110;
+%         % Coupling factors
+%     k_p = 0.56;
+%     k_t = 0.46;
+%     k_31 = 0.32;
+%     k_33 = 0.66;
+%     k_15 = 0.63;
+%         %Piezoelectric voltage Coefficients [10^-3Vm/N]
+%     g_31 = -11.2*10^(-3);
+%     g_33 = 25*10^(-3);
+%      % Piezoelectric Charge Coefficients [10^-12C/N)
+%     d_31 = -120*10^(-12);
+%     d_15 = 475*10^(-12);
+%         %Elastic compliance coefficients [10^-12m^2/N]
+%     Q_m = 2000; % Mechanical quality factor

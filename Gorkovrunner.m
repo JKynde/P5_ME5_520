@@ -29,6 +29,7 @@ Wavesumresv_squared=zeros(length(t),length(z)); % Til v^2
 %% Long ass nested forloop
 Progress=0;
 fprintf('Filling wavesumres and squaring \n')
+tic
 for n=1:length(z)
     for m=1:length(t)
     [~, ~, WavesumresP(m,n),~, ~, ~,Wavesumresv(m,n)]=Pressure(z(n),omega,t(m),F,v_t);  
@@ -37,6 +38,7 @@ for n=1:length(z)
     end
     Progress = (n/(length(z))*100);
     fprintf('Filling and squaring progress: %f \n',Progress)
+    toc
 end
 
 
@@ -54,37 +56,39 @@ fprintf('Calculating U_AC_V \n')
 for n=1:length(z)
    U_AC_V(n) = (f_2/(2*rho_oil*v_0Oil^2)*P_avg(n)-f_2*(3/4)*rho_oil*v_avg(n)); % Her udregnes gorkovs potential pr volumen af partikel
 end
-
-%% Plotting omkring F_AC
 fprintf('Differentiating \n')
 F_AC_V=-differentialboy(U_AC_V,z_stepsize);
 F_AC = F_AC_V*V_particle;
+
+%Udregning af hastighed i kvasistatisk betragtning: Jespers ord ikke vores.
+%Kommer fra F-Bxdot = m*a og så kigger vi i det scenerie hvor a=0. Dvs
+%xdot=F/B og så antager vi at stokes lov gælder.
+Kvasihastighed = F_AC/(6*pi*mu_oil*r_particle); %B fra stokes lov. 
+
+%% Plotting omkring F_AC
+fprintf('Plotting \n')
 if plotte == 1
-hold on 
-xlabel('Distance from transducer head')
-yyaxis left
-ylabel('Force on particle with given volume')
-plot(z,F_AC)
-yyaxis right 
-ylabel('Pressurefield at time = 0')
-plot(z,WavesumresP(1,:)) 
-%plot (z,U_AC_V)
+    hold on 
+    xlabel('Distance from transducer head')
+    yyaxis left
+    ylabel('Force on particle with given volume')
+    plot(z,Kvasihastighed)
+    yyaxis right 
+    ylabel('Pressurefield at time = 0')
+    plot(z,WavesumresP(1,:)) 
+    %plot (z,U_AC_V)
 end
 
 %% F_AC udtryksgenerator - Sinusbølge
 if generate_F_AC_ex_and_syms == 1
-    
 % % F_AC function generator. F_AC antages at være en sinus funktion med
 % given amplitude, bølgelængde og fasedrej, som findes ud fra den numeriske plot.
-
 fprintf('Creating F_AC_function from numeric plot \n')
-
 zeromap = zeros(1,3); % Laver vektor til n-værdier før fortegnskifte.
 F_AC_max = max(F_AC); % Amplituden af F_AC findes.
 % For loop to check for 3 sign flips (equal to three zeroes) and then
 % lambda can be determined.
 i = 1;
-
 for n=1:length(F_AC) % Det her for loop går gennem F_AC vektoren og leder efter 
     % fortegnskift. Når den har fundet et fortegnskift på næste indgang,
     % gennem den tilsvarende n-værdi i zeromap og i tæller op. Når den har
@@ -130,8 +134,8 @@ F_AC_syms = F_AC_max*sin((2*pi/F_AC_lambda)*x-2*pi/F_AC_lambda * deltaZ); % Symb
 if plotte ==2
     
     
-plot(z,F_AC_ex,z,F_AC); % Plot til at sammenligne F_AC_ex og F_AC
-%vektorene
+    plot(z,F_AC_ex,z,F_AC); % Plot til at sammenligne F_AC_ex og F_AC
+    %vektorene
 end
 
 else
