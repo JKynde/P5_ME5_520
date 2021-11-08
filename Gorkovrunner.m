@@ -48,6 +48,7 @@ end
 P_avg=zeros(1,length(z));
 v_avg=zeros(1,length(z));
 fprintf('Integrating to find <p^2> and <v^2> \n')
+% Integration gøres med simpsons rule
 for n=1:length(z)
    P_avg(n) = (1/(10^-6))*(integralboy(WavesumresP_squared(:,n),t_stepsize)); % trykket som funktion af tid og afstand i anden, integreret over tiden, divideret med perioden <p^2>
    v_avg(n) = (1/(10^-6))*(integralboy(Wavesumresv_squared(:,n),t_stepsize)); % hastigheden som funktion af tid og afstand i anden, integreret over tiden, divideret med perioden <v^2>
@@ -82,7 +83,7 @@ end
 %% F_AC udtryksgenerator - Sinusbølge
 if generate_F_AC_ex_and_syms == 1
 % % F_AC function generator. F_AC antages at være en sinus funktion med
-% given amplitude, bølgelængde og fasedrej, som findes ud fra den numeriske plot.
+% given amplitude, bølgelængde og fasedrej, som findes ud fra det numeriske plot.
 fprintf('Creating F_AC_function from numeric plot \n')
 zeromap = zeros(1,3); % Laver vektor til n-værdier før fortegnskifte.
 F_AC_max = max(F_AC); % Amplituden af F_AC findes.

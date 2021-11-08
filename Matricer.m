@@ -1,6 +1,6 @@
 function [F,v_t,ZinAe] = Matricer(f,V_in,Tlmode)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%Matricer Matricer bygger sittig matricerne og har Kraften og hastigheden
+%ved transducerhovedet samt den elektriske impedans som output.
 Parameters;
 j = sqrt(-1);
 omega = 2*pi*f; %Vinkelhastighed

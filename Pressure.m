@@ -1,6 +1,7 @@
 function [p_z,C,WavesumP, F_z,Wave1P,Wave2P,Wavesumv] = Pressure(z,omega,t,F,v_t)
-%PREASSURE Summary of this function goes here
-%   Detailed explanation goes here
+%PRESSURE Pressure bygger trykfeltet og hastighedsfeltet ud fra en z
+%vektor, vinkelhastigheden, en tidsvektor samt det maksimale tryk og
+%hastighed ved transducerhovedet.
 %Defraction coefficient
 Parameters;
 k=omega/v_0Oil; %Wave number for oil
@@ -12,8 +13,8 @@ p_z =(rho_oil*v_0Oil*abs(v_t)*exp(j*k*z)); % Lige nu ikke ganget med C, men elle
 P_tmax = abs(F)/Area;
 
 Vaac = (2*nu_oil*omega^2)/(3*(v_0Oil^3));% Viscous acoustic attenuation coefficient.
-Vaac_one_trip=exp(-Vaac*d_heads);
-Decay_constant = R_reflect*Vaac_one_trip;
+Vaac_one_trip=exp(-Vaac*d_heads); % Acoustic attenuation af a result of one trip between the heads.
+Decay_constant = R_reflect*Vaac_one_trip; % Final decay constant pr trip for geometric series.
 
 Wave1A = P_tmax/(1-Decay_constant^2); % Deres amplituder regnes som en uende geometrisk række, som bliver ved med at blive reflekteret.
 Wave2A =Decay_constant*P_tmax/(1-Decay_constant^2); % Her udregnes amplituderne for de to bølger der udgør den stående bølge
