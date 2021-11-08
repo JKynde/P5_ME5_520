@@ -2,6 +2,7 @@ clc %hi hi
 clear
 Parameters;
 f = 10^6; % Input frequency
+V_in = 150; % Voltage phasor
 omega = 2*pi*f; % Angular velocity
 t=[0:1*10^-8*2:2*10^-6*2]; % initialize time vector t_start:t_step:t_end
 z=[r_transducer*2:0.0001*0.5:r_transducer*2+2*lambda]; %initialize distance from transducer. The model is valid from 2*r_transducer
@@ -13,7 +14,7 @@ C=zeros(1,length(z)); %initialize diffraction coefficient.
 
 F_zprvol=zeros(1,length(z)); % Vector for force pr. volume independent of time.
 
-[F,v_t] = Matricer(omega/(2*pi),300,1); % Force and velocity from Sittig Model
+[F,v_t] = Matricer(omega/(2*pi),V_in,1); % Force and velocity from Sittig Model
 
 for i=1:length(t) % Loop over time and distance
     

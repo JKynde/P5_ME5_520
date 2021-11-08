@@ -7,7 +7,7 @@ plotte = 1; % plotting option 1 = plot mellem F_AC og P-felt til t =0 - 2 = plot
 generate_F_AC_ex_and_syms = 0; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
 Tlmode=1; % Front lag eller ejjjj. Vi elsker voooores børn,
 f=10^6; % Frekvens
-V_in=300; % Spændingsfaser
+V_in=150; % Spændingsfaser
 omega=2*pi*f; % Vinkelhastighed
 t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
 r_particle = 10^-4;
