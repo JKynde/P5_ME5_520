@@ -43,10 +43,10 @@ rho_p = 1.225; %kg/m^3 %rho luft = 1.225
 v_0p = 340.19744;% m/s eller 761 i retard units 
 r_particle = 10^-4; % 0.1 mm, men det er rent gæt 4
 
-% Oil parameters ISO vg-32 eller ISO vg-320 vi håber at det er det samme,
+% Oil parameters ISO VG-32 ISO.
 rho_oil = 857; % Densitet af olien [kg/m^3]
 v_0Oil = 1493; % Lydens hastighed i olien.
-nu_oil = 313*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
+nu_oil = 32*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
 mu_oil = nu_oil*rho_oil;
 
 %Calculated parameters
