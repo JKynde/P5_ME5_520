@@ -29,7 +29,6 @@ Wavesumresv_squared=zeros(length(t),length(z)); % Til v^2
 %% Long ass nested forloop
 Progress=0;
 fprintf('Filling wavesumres and squaring \n')
-tic
 for n=1:length(z)
     for m=1:length(t)
     [~, ~, WavesumresP(m,n),~, ~, ~,Wavesumresv(m,n)]=Pressure(z(n),omega,t(m),F,v_t);  
@@ -38,7 +37,6 @@ for n=1:length(z)
     end
     Progress = (n/(length(z))*100);
     fprintf('Filling and squaring progress: %f \n',Progress)
-    toc
 end
 
 
