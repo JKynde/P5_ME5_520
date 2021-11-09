@@ -3,7 +3,7 @@ clear
 fprintf('Initializing \n')
 Parameters;
 %% Parameters og running options
-plotte = 3; % plotting option 1 = plot mellem F_AC og P-felt til t =0 - 2 = plot af F_AC_ex og F_AC
+plotte = 1; % plotting option 1 = plot mellem F_AC og P-felt til t =0 - 2 = plot af F_AC_ex og F_AC
 generate_F_AC_ex_and_syms = 0; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
 Tlmode=1; % Front lag eller ejjjj. Vi elsker voooores børn,
 f=10^6; % Frekvens
@@ -188,7 +188,7 @@ if plotte == 3
     end
 end
 
-
+%% done
 fprintf('Done \n')
 
 
