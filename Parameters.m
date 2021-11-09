@@ -41,7 +41,7 @@ ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet'
 %Partikle parameters: sat til luft for sjov for nu
 rho_p = 1.225; %kg/m^3 %rho luft = 1.225
 v_0p = 340.19744;% m/s eller 761 i retard units 
-r_particle = 10^-4; % 0.1 mm, men det er rent gæt 4
+%r_particle = 10^-4; % 0.1 mm, men det er rent gæt 4
 
 % Oil parameters ISO VG-32 ISO.
 rho_oil = 857; % Densitet af olien [kg/m^3]
@@ -62,7 +62,7 @@ ZrAa =v_0Oil*rho_oil*Area; % Acoustic impedance of radiating medium. In this cas
 kappa_l=1/(rho_oil*v_0Oil^2); %Gorkov lort
 kappa_p = 1/(rho_p*v_0p^2); % mere gorkov lort
 R_reflect = (rho_f*v_0f-rho_oil*v_0Oil) / (rho_oil*v_0Oil + rho_f*v_0f); % Reflection coefficient between transducer face and oil.
-V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel, bruges i gorkov
+%V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel, bruges i gorkov
 f_1 = 1 - kappa_p/kappa_l; % En konstant der skal bruges i gorkov
 f_2 = (2*(rho_p-rho_oil)) / (2*rho_p + rho_oil); % Også en konstant der skal bruges i gorkov
 Contrast_factor = (5*rho_p-2*rho_oil) / (2*rho_p+rho_oil) - kappa_p/kappa_l ; 

@@ -3,14 +3,14 @@ clear
 fprintf('Initializing \n')
 Parameters;
 %% Parameters og running options
-plotte = 3; % plotting option 1 er plot mellem F_AC og P-felt til t = 0 - 2 er plot af F_AC_ex og F_AC - 3 er normaliseret plot til at se faserne
+plotte = 1; % plotting option 1 er plot mellem F_AC og P-felt til t = 0 - 2 er plot af F_AC_ex og F_AC - 3 er normaliseret plot til at se faserne
 generate_F_AC_ex_and_syms = 0; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
 Tlmode=1; % Front lag eller ejjjj. Vi elsker voooores børn,
 f=10^6; % Frekvens
 V_in=150; % Spændingsfaser
 omega=2*pi*f; % Vinkelhastighed
 t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
-r_particle = 10^-4;
+r_particle = 80*10^-6;
 z_stepsize=1.2500e-05/5; %Stepsize til z.
 %% Initialisering
 V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel
@@ -47,8 +47,8 @@ fprintf('Integrating to find <p^2> and <v^2> \n')
 
 % Integration gøres med simpsons rule
 for n=1:lengthz
-   P_avg(n) = (1/(10^-6))*(integralboy(WavesumresP_squared(:,n),t_stepsize)); % trykket som funktion af tid og afstand i anden, integreret over tiden, divideret med perioden <p^2>
-   v_avg(n) = (1/(10^-6))*(integralboy(Wavesumresv_squared(:,n),t_stepsize)); % hastigheden som funktion af tid og afstand i anden, integreret over tiden, divideret med perioden <v^2>
+   P_avg(n) = (1/(1/f))*(integralboy(WavesumresP_squared(:,n),t_stepsize)); % trykket som funktion af tid og afstand i anden, integreret over tiden, divideret med perioden <p^2>
+   v_avg(n) = (1/(1/f))*(integralboy(Wavesumresv_squared(:,n),t_stepsize)); % hastigheden som funktion af tid og afstand i anden, integreret over tiden, divideret med perioden <v^2>
 end
 
 fprintf('Calculating U_AC_V \n')
@@ -57,10 +57,12 @@ for n=1:lengthz
 end
 
 fprintf('Differentiating \n')
-F_AC_V=-differentialboy(U_AC_V,z_stepsize);
+F_AC_V=-(differentialboy(U_AC_V,z_stepsize));
 F_AC = F_AC_V*V_particle;
 
-%Udregning af hastighed i kvasistatisk betragtning: Jespers ord ikke vores.
+%Udregning af hastighed i kvasistatisk betragtning. Det vil sige, at det
+%korte transiente forløb hvor partiklen kommer op til steady state farten
+%ses der bort fra
 %Kommer fra F-Bxdot = m*a og så kigger vi i det scenerie hvor a=0. Dvs
 %xdot=F/B og så antager vi at stokes lov gælder.
 Kvasihastighed = F_AC/(6*pi*mu_oil*r_particle); %B fra stokes lov. 
@@ -72,9 +74,11 @@ if plotte == 1
     xlabel('Distance from transducer head')
     yyaxis left
     ylabel('Force on particle with given volume')
+    %plot(z,U_AC_V)
     plot(z,Kvasihastighed)
     yyaxis right 
     ylabel('Pressurefield at time = 0')
+    %plot(z,P_avg)
     plot(z,WavesumresP(1,:)) 
     %plot (z,U_AC_V)
 end
@@ -188,12 +192,10 @@ if plotte == 3
         %plot(z,Wavesumresv_normalized(n,:),'--')
         plot(z,P_avg_normalized,'-')
         plot(z,v_avg_normalized,'--')
-        plot(z,U_AC_V_normalized,':')  
+        %plot(z,U_AC_V_normalized,':')  
         plot(z,F_AC_V_normalized,'-.')
-%         plot(z,WavesumresP_squared_normalized(n,:),':')
-%         plot(z,Wavesumresv_squared_normalized(n,:),'-.')
-%         plot(z,U_AC_V_normalized)
-%         plot(z,F_AC_V_normalized)
+        %plot(z,WavesumresP_squared_normalized(n,:),':')
+        %plot(z,Wavesumresv_squared_normalized(n,:),'-.')
         if n ~= lengtht
             pause (0.1)
             clf
