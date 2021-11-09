@@ -22,11 +22,11 @@ Wave2A =Decay_constant*P_tmax/(1-Decay_constant^2); % Her udregnes amplituderne 
 %Wave1P = Wave1A*sin( (2*pi/lambda)*z + omega*t); % Bølgerne laves.
 %Wave2P = Wave2A*sin( (2*pi/lambda)*z - omega*t); 
 Wave1P = Wave1A*exp(j*((2*pi/lambda)*z+omega*t)); % Bølgerne laves som fasere
-Wave2P = Wave2A*exp(j*((2*pi/lambda)*z-omega*t));
+Wave2P = Wave2A*exp(j*((-2*pi/lambda)*z+omega*t));
 %Wave1v = Wave1A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z + omega*t-pi/2);
 %Wave2v = Wave2A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z - omega*t-pi/2);
-Wave1v = -j*1/(rho_oil*v_0Oil) * Wave1A*exp(j*((2*pi/lambda)*z+omega*t));
-Wave2v = -j*1/(rho_oil*v_0Oil) * Wave2A*exp(j*((2*pi/lambda)*z-omega*t));
+Wave1v = 1/(rho_oil*v_0Oil) * Wave1A*exp(j*((2*pi/lambda)*z+omega*t));
+Wave2v = -1/(rho_oil*v_0Oil) * Wave2A*exp(j*((-2*pi/lambda)*z+omega*t));
 
 WavesumP = real(Wave1P + Wave2P); %Standing wave equation. Summen af alle venstregående og højregående bølger.
 Wavesumv = real(Wave1v + Wave2v);
