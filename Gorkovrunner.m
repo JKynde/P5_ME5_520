@@ -3,7 +3,7 @@ clear
 fprintf('Initializing \n')
 Parameters;
 %% Parameters og running options
-plotte = 1; % plotting option 1 = plot mellem F_AC og P-felt til t =0 - 2 = plot af F_AC_ex og F_AC
+plotte = 3; % plotting option 1 er plot mellem F_AC og P-felt til t = 0 - 2 er plot af F_AC_ex og F_AC - 3 er normaliseret plot til at se faserne
 generate_F_AC_ex_and_syms = 0; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
 Tlmode=1; % Front lag eller ejjjj. Vi elsker voooores børn,
 f=10^6; % Frekvens
@@ -11,9 +11,9 @@ V_in=150; % Spændingsfaser
 omega=2*pi*f; % Vinkelhastighed
 t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
 r_particle = 10^-4;
-V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel
 z_stepsize=1.2500e-05/5; %Stepsize til z.
 %% Initialisering
+V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel
 [F,v_t,~]=Matricer(f,V_in,Tlmode); %Henter F og v fra matricer
 z=[r_transducer*2:z_stepsize:r_transducer*2+2*lambda]; %initaliserer afstandsvektoren fra 2 gange transducer radius, til 2 bølgelængder væk
 t_stepsize=10^-6/(2*t_steps); %Størrelsen af steppet i tiden til simpsons rule i integral boy.
@@ -44,15 +44,18 @@ end
 P_avg=zeros(1,lengthz);
 v_avg=zeros(1,lengthz);
 fprintf('Integrating to find <p^2> and <v^2> \n')
+
 % Integration gøres med simpsons rule
 for n=1:lengthz
    P_avg(n) = (1/(10^-6))*(integralboy(WavesumresP_squared(:,n),t_stepsize)); % trykket som funktion af tid og afstand i anden, integreret over tiden, divideret med perioden <p^2>
    v_avg(n) = (1/(10^-6))*(integralboy(Wavesumresv_squared(:,n),t_stepsize)); % hastigheden som funktion af tid og afstand i anden, integreret over tiden, divideret med perioden <v^2>
 end
+
 fprintf('Calculating U_AC_V \n')
 for n=1:lengthz
-   U_AC_V(n) = (f_2/(2*rho_oil*v_0Oil^2)*P_avg(n)-f_2*(3/4)*rho_oil*v_avg(n)); % Her udregnes gorkovs potential pr volumen af partikel
+   U_AC_V(n) = (f_1/(2*rho_oil*v_0Oil^2)*P_avg(n)-f_2*(3/4)*rho_oil*v_avg(n)); % Her udregnes gorkovs potential pr volumen af partikel
 end
+
 fprintf('Differentiating \n')
 F_AC_V=-differentialboy(U_AC_V,z_stepsize);
 F_AC = F_AC_V*V_particle;
@@ -63,8 +66,8 @@ F_AC = F_AC_V*V_particle;
 Kvasihastighed = F_AC/(6*pi*mu_oil*r_particle); %B fra stokes lov. 
 
 %% Plotting omkring F_AC
-fprintf('Plotting \n')
 if plotte == 1
+    fprintf('Plotting \n')
     hold on 
     xlabel('Distance from transducer head')
     yyaxis left
@@ -134,11 +137,14 @@ if generate_F_AC_ex_and_syms == 1
     end
 end
 %% Normaliseret plottefis.
-fprintf('Normalizing and plotting \n')
 if plotte == 3
+    fprintf('Normalizing and plotting \n')
+    P_avg_normalized=P_avg/max(P_avg);
+    v_avg_normalized=v_avg/max(v_avg);
     U_AC_V_normalized=U_AC_V/(max(U_AC_V));  
     F_AC_V_normalized=(F_AC_V) / (max(F_AC_V)); 
     F_AC_normalized=(F_AC) / (max(F_AC));
+    
     WavesumresP_normalized=zeros(length(t),length(z));
     Wavesumresv_normalized=zeros(length(t),length(z)); 
     WavesumresP_squared_normalized=zeros(length(t),length(z)); 
@@ -148,6 +154,7 @@ if plotte == 3
     Wavesumresv_max=0;
     WavesumresP_squared_max=0;
     Wavesumresv_squared_max=0;
+    
     for n=1:lengthz
         for m=1:lengtht
            if WavesumresP(m,n) > WavesumresP_max
@@ -175,16 +182,23 @@ if plotte == 3
     end
     
     for n=1:lengtht
-        hold on 
-        plot(z,WavesumresP_normalized(n,:),'-')
-        plot(z,Wavesumresv_normalized(n,:),'--')
-        plot(z,WavesumresP_squared_normalized(n,:),':')
-        plot(z,Wavesumresv_squared_normalized(n,:),'-.')
+        hold on
+        axis([2*r_transducer  z(length(z)) -1 1]);
+        %plot(z,WavesumresP_normalized(n,:),'-')
+        %plot(z,Wavesumresv_normalized(n,:),'--')
+        plot(z,P_avg_normalized,'-')
+        plot(z,v_avg_normalized,'--')
+        plot(z,U_AC_V_normalized,':')  
+        plot(z,F_AC_V_normalized,'-.')
+%         plot(z,WavesumresP_squared_normalized(n,:),':')
+%         plot(z,Wavesumresv_squared_normalized(n,:),'-.')
 %         plot(z,U_AC_V_normalized)
 %         plot(z,F_AC_V_normalized)
-    pause (0.5)
-        clf
-        
+        if n ~= lengtht
+            pause (0.1)
+            clf
+        else
+        end
     end
 end
 
