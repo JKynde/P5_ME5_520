@@ -13,9 +13,10 @@ DielectricLossFactor = 3; % -||- i [10^(-3)]
 d_33 = 265*10^(-12);
     % Acousto-mechenical properties
 %Elastic compliance coefficients [10^-12m^2/N]
-S11T = 11.8*10^(-12);
+%S11T = 11.8*10^(-12);
 S33E = 14.2*10^(-12);
-c33D = 16.6*10^10; % Elastic stiffness coefficient [10^10N/m^2]
+%c33D = 16.6*10^10; % Elastic stiffness coefficient [10^10N/m^2]
+c33D = ( d_33 / ( S33E * epsilon33T) )^2 + 1 / (S33E);
 Q_m = 2000; % Mechanical quality factor
 C_0 = 0.104*10^(-9); % Kapacitans af pladen i nanofarad. Det er to af dem så det noget fuck endnu
 h_33=d_33/(S33E*epsilon33T); % Formel for h_33, som vi tror er Piezoelectric stiffness constant er regnet ud fra side 15 i https://link.springer.com/content/pdf/bbm%3A978-94-007-0579-1%2F1.pdf
