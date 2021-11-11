@@ -10,8 +10,8 @@ f=10^6; % Frekvens
 V_in=150; % Spændingsfaser
 omega=2*pi*f; % Vinkelhastighed
 t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
-r_particle = 80*10^-6;
-z_stepsize=1.2500e-05/5; %Stepsize til z.
+r_particle = 50*10^-6;
+z_stepsize=1.2500e-05; %Stepsize til z.
 %% Initialisering
 V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel
 [F,v_t,~]=Matricer(f,V_in,Tlmode); %Henter F og v fra matricer
@@ -53,12 +53,12 @@ end
 
 fprintf('Calculating U_AC_V \n')
 for n=1:lengthz
-   U_AC_V(n) = (f_1/(2*rho_oil*v_0Oil^2)*P_avg(n)-f_2*(3/4)*rho_oil*v_avg(n)); % Her udregnes gorkovs potential pr volumen af partikel
+   U_AC_V(n) = (f_1/(2*rho_oil*(v_0Oil)^2)*P_avg(n)-f_2*(3/4)*rho_oil*v_avg(n)); % Her udregnes gorkovs potential pr volumen af partikel
 end
 
 fprintf('Differentiating \n')
 F_AC_V=-(differentialboy(U_AC_V,z_stepsize));
-F_AC = F_AC_V*V_particle;
+F_AC = V_particle*F_AC_V;
 
 %Udregning af hastighed i kvasistatisk betragtning. Det vil sige, at det
 %korte transiente forløb hvor partiklen kommer op til steady state farten
@@ -192,7 +192,7 @@ if plotte == 3
         %plot(z,Wavesumresv_normalized(n,:),'--')
         plot(z,P_avg_normalized,'-')
         plot(z,v_avg_normalized,'--')
-        %plot(z,U_AC_V_normalized,':')  
+        plot(z,U_AC_V_normalized,':')  
         plot(z,F_AC_V_normalized,'-.')
         %plot(z,WavesumresP_squared_normalized(n,:),':')
         %plot(z,Wavesumresv_squared_normalized(n,:),'-.')
