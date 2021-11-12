@@ -36,8 +36,13 @@ rho_b = 7800;%Backing densitet [kg/M^3]m
 
 %Front layer parameters. Altså housingen ude foran.
 l_a = 3.2*10^(-3); %layer thickness [m]
-rho_f = 2700 ; %Densitet af front layer. [kg/m^3]
+rho_f = 2700; %Densitet af front layer. [kg/m^3]
 ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet'
+
+% %Mellem layer parameters.
+ l_m =0.5*10^(-3);
+ rho_m = 7800;
+ ElasticModolusMellem = 2.1*10^11;
 
 %Partikle parameters: sat til luft for sjov for nu
 rho_p = 1.225; %kg/m^3 %rho luft = 1.225
@@ -53,11 +58,13 @@ mu_oil = nu_oil*rho_oil;
 %Calculated parameters
 lambda = v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz
 v_0 = sqrt(c33D/rho_P); % wave speed of compressional waves in the piezoelectric plate
+v_0m = sqrt(ElasticModolusMellem/rho_m); % Wave speed of compressional waves in the mellemlag.. nice danlish
 v_0b = sqrt(ElasticModolusBacking/rho_b); % Wave speed of compressional waves in the backing material
 v_0f = sqrt(ElasticModolusFront/rho_f); % Wave speed of compressional waves in the front layer
 n=h_33*C_0; % ElectricMatrix parameter.
 Z0a = rho_P*v_0*Area; % plane wave acoustic impedance of the piezoelectric plate.
 Zba = rho_b*v_0b*Area; % <- vides ikke endnu, men det er: Corresponding acoustic impedance of the backing Z_b^A Vi gætter foreløbigt på =rho_backing*v_0,backing*S Problemet er at der står den er afhængig af frekvens. Plus den er cone-shaped.
+Zma = rho_m*v_0m*Area;
 Z0a_f = rho_f*v_0f*Area; % Acoustic impedance front layer ;
 ZrAa =v_0Oil*rho_oil*Area; % Acoustic impedance of radiating medium. In this case the oil
 kappa_l=1/(rho_oil*v_0Oil^2); %Gorkov lort
@@ -78,7 +85,7 @@ Contrast_factor = (5*rho_p-2*rho_oil) / (2*rho_p+rho_oil) - kappa_p/kappa_l ;
 %     k_p = 0.56;
 %     k_t = 0.46;
 %     k_31 = 0.32;
-%     k_33 = 0.66;
+     k_33 = 0.66;
 %     k_15 = 0.63;
 %         %Piezoelectric voltage Coefficients [10^-3Vm/N]
 %     g_31 = -11.2*10^(-3);
