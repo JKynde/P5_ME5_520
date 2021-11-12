@@ -10,7 +10,7 @@ f=10^6; % Frekvens
 V_in=150; % Spændingsfaser
 omega=2*pi*f; % Vinkelhastighed
 t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
-r_particle = 50*10^-6;
+r_particle = 5*10^-6;
 z_stepsize=1.2500e-05; %Stepsize til z.
 %% Initialisering
 V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel
