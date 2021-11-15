@@ -4,23 +4,21 @@ clc
 clear all
 close all
 j = sqrt(-1);
-plotmodes = 6; % 1 = F   2 = Z    3 = v     4 = F2   5 = Z2
+plotmodes = 4; % 1 = F   2 = Z    3 = v     4 = F2   5 = Z2
 Parameters; % Først defineres alle parametre fra konstante Parameters.m
 V_in = 150*exp(j*deg2rad(0)); % Indgangs spændingsvisor.
 Tlmode = 1; % Tlmode til Matricer.m functionen. Der er om front layer matricen er ganget på. 1 for ja else ikke.
-N=1;
+N=2;
 f = logspace(5,6.5,5000); % Lav en vektor logaritmisk fordelte indgange med n punkter.
 F_out = zeros(1,length(f)); % Lav en vektor med nuller lige så lang som vektor f.
 Z_out = zeros(1,length(f)); 
 v_out = zeros(1,length(f));
 for n=1:length(f) % For loop som fylder F_out med resultaterne af modellen
-    if plotmodes == 1 || 2 || 3
-    [F_out(n),v_out(n),Z_out(n)]=Matricer(f(n),V_in,Tlmode); %for loopet løber over forskellige værdier af f og outputter tre vektorer som er F, Z, V
+    if plotmodes == 1 || plotmodes == 2 || plotmodes == 3
+        [F_out(n),v_out(n),Z_out(n)]=Matricer(f(n),V_in,Tlmode); %for loopet løber over forskellige værdier af f og outputter tre vektorer som er F, Z, V
+    elseif plotmodes == 4 || plotmodes == 5  
+        [F_out(n),Z_out(n)] = Matricer2(f(n),V_in,Tlmode,N); % det samme som ovenover men for sittig2   
     else
-    end
-    if plotmodes == 4 || 5    
-        [F_out(n),Z_out(n)] = Matricer2(f(n),V_in,Tlmode,N); % det samme som ovenover men for sittig2
-    else 
     end
  end
 
