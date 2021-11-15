@@ -15,6 +15,7 @@ C=zeros(1,length(z)); %initialize diffraction coefficient.
 F_zprvol=zeros(1,length(z)); % Vector for force pr. volume independent of time.
 
 [F,v_t] = Matricer(omega/(2*pi),V_in,1); % Force and velocity from Sittig Model
+[F,v_t] = Matricer2(10^6,V_in,1,2); % Force and velocity from original sittig and crazy paper
 
 for i=1:length(t) % Loop over time and distance
     
