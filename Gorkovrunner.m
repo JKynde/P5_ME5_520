@@ -3,7 +3,7 @@ clear
 fprintf('Initializing \n')
 Parameters;
 %% Parameters og running options
-plotte = 1; % plotting option 1 er plot mellem F_AC og P-felt til t = 0 - 2 er plot af F_AC_ex og F_AC - 3 er normaliseret plot til at se faserne
+plotte = 4; % plotting option 1 er plot mellem F_AC og P-felt til t = 0 - 2 er plot af F_AC_ex og F_AC - 3 er normaliseret plot til at se faserne
 generate_F_AC_ex_and_syms = 0; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
 Tlmode=1; % Front lag eller ejjjj. Vi elsker voooores børn,
 f=10^6; % Frekvens
@@ -141,11 +141,11 @@ if generate_F_AC_ex_and_syms == 1
     end
 end
 %% Normaliseret plottefis.
-if plotte == 3
+if plotte == 3 || plotte == 4
     fprintf('Normalizing and plotting \n')
     P_avg_normalized=P_avg/max(P_avg);
     v_avg_normalized=v_avg/max(v_avg);
-    U_AC_V_normalized=U_AC_V/(max(U_AC_V));  
+    U_AC_V_normalized=U_AC_V/(min(U_AC_V));  %min fordi U_AC_V er negativ
     F_AC_V_normalized=(F_AC_V) / (max(F_AC_V)); 
     F_AC_normalized=(F_AC) / (max(F_AC));
     
@@ -184,12 +184,12 @@ if plotte == 3
             Wavesumresv_squared_normalized(m,n)=Wavesumresv_squared(m,n)/Wavesumresv_squared_max;
         end
     end
-    
+    if plotte == 3
     for n=1:lengtht
         hold on
         axis([2*r_transducer  z(length(z)) -1 1]);
-        %plot(z,WavesumresP_normalized(n,:),'-')
-        %plot(z,Wavesumresv_normalized(n,:),'--')
+        plot(z,WavesumresP_normalized(n,:),'-')
+        plot(z,Wavesumresv_normalized(n,:),'--')
         plot(z,P_avg_normalized,'-')
         plot(z,v_avg_normalized,'--')
         plot(z,U_AC_V_normalized,':')  
@@ -201,9 +201,79 @@ if plotte == 3
             clf
         else
         end
+        end
     end
-end
+ end
 
+%% Forsøg på konturplots
+if plotte == 4
+fprintf('Making pancakes... \n')
+%initialisering af plots
+[X, Y]=meshgrid(r_transducer*2:z_stepsize:r_transducer*2+2*lambda, 0:1); %her laves meshgrid. Basically den overflade funktionen skal plottes på. Alle inddellinger i længderetningen og to i tidsretningen, da den skal være mindst 2X2
+Q = tiledlayout(5,1); %hvor mange grafer man vil have
+Q.TileSpacing = 'compact';
+title(Q,'Phase Comparison Of Different Quantities', 'fontweight', 'Bold', 'fontsize', 10)
+xlabel(Q,'Distance from transducer head', 'fontweight', 'bold', 'fontsize', 10) %samlet label for x-aksen
+
+%kontur af trykfeltet til t=0
+ax = nexttile;
+pressurefieldkontur=zeros(239,2);
+pressurefieldkontur(:,1)=WavesumresP_normalized(1,:);
+pressurefieldkontur(:,2)=WavesumresP_normalized(1,:);
+contourf(X, Y, pressurefieldkontur', 10); colormap jet;
+title('Pressurefield at t=0')
+%axis off
+
+%kontur af P_avg
+ax1 = nexttile;
+peepee=zeros(239,2);
+peepee(:,1)=P_avg_normalized(1,:);
+peepee(:,2)=P_avg_normalized(1,:);
+contourf(X, Y, peepee', 10); colormap jet;
+title('Mean square pressure amplitude(normalized)')
+%axis off
+
+%kontur af v_avg
+ax2 = nexttile;
+weewee=zeros(239,2);
+weewee(:,1)=v_avg_normalized(1,:);
+weewee(:,2)=v_avg_normalized(1,:);
+contourf(X, Y, weewee', 10); colormap jet;
+title('Mean square velocity amplitude(normalized)')
+%axis off
+
+%kontur af U_AC
+ax3 = nexttile;
+u=zeros(239,2);
+u(:,1) = U_AC_V_normalized(1,:);
+u(:,2) = U_AC_V_normalized(1,:);
+contourf(X, Y, u', 10); colormap jet;
+title('Primary radiation potential(normalized)')
+%axis off
+
+%kontur af F_particle
+ax4 = nexttile;
+dongwang=zeros(239,2);
+dongwang(:,1) = F_AC_normalized(1,:);
+dongwang(:,2) = F_AC_normalized(1,:);
+contourf(X, Y, dongwang', 10); colormap jet;
+title('Primary radiation force(normalized)');
+%axis off
+%Kosmetisk grafbehandling
+cb = colorbar; %laver en colorbar
+cb.Layout.Tile = 'east'; % colorbaren skal være til højre
+linkaxes([ax, ax1, ax2, ax3, ax4], 'xy'); %aksene sættes sammen
+xticklabels(ax,{}) %her fjernes x og y-aksen for alle grafer, bortset fra x aksen af den nederste
+yticklabels(ax,{}) %det er nok den mest komplicerede måde at gøre det på men fuck det
+xticklabels(ax1,{})
+yticklabels(ax1,{})
+xticklabels(ax2,{})
+yticklabels(ax2,{})
+xticklabels(ax3,{})
+yticklabels(ax3,{})
+yticklabels(ax4,{})
+fprintf('Breakfast is ready! \n')
+end
 %% done
 fprintf('Done \n')
 
