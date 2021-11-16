@@ -49,7 +49,6 @@ rho_p = 1.225; %kg/m^3 %rho luft = 1.225
 v_0p = 340.19744;% m/s eller 761 i retard units 
 % rho_p = 1050; % brug disse for polysterene(tunge partikler)
 % v_0p = 1700; % og denne
-%r_particle = 10^-4; % 0.1 mm, men det er rent gæt 4
 
 % Oil parameters ISO VG-32 ISO.
 rho_oil = 857; % Densitet af olien [kg/m^3]

@@ -8,7 +8,7 @@ plotmodes = 4; % 1 = F   2 = Z    3 = v     4 = F2   5 = Z2
 Parameters; % Først defineres alle parametre fra konstante Parameters.m
 V_in = 150*exp(j*deg2rad(0)); % Indgangs spændingsvisor.
 Tlmode = 1; % Tlmode til Matricer.m functionen. Der er om front layer matricen er ganget på. 1 for ja else ikke.
-N=2;
+N=2; % Antal piezoplader i matricer2
 f = logspace(5,6.5,5000); % Lav en vektor logaritmisk fordelte indgange med n punkter.
 F_out = zeros(1,length(f)); % Lav en vektor med nuller lige så lang som vektor f.
 Z_out = zeros(1,length(f)); 
@@ -120,4 +120,4 @@ ylabel('Angle of Z_{out}(^\circ)')
     otherwise
 end
 
-
+%bruh lad mig pull
