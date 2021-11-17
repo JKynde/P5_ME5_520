@@ -38,6 +38,10 @@ rho_b = 7800;%Backing densitet [kg/M^3]m
 l_a = 3.2*10^(-3); %layer thickness [m]
 rho_f = 2700; %Densitet af front layer. [kg/m^3]
 ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet'
+% adhesive parameters
+ l_aa = 0.015*10^(-3);
+ rho_a = 1190;
+ ElasticModolusAdhesive = 10^10;
 
 % %Mellem layer parameters.
  l_m =0.5*10^(-3);
@@ -62,10 +66,12 @@ v_0 = sqrt(c33D/rho_P); % wave speed of compressional waves in the piezoelectric
 v_0m = sqrt(ElasticModolusMellem/rho_m); % Wave speed of compressional waves in the mellemlag.. nice danlish
 v_0b = sqrt(ElasticModolusBacking/rho_b); % Wave speed of compressional waves in the backing material
 v_0f = sqrt(ElasticModolusFront/rho_f); % Wave speed of compressional waves in the front layer
+v_0a = sqrt(ElasticModolusAdhesive/rho_a); % Wave speed of compressional waves in the adhesive
 n=h_33*C_0; % ElectricMatrix parameter.
 Z0a = rho_P*v_0*Area; % plane wave acoustic impedance of the piezoelectric plate.
 Zba = rho_b*v_0b*Area; % <- vides ikke endnu, men det er: Corresponding acoustic impedance of the backing Z_b^A Vi gætter foreløbigt på =rho_backing*v_0,backing*S Problemet er at der står den er afhængig af frekvens. Plus den er cone-shaped.
 Zma = rho_m*v_0m*Area;
+Zaa = rho_a*v_0a*Area;
 Z0a_f = rho_f*v_0f*Area; % Acoustic impedance front layer ;
 ZrAa =v_0Oil*rho_oil*Area; % Acoustic impedance of radiating medium. In this case the oil
 kappa_l=1/(rho_oil*v_0Oil^2); %Gorkov lort

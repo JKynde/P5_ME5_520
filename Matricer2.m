@@ -1,4 +1,4 @@
-function [F,v_t,ZinAe] = Matricer2(f,V_in,Tlmode,N)
+function [F,v_t,ZinAe] = Matricer2(f,V_in,Tlmode,mode)
 %Matricer Matricer bygger sittig matricerne og har Kraften og hastigheden
 %ved transducerhovedet samt den elektriske impedans som output.
 Parameters;
@@ -6,6 +6,7 @@ j = sqrt(-1);
 omega = 2*pi*f; %Vinkelhastighed
 k=omega/v_0; % Wave number piezo.
 k_a = omega/v_0f;  % Wave number front layer
+N=1; % Remnent of old times. Must be 1, don't touch.
 %% Sindsyg matrice fra sindsyg kilde:
 theta = omega*d_p/v_0;
 sigma = C_0*h_33^2/(omega*Z0a);
@@ -13,15 +14,36 @@ cosphi = (cos(theta)-sigma*sin(theta))/(1-sigma*sin(theta));
 phi = acos(cosphi);
 cosNphi = cos(N*phi);
 sinNphi = sin(N*phi);
-
 R = sqrt((sin(theta) - 2*sigma*(1-cos(theta)))/(sin(theta)));
-
-T = [cosNphi -j*Z0a*R*sinNphi -h_33*C_0*tan(1/2 * phi)*sinNphi 0
+T_disc = [cosNphi -j*Z0a*R*sinNphi -h_33*C_0*tan(1/2 * phi)*sinNphi 0
 -j*(Z0a)^(-1)*R^(-1)*sinNphi cosNphi -j*h_33*C_0*Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) 0
 0 0 (-1)^N 0
 -j*h_33*C_0*Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) -h_33*C_0*tan(1/2 * phi)*sinNphi j*(N*(-1)^N)*(1+2*sigma*R^(-1)*tan(1/2*phi)+sigma*R^(-1)*tan(1/2*phi)*tan(1/2*phi)*sinNphi)*omega*C_0 (-1)^N];
 
-
+if mode == 1
+T = T_disc*T_disc;
+elseif mode == 2
+    theta_g = omega * l_m / v_0m;
+    T_terminal = [cos(theta_g) j*Zma*sin(theta_g) 0 0
+    j*sin(theta_g)/Zma cos(theta_g) 0 0
+    0 0 1 0
+    0 0 0 1];
+T = T_terminal*T_disc*T_terminal*T_disc*T_terminal;
+elseif mode == 3
+    theta_g = omega * l_m / v_0m;
+    theta_a = omega * l_a / v_0a;
+    T_terminal = [cos(theta_g) j*Zma*sin(theta_g) 0 0
+    j*sin(theta_g)/Zma cos(theta_g) 0 0
+    0 0 1 0
+    0 0 0 1];
+T_adhesive = [cos(theta_a) j*Zaa*sin(theta_a) 0 0
+    j*sin(theta_a)/Zaa cos(theta_a) 0 0
+    0 0 1 0
+    0 0 0 1];
+T = T_adhesive*T_terminal*T_adhesive*T_disc*T_adhesive*T_terminal*T_adhesive*T_disc*T_adhesive*T_terminal;
+else
+    T=T_disc;
+end
 
 
 
