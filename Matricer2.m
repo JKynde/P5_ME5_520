@@ -31,7 +31,7 @@ elseif mode == 2
 T = T_terminal*T_disc*T_terminal*T_disc*T_terminal;
 elseif mode == 3
     theta_g = omega * l_m / v_0m;
-    theta_a = omega * l_a / v_0a;
+    theta_a = omega * l_aa / v_0a;
     T_terminal = [cos(theta_g) j*Zma*sin(theta_g) 0 0
     j*sin(theta_g)/Zma cos(theta_g) 0 0
     0 0 1 0
@@ -46,10 +46,7 @@ else
 end
 
 
-
 %% Hello
-
-
 
 
 T_nedkogt = [T(3,1)-T(3,3)*((T(2,1)*Zba+T(1,1)))/(T(2,3)*Zba+T(1,3)) T(3,2)-T(3,3)*(T(2,2)*Zba+T(1,2))/(T(2,3)*Zba+T(1,3))

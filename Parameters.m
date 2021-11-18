@@ -41,7 +41,11 @@ ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet'
 % adhesive parameters
  l_aa = 0.015*10^(-3);
  rho_a = 1190;
- ElasticModolusAdhesive = 10^10;
+ ElasticModolusAdhesive = 10^10; 
+% Adhesive parameters for Epoxy resin
+ %l_aa = 0.015*10^(-3);
+ %rho_a = 1146.6;
+ %ElasticModolusAdhesive = 3.1*10^10;
 
 % %Mellem layer parameters.
  l_m =0.5*10^(-3);
