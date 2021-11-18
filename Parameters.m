@@ -13,7 +13,6 @@ DielectricLossFactor = 3; % -||- i [10^(-3)]
 d_33 = 265*10^(-12);
     % Acousto-mechenical properties
 %Elastic compliance coefficients [10^-12m^2/N]
-%S11T = 11.8*10^(-12);
 S33E = 14.2*10^(-12);
 c33D = 16.6*10^10; % Elastic stiffness coefficient [10^10N/m^2]
 %c33D = ( d_33 / ( S33E * epsilon33T) )^2*epsilon33T + 1 / (S33E);
@@ -38,14 +37,14 @@ rho_b = 7800;%Backing densitet [kg/M^3]m
 l_a = 3.2*10^(-3); %layer thickness [m]
 rho_f = 2700; %Densitet af front layer. [kg/m^3]
 ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet'
-% adhesive parameters
- l_aa = 0.015*10^(-3);
- rho_a = 1190;
- ElasticModolusAdhesive = 10^10; 
-% Adhesive parameters for Epoxy resin
+% adhesive parameters (v.1)
  %l_aa = 0.015*10^(-3);
- %rho_a = 1146.6;
- %ElasticModolusAdhesive = 3.1*10^10;
+ %rho_a = 1190;
+ %ElasticModolusAdhesive = 10^10; 
+% Adhesive parameters for Epoxy resin (v.2)
+ l_aa = 0.015*10^(-3);
+ rho_a = 1146.6;
+ ElasticModolusAdhesive = 3.1*10^10;
 
 % %Mellem layer parameters.
  l_m =0.5*10^(-3);
@@ -64,6 +63,14 @@ v_0Oil = 1493; % Lydens hastighed i olien.
 nu_oil = 32*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
 mu_oil = nu_oil*rho_oil;
 
+%Cabel parameters
+ l_c = 0; %Længde af kabel
+ v_0c = 0; %=omega/wave speed
+ epsilon_c = 0; %Permativitet af kabel
+ myh_c = 0; %Permabiliteten af kabel
+ a_c = 0; %Indre radius af kabel
+ b_c = 0; %Ydre radius af kabel
+ 
 %Calculated parameters
 lambda = v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz
 v_0 = sqrt(c33D/rho_P); % wave speed of compressional waves in the piezoelectric plate
@@ -87,6 +94,8 @@ f_2 = (2*(rho_p-rho_oil)) / (2*rho_p + rho_oil); % Også en konstant der skal br
 Contrast_factor = (5*rho_p-2*rho_oil) / (2*rho_p+rho_oil) - kappa_p/kappa_l ; 
 
  %% Parameter der ikke bliver brugt
+ %Elastic compliance coefficients [10^-12m^2/N]
+%S11T = 11.8*10^(-12);
 %        %Frequency coefficients [Hz*m]
 %     N_p = 2270;
 %     N_1 = 1640;
