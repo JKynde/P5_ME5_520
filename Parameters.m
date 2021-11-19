@@ -7,7 +7,7 @@ epsilon_0 = 8.854*10^(-12); % permittivity of free space [F/m]
 PermittivityPolarizationInDirection = 1200; % Relative permittivity in the polarization direction = epsilon_33^T/epsilon_0
 epsilon33T = PermittivityPolarizationInDirection*epsilon_0; %epsilon 33T skal bruges senere til at udregnes h_33, som vi skal bruge.
 PermittivityNormalDirection = 1500; % Relative permittivity in the norm direction epsilon_11^T/epsilon_0
-DielectricLossFactor = 3; % -||- i [10^(-3)]
+
 
 % Piezoelectric Charge Coefficients [10^-12C/N)
 d_33 = 265*10^(-12);
@@ -15,15 +15,14 @@ d_33 = 265*10^(-12);
 %Elastic compliance coefficients [10^-12m^2/N]
 S33E = 14.2*10^(-12);
 c33D = 16.6*10^10; % Elastic stiffness coefficient [10^10N/m^2]
-%c33D = ( d_33 / ( S33E * epsilon33T) )^2*epsilon33T + 1 / (S33E);
-Q_m = 2000; % Mechanical quality factor
-C_0 = 0.104*10^(-9); % Kapacitans af pladen i nanofarad. Det er to af dem så det noget fuck endnu
+%c33D = ( d_33 / ( S33E * epsilon33T) )^2*epsilon33T + 1 / (S33E); %
+%Alternativ måde at regne c33D på
+C_0 = 0.104*10^(-9); % Kapacitans af pladen i farad 
 h_33=d_33/(S33E*epsilon33T); % Formel for h_33, som vi tror er Piezoelectric stiffness constant er regnet ud fra side 15 i https://link.springer.com/content/pdf/bbm%3A978-94-007-0579-1%2F1.pdf
 % Der er en antagelse at h_33 i Ultrasonic Nondestructive Evaluation
 % systems er den samme som i den artiklen hvor formlen for h_33 er fundet.
 
-%Geometri af en enkelt piezoplade(vi har to. Ved ikke hvordan vi lige
-%modellerer det endnu)
+%Geometri af en enkelt piezoplade
 d_p = 0.002; %Plate thickness [m]
 r_transducer = 0.005/2;
 Area = (r_transducer)^2*pi; % Plate area
@@ -48,10 +47,12 @@ l_m =0.5*10^(-3);
 rho_m = 7800;
 ElasticModolusMellem = 2.1*10^11;
 
-%Partikle parameters: sat til luft for sjov for nu
+%Partikle parameters:
+%luft
 rho_p = 1.225; %kg/m^3 %rho luft = 1.225
 v_0p = 340.19744;% m/s eller 761 i retard units 
-% rho_p = 1050; % brug disse for polysterene(tunge partikler)
+% brug disse for polysterene(tunge partikler)
+% rho_p = 1050; 
 % v_0p = 1700; % og denne
 
 % Oil parameters ISO VG-32 ISO.
@@ -87,7 +88,6 @@ ZrAa =v_0Oil*rho_oil*Area; % Acoustic impedance of radiating medium. In this cas
 kappa_l=1/(rho_oil*v_0Oil^2); %Gorkov lort
 kappa_p = 1/(rho_p*v_0p^2); % mere gorkov lort
 R_reflect = (rho_f*v_0f-rho_oil*v_0Oil) / (rho_oil*v_0Oil + rho_f*v_0f); % Reflection coefficient between transducer face and oil.
-%V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel, bruges i gorkov
 f_1 = 1 - kappa_p/kappa_l; % En konstant der skal bruges i gorkov
 f_2 = (2*(rho_p-rho_oil)) / (2*rho_p + rho_oil); % Også en konstant der skal bruges i gorkov
 Contrast_factor = (5*rho_p-2*rho_oil) / (2*rho_p+rho_oil) - kappa_p/kappa_l ; 
@@ -114,3 +114,6 @@ Contrast_factor = (5*rho_p-2*rho_oil) / (2*rho_p+rho_oil) - kappa_p/kappa_l ;
 %     d_15 = 475*10^(-12);
 %         %Elastic compliance coefficients [10^-12m^2/N]
 %     Q_m = 2000; % Mechanical quality factor
+%DielectricLossFactor = 3; % -||- i [10^(-3)]
+%V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel, bruges i gorkov,
+%burde også regnes i gorkov, så den er kommenteret ud her

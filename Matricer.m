@@ -26,9 +26,9 @@ F = V_in*S_VF; % Force from input voltage.
 
 end
 %%
-% Cabel model 
-T_c=[cos(k_c*l_c) -j*Z0e*sin(k_c*l_c
--j*sin(k_c*l_c)/Z0e cos(k_c*l_c)]
-%hvor
-Z0e=1/(2*pi)*sqrt(myh_c/epsilon_c)*ln(b_c/a_c);
-k_c = omega/v_0c;
+% % Cabel model 
+% T_c=[cos(k_c*l_c) -j*Z0e*sin(k_c*l_c
+% -j*sin(k_c*l_c)/Z0e cos(k_c*l_c)]
+% %hvor
+% Z0e=1/(2*pi)*sqrt(myh_c/epsilon_c)*ln(b_c/a_c);
+% k_c = omega/v_0c;
