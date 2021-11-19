@@ -65,11 +65,12 @@ mu_oil = nu_oil*rho_oil;
 
 %Cabel parameters
  l_c = 0; %Længde af kabel
- v_0c = 0; %=omega/wave speed
  epsilon_c = 0; %Permativitet af kabel
  myh_c = 0; %Permabiliteten af kabel
  a_c = 0; %Indre radius af kabel
  b_c = 0; %Ydre radius af kabel
+ ElasticModolusCabel = 11.7*10^10; % Elastic Modolus af kobber
+ rho_c = 8960; %kg/m3 af kobber
  
 %Calculated parameters
 lambda = v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz
@@ -78,6 +79,7 @@ v_0m = sqrt(ElasticModolusMellem/rho_m); % Wave speed of compressional waves in 
 v_0b = sqrt(ElasticModolusBacking/rho_b); % Wave speed of compressional waves in the backing material
 v_0f = sqrt(ElasticModolusFront/rho_f); % Wave speed of compressional waves in the front layer
 v_0a = sqrt(ElasticModolusAdhesive/rho_a); % Wave speed of compressional waves in the adhesive
+v_0c = sqrt(ElasticModolusCabel/rho_c); % Wave speed of compressional waves in the adhesive
 n=h_33*C_0; % ElectricMatrix parameter.
 Z0a = rho_P*v_0*Area; % plane wave acoustic impedance of the piezoelectric plate.
 Zba = rho_b*v_0b*Area; % <- vides ikke endnu, men det er: Corresponding acoustic impedance of the backing Z_b^A Vi gætter foreløbigt på =rho_backing*v_0,backing*S Problemet er at der står den er afhængig af frekvens. Plus den er cone-shaped.
@@ -105,7 +107,7 @@ Contrast_factor = (5*rho_p-2*rho_oil) / (2*rho_p+rho_oil) - kappa_p/kappa_l ;
 %     k_p = 0.56;
 %     k_t = 0.46;
 %     k_31 = 0.32;
-     k_33 = 0.66;
+%     k_33 = 0.66;
 %     k_15 = 0.63;
 %         %Piezoelectric voltage Coefficients [10^-3Vm/N]
 %     g_31 = -11.2*10^(-3);

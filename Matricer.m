@@ -4,8 +4,9 @@ function [F,v_t,ZinAe] = Matricer(f,V_in,Tlmode)
 Parameters;
 j = sqrt(-1);
 omega = 2*pi*f; %Vinkelhastighed
-k=omega/v_0; % Wave number piezo.
+k = omega/v_0; % Wave number piezo.
 k_a = omega/v_0f;  % Wave number front layer
+k_c = omega/v_0c;  % Wave number of cable
 TeA = [1/n n/j*omega*C_0;-j*omega*C_0 0]; % Elektrisk matrice
 TaA = 1/(Zba-j*Z0a*tan(k*d_p/2))*([Zba+j*Z0a*cot(k*d_p) (Z0a)^2+j*Z0a*Zba*cot(k*d_p)
 1 Zba-2*j*Z0a*tan(k*d_p/2)]); % Acoustisk piezo matrice.
@@ -30,4 +31,4 @@ T_c=[cos(k_c*l_c) -j*Z0e*sin(k_c*l_c
 -j*sin(k_c*l_c)/Z0e cos(k_c*l_c)]
 %hvor
 Z0e=1/(2*pi)*sqrt(myh_c/epsilon_c)*ln(b_c/a_c);
- k_c = omega/wave speed;
+k_c = omega/v_0c;
