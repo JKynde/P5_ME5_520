@@ -36,20 +36,17 @@ rho_b = 7800;%Backing densitet [kg/M^3]m
 %Front layer parameters. Altså housingen ude foran.
 l_a = 3.2*10^(-3); %layer thickness [m]
 rho_f = 2700; %Densitet af front layer. [kg/m^3]
-ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet'
-% adhesive parameters (v.1)
- %l_aa = 0.015*10^(-3);
- %rho_a = 1190;
- %ElasticModolusAdhesive = 10^10; 
-% Adhesive parameters for Epoxy resin (v.2)
- l_aa = 0.015*10^(-3);
- rho_a = 1146.6;
- ElasticModolusAdhesive = 3.1*10^10;
+ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet
+
+%adhesive parameters
+l_aa = 0.015*10^(-3);
+rho_a = 1146;
+ElasticModolusAdhesive = 5.9*10^10;
 
 % %Mellem layer parameters.
- l_m =0.5*10^(-3);
- rho_m = 7800;
- ElasticModolusMellem = 2.1*10^11;
+l_m =0.5*10^(-3);
+rho_m = 7800;
+ElasticModolusMellem = 2.1*10^11;
 
 %Partikle parameters: sat til luft for sjov for nu
 rho_p = 1.225; %kg/m^3 %rho luft = 1.225
