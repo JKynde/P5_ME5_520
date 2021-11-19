@@ -19,19 +19,15 @@ Decay_constant = R_reflect*Vaac_one_trip; % Final decay constant pr trip for geo
 Wave1A = P_tmax/(1-Decay_constant^2); % Deres amplituder regnes som en uende geometrisk række, som bliver ved med at blive reflekteret.
 Wave2A =Decay_constant*P_tmax/(1-Decay_constant^2); % Her udregnes amplituderne for de to bølger der udgør den stående bølge
 
-%Wave1P = Wave1A*sin( (2*pi/lambda)*z + omega*t); % Bølgerne laves.
-%Wave2P = Wave2A*sin( (2*pi/lambda)*z - omega*t); 
+
 Wave1P = Wave1A*exp(j*((2*pi/lambda)*z+omega*t)); % Bølgerne laves som fasere
 Wave2P = Wave2A*exp(j*((-2*pi/lambda)*z+omega*t));
-%Wave1v = Wave1A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z + omega*t-pi/2);
-%Wave2v = Wave2A/(rho_oil*v_0Oil) * sin ( (2*pi/lambda)*z - omega*t-pi/2);
+
 Wave1v = 1/(rho_oil*v_0Oil) * Wave1A*exp(j*((2*pi/lambda)*z+omega*t));
 Wave2v = -1/(rho_oil*v_0Oil) * Wave2A*exp(j*((-2*pi/lambda)*z+omega*t));
 
 WavesumP = real(Wave1P + Wave2P); %Standing wave equation. Summen af alle venstregående og højregående bølger.
 Wavesumv = real(Wave1v + Wave2v);
-
-%Wave = 2*2.2569e+05*sin(2*pi*z/lambda)*cos(omega*t);
 
 % Lukes approximeret metode hvor amplituden af den stående bølge er
 % 2*P_tmax. Desuden er den stående bølge også perfekt.
