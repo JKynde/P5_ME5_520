@@ -31,7 +31,7 @@ elseif mode == 2
 T = T_terminal*T_disc*T_terminal*T_disc*T_terminal;
 elseif mode == 3
     theta_g = omega * l_m / v_0m;
-    theta_a = omega * l_a / v_0a;
+    theta_a = omega * l_aa / v_0a;
     T_terminal = [cos(theta_g) j*Zma*sin(theta_g) 0 0
     j*sin(theta_g)/Zma cos(theta_g) 0 0
     0 0 1 0
@@ -40,7 +40,7 @@ T_adhesive = [cos(theta_a) j*Zaa*sin(theta_a) 0 0
     j*sin(theta_a)/Zaa cos(theta_a) 0 0
     0 0 1 0
     0 0 0 1];
-T = T_adhesive*T_terminal*T_adhesive*T_disc*T_adhesive*T_terminal*T_adhesive*T_disc*T_adhesive*T_terminal;
+T = T_adhesive*T_terminal*T_adhesive*T_disc*T_adhesive*T_terminal*T_adhesive*T_disc*T_adhesive*T_terminal*T_adhesive;
 else
     T=T_disc;
 end
