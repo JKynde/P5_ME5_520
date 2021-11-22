@@ -218,7 +218,7 @@ xlabel(Q,'Distance from transducer head', 'fontweight', 'bold', 'fontsize', 10) 
 
 %kontur af trykfeltet til t=0
 ax = nexttile;
-pressurefieldkontur=zeros(239,2);
+pressurefieldkontur=zeros(length(X),2);
 pressurefieldkontur(:,1)=WavesumresP_normalized(1,:);
 pressurefieldkontur(:,2)=WavesumresP_normalized(1,:);
 contourf(X, Y, pressurefieldkontur', 10); colormap jet;
@@ -227,7 +227,7 @@ title('Pressurefield at t=0')
 
 %kontur af P_avg
 ax1 = nexttile;
-peepee=zeros(239,2);
+peepee=zeros(length(X),2);
 peepee(:,1)=P_avg_normalized(1,:);
 peepee(:,2)=P_avg_normalized(1,:);
 contourf(X, Y, peepee', 10); colormap jet;
@@ -236,7 +236,7 @@ title('Mean square pressure amplitude(normalized)')
 
 %kontur af v_avg
 ax2 = nexttile;
-weewee=zeros(239,2);
+weewee=zeros(length(X),2);
 weewee(:,1)=v_avg_normalized(1,:);
 weewee(:,2)=v_avg_normalized(1,:);
 contourf(X, Y, weewee', 10); colormap jet;
@@ -245,7 +245,7 @@ title('Mean square velocity amplitude(normalized)')
 
 %kontur af U_AC
 ax3 = nexttile;
-u=zeros(239,2);
+u=zeros(length(X),2);
 u(:,1) = U_AC_V_normalized(1,:);
 u(:,2) = U_AC_V_normalized(1,:);
 contourf(X, Y, u', 10); colormap jet;
@@ -254,7 +254,7 @@ title('Primary radiation potential(normalized)')
 
 %kontur af F_particle
 ax4 = nexttile;
-dongwang=zeros(239,2);
+dongwang=zeros(length(X),2);
 dongwang(:,1) = F_AC_normalized(1,:);
 dongwang(:,2) = F_AC_normalized(1,:);
 contourf(X, Y, dongwang', 10); colormap jet;
