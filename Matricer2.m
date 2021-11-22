@@ -1,43 +1,43 @@
-function [F,v_t,ZinAe] = Matricer2(f,V_in,Tlmode,mode)
+function [F,v_t,ZinAe] = Matricer2(f,V_in,param)
 %Matricer Matricer bygger sittig matricerne og har Kraften og hastigheden
 %ved transducerhovedet samt den elektriske impedans som output.
 Parameters;
 j = sqrt(-1);
 omega = 2*pi*f; %Vinkelhastighed
-k=omega/v_0; % Wave number piezo.
-k_a = omega/v_0f;  % Wave number front layer
+k=omega/param.v_0; % Wave number piezo.
+k_a = omega/param.v_0f;  % Wave number front layer
 N=1; % Remnent of old times. Must be 1, don't touch.
 %% 4x4 matrice konstruktion og produkt.
-theta = omega*d_p/v_0;
-sigma = C_0*h_33^2/(omega*Z0a);
+theta = omega*param.d_p/param.v_0;
+sigma = param.C_0*param.h_33^2/(omega*param.Z0a);
 cosphi = (cos(theta)-sigma*sin(theta))/(1-sigma*sin(theta));
 phi = acos(cosphi);
 cosNphi = cos(N*phi);
 sinNphi = sin(N*phi);
 R = sqrt((sin(theta) - 2*sigma*(1-cos(theta)))/(sin(theta)));
-T_disc = [cosNphi -j*Z0a*R*sinNphi -h_33*C_0*tan(1/2 * phi)*sinNphi 0
--j*(Z0a)^(-1)*R^(-1)*sinNphi cosNphi -j*h_33*C_0*Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) 0
+T_disc = [cosNphi -j*param.Z0a*R*sinNphi -param.h_33*param.C_0*tan(1/2 * phi)*sinNphi 0
+-j*(param.Z0a)^(-1)*R^(-1)*sinNphi cosNphi -j*param.h_33*C_0*param.Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) 0
 0 0 (-1)^N 0
--j*h_33*C_0*Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) -h_33*C_0*tan(1/2 * phi)*sinNphi j*(N*(-1)^N)*(1+2*sigma*R^(-1)*tan(1/2*phi)+sigma*R^(-1)*tan(1/2*phi)*tan(1/2*phi)*sinNphi)*omega*C_0 (-1)^N];
+-j*param.h_33*param.C_0*param.Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) -param.h_33*param.C_0*tan(1/2 * phi)*sinNphi j*(N*(-1)^N)*(1+2*sigma*R^(-1)*tan(1/2*phi)+sigma*R^(-1)*tan(1/2*phi)*tan(1/2*phi)*sinNphi)*omega*param.C_0 (-1)^N];
 
-if mode == 1
+if param.mode == 1
 T = T_disc*T_disc;
-elseif mode == 2
-    theta_g = omega * l_m / v_0m;
-    T_terminal = [cos(theta_g) j*Zma*sin(theta_g) 0 0
-    j*sin(theta_g)/Zma cos(theta_g) 0 0
+elseif param.mode == 2
+    theta_g = omega * param.l_m / param.v_0m;
+    T_terminal = [cos(theta_g) j*param.Zma*sin(theta_g) 0 0
+    j*sin(theta_g)/param.Zma cos(theta_g) 0 0
     0 0 1 0
     0 0 0 1];
 T = T_terminal*T_disc*T_terminal*T_disc*T_terminal;
-elseif mode == 3
-    theta_g = omega * l_m / v_0m;
-    theta_a = omega * l_aa / v_0a;
-    T_terminal = [cos(theta_g) j*Zma*sin(theta_g) 0 0
-    j*sin(theta_g)/Zma cos(theta_g) 0 0
+elseif param.mode == 3
+    theta_g = omega * param.l_m / param.v_0m;
+    theta_a = omega * param.l_aa / param.v_0a;
+    T_terminal = [cos(theta_g) j*param.Zma*sin(theta_g) 0 0
+    j*sin(theta_g)/param.Zma cos(theta_g) 0 0
     0 0 1 0
     0 0 0 1];
-T_adhesive = [cos(theta_a) j*Zaa*sin(theta_a) 0 0
-    j*sin(theta_a)/Zaa cos(theta_a) 0 0
+T_adhesive = [cos(theta_a) j*param.Zaa*sin(theta_a) 0 0
+    j*sin(theta_a)/param.Zaa cos(theta_a) 0 0
     0 0 1 0
     0 0 0 1];
 T = T_adhesive*T_terminal*T_adhesive*T_disc*T_adhesive*T_terminal*T_adhesive*T_disc*T_adhesive*T_terminal*T_adhesive;
@@ -49,19 +49,19 @@ end
 %% Nedkogning og 2x2 produkteri
 
 
-T_nedkogt = [T(3,1)-T(3,3)*((T(2,1)*Zba+T(1,1)))/(T(2,3)*Zba+T(1,3)) T(3,2)-T(3,3)*(T(2,2)*Zba+T(1,2))/(T(2,3)*Zba+T(1,3))
-T(4,1)-T(4,3)*(T(2,1)*Zba+T(1,1))/(T(2,3)*Zba+T(1,3)) T(4,2)-T(4,3)*(T(2,2)*Zba+T(1,2))/(T(2,3)*Zba+T(1,3))];
-Tl = [cos(k_a*l_a) -j*Z0a_f*sin(k_a*l_a)
--j*sin(k_a*l_a)/Z0a_f cos(k_a*l_a)];
- if Tlmode==1
+T_nedkogt = [T(3,1)-T(3,3)*((T(2,1)*param.Zba+T(1,1)))/(T(2,3)*Zba+T(1,3)) T(3,2)-T(3,3)*(T(2,2)*param.Zba+T(1,2))/(T(2,3)*Zba+T(1,3))
+T(4,1)-T(4,3)*(T(2,1)*param.Zba+T(1,1))/(T(2,3)*Zba+T(1,3)) T(4,2)-T(4,3)*(T(2,2)*param.Zba+T(1,2))/(T(2,3)*param.Zba+T(1,3))];
+Tl = [cos(k_a*param.l_a) -j*param.Z0a_f*sin(k_a*param.l_a)
+-j*sin(k_a*param.l_a)/param.Z0a_f cos(k_a*param.l_a)];
+ if param.Tlmode==1
  TA = (T_nedkogt*Tl); % Total transfer matrix
  else 
      TA=T_nedkogt;% Total transfer matrix
  end
  %% Sensitivity functions and outputs
-SvIA = 1/(ZrAa*TA(2,1)+TA(2,2)); % v_t/I_in 
-ZinAe = (ZrAa*TA(1,1)+TA(1,2))/(ZrAa*TA(2,1)+TA(2,2)); % V_in/I_in
-S_VF = ZrAa*SvIA/ZinAe;   % F/V_in whoohoooo
+SvIA = 1/(param.ZrAa*TA(2,1)+TA(2,2)); % v_t/I_in 
+ZinAe = (param.ZrAa*TA(1,1)+TA(1,2))/(param.ZrAa*TA(2,1)+TA(2,2)); % V_in/I_in
+S_VF = param.ZrAa*SvIA/ZinAe;   % F/V_in whoohoooo
 S_vV = SvIA / ZinAe ; % v_t/V_in Transducer speed over input voltage.
 v_t = V_in * S_vV ; 
 F = V_in*S_VF; % Force from input voltage

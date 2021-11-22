@@ -2,6 +2,8 @@ function [param] = StructCreator()
 % This script creates a struct will all relevant parameters, such that it
 % can be passed to a function.
 param = struct;
+param.Tlmode=1;
+param.mode = 1;
 
 % Priezoelektriske Materiale konstanter (PIC181).
 param.rho_P = 7800; % Densitet i [kg/m^3]

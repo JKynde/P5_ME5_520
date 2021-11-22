@@ -3,21 +3,22 @@
 clc
 clear all
 close all
-Parameters; % Først defineres alle parametre fra konstante Parameters.m
+%Parameters; % Først defineres alle parametre fra konstante Parameters.m
+param=StructCreator();
 j = sqrt(-1);
 plotmodes = 4; % 1 = F   2 = Z    3 = v     4 = F Matricer2   5 = Z Matricer2
 V_in = 150*exp(j*deg2rad(0)); % Indgangs spændingsvisor.
-mode = 3; % Running modes for Matricer2 1 = 2 diske 2 = 2 diske + terminaler 3 = 2 disk + terminaler + lim else 1 disk ligesom matricer
-Tlmode = 1; % Tlmode til Matricer.m functionen. Der er om front layer matricen er ganget på. 1 for ja else ikke.
+param.mode = 2; % Running modes for Matricer2 1 = 2 diske 2 = 2 diske + terminaler 3 = 2 disk + terminaler + lim else 1 disk ligesom matricer
+param.Tlmode = 1; % Tlmode til Matricer.m functionen. Der er om front layer matricen er ganget på. 1 for ja else ikke.
 f = logspace(5,6.5,5000); % Lav en vektor logaritmisk fordelte indgange med n punkter.
 F_out = zeros(1,length(f)); % Lav en vektor med nuller lige så lang som vektor f.
 Z_out = zeros(1,length(f)); 
 v_out = zeros(1,length(f));
 for n=1:length(f) % For loop som fylder F_out med resultaterne af modellen
     if plotmodes == 1 || plotmodes == 2 || plotmodes == 3
-        [F_out(n),v_out(n),Z_out(n)]=Matricer(f(n),V_in,Tlmode); %for loopet løber over forskellige værdier af f og outputter tre vektorer som er F, Z, V
+        [F_out(n),v_out(n),Z_out(n)]=Matricer(f(n),V_in,param); %for loopet løber over forskellige værdier af f og outputter tre vektorer som er F, Z, V
     elseif plotmodes == 4 || plotmodes == 5  
-        [F_out(n),Z_out(n)] = Matricer2(f(n),V_in,Tlmode,mode); % det samme som ovenover men for sittig2   
+        [F_out(n),Z_out(n)] = Matricer2(f(n),V_in,param); % det samme som ovenover men for sittig2   
     else
     end
  end

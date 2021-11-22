@@ -1,7 +1,8 @@
 clc %hi hi
 clear
 fprintf('Initializing \n')
-Parameters;
+%Parameters;
+param=StructCreator();
 %% Parameters og running options
 plotte = 4; % plotting option 1 er plot mellem F_AC og P-felt til t = 0 - 2 er plot af F_AC_ex og F_AC - 3 er normaliseret plot til at se faserne
 generate_F_AC_ex_and_syms = 0; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
@@ -10,12 +11,12 @@ f=10^6; % Frekvens
 V_in=150; % Spændingsfaser
 omega=2*pi*f; % Vinkelhastighed
 t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
-r_particle = 100*10^-6; % Particle radius should be r<<lambda
+param.r_particle = 100*10^-6; % Particle radius should be r<<lambda
 z_stepsize=1.2500e-05; %Stepsize til z.
 %% Initialisering
-V_particle=(4/3)*pi*(r_particle)^3; %Volumen af partikel
-[F,v_t,~]=Matricer(f,V_in,Tlmode); %Henter F og v fra matricer
-z=[r_transducer*2:z_stepsize:r_transducer*2+2*lambda]; %initaliserer afstandsvektoren fra 2 gange transducer radius, til 2 bølgelængder væk
+V_particle=(4/3)*pi*(param.r_particle)^3; %Volumen af partikel
+[F,v_t,~]=Matricer2(f,V_in,param); %Henter F og v fra matricer
+z=[param.r_transducer*2:z_stepsize:param.r_transducer*2+2*param.lambda]; %initaliserer afstandsvektoren fra 2 gange transducer radius, til 2 bølgelængder væk
 t_stepsize=10^-6/(2*t_steps); %Størrelsen af steppet i tiden til simpsons rule i integral boy.
 t=[0:t_stepsize:10^(-6)-t_stepsize]; % initialize time vector t_start:t_step:t_end t løber fra 0 til T (10^-6 s) minus en enkelt stepsize så det passer med at simpson får et lige antal punkter.
 U_AC_V=zeros(1,length(z)); %Initialize primary radiation potential per volume vector 
@@ -32,7 +33,7 @@ Progress=0;
 fprintf('Filling wavesumres and squaring \n')
 for n=1:lengthz
     for m=1:lengtht
-    [~, ~, WavesumresP(m,n),~, ~, ~,Wavesumresv(m,n)]=Pressure(z(n),omega,t(m),F,v_t);  
+    [~, ~, WavesumresP(m,n),~, ~, ~,Wavesumresv(m,n)]=Pressure(z(n),omega,t(m),F,v_t,param);  
     WavesumresP_squared(m,n)=(WavesumresP(m,n))^2;
     Wavesumresv_squared(m,n)=(Wavesumresv(m,n))^2;
     end
@@ -53,7 +54,7 @@ end
 
 fprintf('Calculating U_AC_V \n')
 for n=1:lengthz
-   U_AC_V(n) = (f_1/(2*rho_oil*(v_0Oil)^2)*P_avg(n)-f_2*(3/4)*rho_oil*v_avg(n)); % Her udregnes gorkovs potential pr volumen af partikel
+   U_AC_V(n) = (param.f_1/(2*param.rho_oil*(param.v_0Oil)^2)*P_avg(n)-param.f_2*(3/4)*param.rho_oil*v_avg(n)); % Her udregnes gorkovs potential pr volumen af partikel
 end
 
 fprintf('Differentiating \n')
@@ -65,7 +66,7 @@ F_AC = V_particle*F_AC_V;
 %ses der bort fra
 %Kommer fra F-Bxdot = m*a og så kigger vi i det scenerie hvor a=0. Dvs
 %xdot=F/B og så antager vi at stokes lov gælder.
-Kvasihastighed = F_AC/(6*pi*mu_oil*r_particle); %B fra stokes lov. 
+Kvasihastighed = F_AC/(6*pi*param.mu_oil*param.r_particle); %B fra stokes lov. 
 
 %% Plotting omkring F_AC
 if plotte == 1
@@ -187,7 +188,7 @@ if plotte == 3 || plotte == 4
     if plotte == 3
     for n=1:lengtht
         hold on
-        axis([2*r_transducer  z(length(z)) -1 1]);
+        axis([2*param.r_transducer  z(length(z)) -1 1]);
         plot(z,WavesumresP_normalized(n,:),'-')
         plot(z,Wavesumresv_normalized(n,:),'--')
         plot(z,P_avg_normalized,'-')
@@ -209,7 +210,7 @@ if plotte == 3 || plotte == 4
 if plotte == 4
 fprintf('Making pancakes... \n')
 %initialisering af plots
-[X, Y]=meshgrid(r_transducer*2:z_stepsize:r_transducer*2+2*lambda, 0:1); %her laves meshgrid. Basically den overflade funktionen skal plottes på. Alle inddellinger i længderetningen og to i tidsretningen, da den skal være mindst 2X2
+[X, Y]=meshgrid(param.r_transducer*2:z_stepsize:param.r_transducer*2+2*param.lambda, 0:1); %her laves meshgrid. Basically den overflade funktionen skal plottes på. Alle inddellinger i længderetningen og to i tidsretningen, da den skal være mindst 2X2
 Q = tiledlayout(5,1); %hvor mange grafer man vil have
 Q.TileSpacing = 'compact';
 title(Q,'Phase Comparison Of Different Quantities', 'fontweight', 'Bold', 'fontsize', 10)
