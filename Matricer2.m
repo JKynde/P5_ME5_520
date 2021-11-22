@@ -7,7 +7,7 @@ omega = 2*pi*f; %Vinkelhastighed
 k=omega/v_0; % Wave number piezo.
 k_a = omega/v_0f;  % Wave number front layer
 N=1; % Remnent of old times. Must be 1, don't touch.
-%% Sindsyg matrice fra sindsyg kilde:
+%% 4x4 matrice konstruktion og produkt.
 theta = omega*d_p/v_0;
 sigma = C_0*h_33^2/(omega*Z0a);
 cosphi = (cos(theta)-sigma*sin(theta))/(1-sigma*sin(theta));
@@ -46,7 +46,7 @@ else
 end
 
 
-%% Hello
+%% Nedkogning og 2x2 produkteri
 
 
 T_nedkogt = [T(3,1)-T(3,3)*((T(2,1)*Zba+T(1,1)))/(T(2,3)*Zba+T(1,3)) T(3,2)-T(3,3)*(T(2,2)*Zba+T(1,2))/(T(2,3)*Zba+T(1,3))
@@ -57,7 +57,8 @@ Tl = [cos(k_a*l_a) -j*Z0a_f*sin(k_a*l_a)
  TA = (T_nedkogt*Tl); % Total transfer matrix
  else 
      TA=T_nedkogt;% Total transfer matrix
-end
+ end
+ %% Sensitivity functions and outputs
 SvIA = 1/(ZrAa*TA(2,1)+TA(2,2)); % v_t/I_in 
 ZinAe = (ZrAa*TA(1,1)+TA(1,2))/(ZrAa*TA(2,1)+TA(2,2)); % V_in/I_in
 S_VF = ZrAa*SvIA/ZinAe;   % F/V_in whoohoooo
