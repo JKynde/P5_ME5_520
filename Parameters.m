@@ -90,7 +90,7 @@ kappa_p = 1/(rho_p*v_0p^2); % mere gorkov lort
 R_reflect = (rho_f*v_0f-rho_oil*v_0Oil) / (rho_oil*v_0Oil + rho_f*v_0f); % Reflection coefficient between transducer face and oil.
 f_1 = 1 - kappa_p/kappa_l; % En konstant der skal bruges i gorkov
 f_2 = (2*(rho_p-rho_oil)) / (2*rho_p + rho_oil); % Også en konstant der skal bruges i gorkov
-Contrast_factor = (5*rho_p-2*rho_oil) / (2*rho_p+rho_oil) - kappa_p/kappa_l ; 
+Contrast_factor = (5*rho_p-2*rho_oil) / (2*rho_p+rho_oil) - kappa_p/kappa_l; 
 
  %% Parameter der ikke bliver brugt
  %Elastic compliance coefficients [10^-12m^2/N]
