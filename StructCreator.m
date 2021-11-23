@@ -75,7 +75,7 @@ param.mu_oil = param.nu_oil*param.rho_oil;
  param.rho_c = 8960; %kg/m3 af kobber
  param.sigma_c = 58.5*10^6; %conductivity of copper
  param.mu_c = 1.256629*10^-6; %permeability of copper
- param.c_c = 2260; %wave speed of copper
+ param.c_c = 2*10^8; %speed of signal in copper
  
 %Calculated parameters
 param.lambda = param.v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz

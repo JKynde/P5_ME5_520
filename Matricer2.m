@@ -54,7 +54,8 @@ elseif param.mode == 4
     theta_a = omega * param.l_aa / param.v_0a;
     k_c = omega/param.c_c;
     delta_s = 1/sqrt(pi*f*param.mu_c*param.sigma_c);
-    Z_c = (1+j)/(param.sigma_c*delta_s)*param.l_c/(2*pi*param.b_c);
+    %Z_c = (1+j)/(param.sigma_c*delta_s)*param.l_c/(2*pi*param.b_c);
+    Z_c = 0.1;
 
     T_terminal = [cos(theta_g) j*param.Zma*sin(theta_g) 0 0
     j*sin(theta_g)/param.Zma cos(theta_g) 0 0
@@ -65,11 +66,16 @@ T_adhesive = [cos(theta_a) j*param.Zaa*sin(theta_a) 0 0
     j*sin(theta_a)/param.Zaa cos(theta_a) 0 0
     0 0 1 0
     0 0 0 1];
-
+ 
 T_cable = [1 0 0 0
     0 1 0 0
     0 0 cos(k_c*param.l_c) -j*Z_c*sin(k_c*param.l_c) 
     0 0 -j*sin(k_c*param.l_c)/Z_c cos(k_c*param.l_c)];
+
+% T_cable = [cos(k_c*param.l_c) -j*Z_c*sin(k_c*param.l_c) 0 0
+% -j*sin(k_c*param.l_c)/Z_c cos(k_c*param.l_c) 0 0
+% 0 0 1 0
+% 0 0 0 1];
 
 T = T_cable*T_adhesive*T_terminal*T_adhesive*T_disc*T_adhesive*T_terminal*T_adhesive*T_disc*T_adhesive*T_terminal*T_adhesive;
 else
