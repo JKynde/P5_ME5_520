@@ -186,22 +186,22 @@ if plotte == 3 || plotte == 4
         end
     end
     if plotte == 3
-    for n=1:lengtht
-        hold on
-        axis([2*param.r_transducer  z(length(z)) -1 1]);
-        plot(z,WavesumresP_normalized(n,:),'-')
-        plot(z,Wavesumresv_normalized(n,:),'--')
-        plot(z,P_avg_normalized,'-')
-        plot(z,v_avg_normalized,'--')
-        plot(z,U_AC_V_normalized,':')  
-        plot(z,F_AC_V_normalized,'-.')
-        %plot(z,WavesumresP_squared_normalized(n,:),':')
-        %plot(z,Wavesumresv_squared_normalized(n,:),'-.')
-        if n ~= lengtht
-            pause (0.1)
-            clf
-        else
-        end
+        for n=1:lengtht
+            hold on
+            axis([2*param.r_transducer  z(length(z)) -1 1]);
+            plot(z,WavesumresP_normalized(n,:),'-')
+            plot(z,Wavesumresv_normalized(n,:),'--')
+            plot(z,P_avg_normalized,'-')
+            plot(z,v_avg_normalized,'--')
+            plot(z,U_AC_V_normalized,':')  
+            plot(z,F_AC_V_normalized,'-.')
+            %plot(z,WavesumresP_squared_normalized(n,:),':')
+            %plot(z,Wavesumresv_squared_normalized(n,:),'-.')
+                if n ~= lengtht
+                    pause (0.1)
+                    clf
+                else
+                end
         end
     end
  end

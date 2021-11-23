@@ -5,7 +5,7 @@ clear
  %% Running options
 param=StructCreator();
 Difftype = "forward"; % Vælg diff type. central, forward eller backward
-Recalc = 1; % Hvis 0 så laver der bare om på parametrene uden at regne alle udregnede konstanter. 
+Recalc = 0; % Hvis 0 så laver der bare om på parametrene uden at regne alle udregnede konstanter. 
 % Hvis 1, så regner den det hele igennem igen.
 fields = ["l_aa";"d_33";"l_a";"C_0";"ElasticModolusAdhesive";"l_c";"l_m";"d_p";"r_transducer"];
 scalingfactor = 0.2;
