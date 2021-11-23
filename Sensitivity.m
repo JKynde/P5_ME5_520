@@ -3,17 +3,17 @@ clc
 clear
 % Det her scribt tjekker for input parameter sensitivitet 
 param=StructCreator();
-OGparam=param;
-Difftype = "Backward"; % Vælg diff type. Central, Forward eller Backward
-fields = ["l_aa";"d_33";"l_a";"C_0";"ElasticModolusAdhesive"];
+Difftype = "Forward"; % Vælg diff type. Central, Forward eller Backward
+fields = ["l_aa";"d_33";"l_a";"C_0";"ElasticModolusAdhesive";"l_c"];
 f = 10^6;
 V_in = 150;
-param.mode=3;
+param.mode=4;
 param.Tlmode = 1;
+OGparam=param;
 BaseCase = abs(Matricer2(f,V_in,param));
 scalingfactor = 0.1;
-upscale = 1+scalingfactor;%
-downscale = 1-scalingfactor;%
+upscale = 1+scalingfactor;
+downscale = 1-scalingfactor;
 format long
 %% Parametervariation
 
