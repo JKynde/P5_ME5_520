@@ -128,4 +128,4 @@ end
 % med t_l som er front lag matricen som vi kender den.
 
 %Matricer for piezodisc 1 og 2, hvilket er matrice T_2 og T_4 ergo T_24 .
-
+ %why no push
