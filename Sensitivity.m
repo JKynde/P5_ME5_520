@@ -1,17 +1,18 @@
 %% Initialisering
 clc
 clear
+close all
 % Det her scribt tjekker for input parameter sensitivitet 
 param=StructCreator();
-Difftype = "Forward"; % Vælg diff type. Central, Forward eller Backward
-fields = ["l_aa";"d_33";"l_a";"C_0";"ElasticModolusAdhesive";"l_c"];
+Difftype = "forward"; % Vælg diff type. central, forward eller backward
+fields = ["l_aa";"d_33";"l_a";"C_0";"ElasticModolusAdhesive";"l_c";"l_m";"d_p"];
 f = 10^6;
 V_in = 150;
 param.mode=4;
 param.Tlmode = 1;
 OGparam=param;
 BaseCase = abs(Matricer2(f,V_in,param));
-scalingfactor = 0.1;
+scalingfactor = 0.2;
 upscale = 1+scalingfactor;
 downscale = 1-scalingfactor;
 format long
@@ -33,20 +34,27 @@ end
 %% Plotting og post processing
 for n=1:length(fields)
     Central(n) = abs( (Resultsup(n)-Resultsdown(n))/(2*stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
-    Forward(n) = abs( (Resultsup(n))/(stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
-    Backward(n) = abs( (Resultsdown(n))/(stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
+    Forward(n) = abs( (Resultsup(n)-BaseCase)/(stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
+    Backward(n) = abs( (BaseCase-Resultsdown(n))/(stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
 end
-if Difftype=="Central"
+if Difftype=="central"
     plot=Central;
-elseif Difftype=="Forward"
+elseif Difftype=="forward"
     plot=Forward;
-elseif Difftype=="Backward"
+elseif Difftype=="backward"
     plot=Backward;
 end
-plot=plot/max(plot);
+%plot=plot/max(plot);
+figure;
 X = categorical(fields);
 X = reordercats(X,fields);
 bar(X,plot)
+figure;
+Bruh(1:length(fields))=BaseCase;
+Y = [Resultsup;Bruh;Resultsdown];
+Y=Y.';
+bar(X,Y)
+
 
 
 
