@@ -7,7 +7,8 @@ param=StructCreator();
 Difftype = "forward"; % Vælg diff type. central, forward eller backward
 Recalc = 1; % Hvis 0 så laver der bare om på parametrene uden at regne alle udregnede konstanter. 
 % Hvis 1, så regner den det hele igennem igen.
-fields = ["l_aa";"d_33";"l_a";"C_0";"ElasticModolusAdhesive";"l_c";"l_m";"d_p"];
+fields = ["l_aa";"d_33";"l_a";"C_0";"ElasticModolusAdhesive";"l_c";"l_m";"d_p";"r_transducer"];
+scalingfactor = 0.2;
 f = 10^6;
 V_in = 150;
 param.mode=4;
@@ -16,7 +17,6 @@ param.Tlmode = 1;
 %% Initialisering
 OGparam=param;
 BaseCase = abs(Matricer2(f,V_in,param));
-scalingfactor = 0.2;
 upscale = 1+scalingfactor;
 downscale = 1-scalingfactor;
 Resultsup=zeros(1,length(fields));
