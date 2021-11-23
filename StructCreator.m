@@ -10,8 +10,8 @@ param.mode = 1;
 %% Non-calculated parameters
 % Priezoelektriske Materiale konstanter (PIC181).
 param.rho_P = 7800; % Densitet i [kg/m^3]
-epsilon_0 = 8.854*10^(-12); % permittivity of free space [F/m]
-PermittivityPolarizationInDirection = 1200; % Relative permittivity in the polarization direction = epsilon_33^T/epsilon_0
+param.epsilon_0 = 8.854*10^(-12); % permittivity of free space [F/m]
+param.PermittivityPolarizationInDirection = 1200; % Relative permittivity in the polarization direction = epsilon_33^T/epsilon_0
 %PermittivityNormalDirection = 1500; % Relative permittivity in the norm direction epsilon_11^T/epsilon_0
 
 
@@ -79,7 +79,7 @@ param.nu_oil = 32*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/
  
 %% Calculated parameters
 param.Area = (param.r_transducer)^2*pi; % Plate area
-param.epsilon33T = PermittivityPolarizationInDirection*epsilon_0; %epsilon 33T skal bruges senere til at udregnes h_33, som vi skal bruge.
+param.epsilon33T = param.PermittivityPolarizationInDirection*param.epsilon_0; %epsilon 33T skal bruges senere til at udregnes h_33, som vi skal bruge.
 param.h_33=param.d_33/(param.S33E*param.epsilon33T); % Formel for h_33, som vi tror er Piezoelectric stiffness constant er regnet ud fra side 15 i https://link.springer.com/content/pdf/bbm%3A978-94-007-0579-1%2F1.pdf
 
 param.lambda = param.v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz

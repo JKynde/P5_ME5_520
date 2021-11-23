@@ -1,6 +1,8 @@
 function [paramOut] = StructRecalculator(param)
+paramOut=param;
+
 paramOut.Area = (param.r_transducer)^2*pi; % Plate area
-paramOut.epsilon33T = PermittivityPolarizationInDirection*epsilon_0; %epsilon 33T skal bruges senere til at udregnes h_33, som vi skal bruge.
+paramOut.epsilon33T = param.PermittivityPolarizationInDirection*param.epsilon_0; %epsilon 33T skal bruges senere til at udregnes h_33, som vi skal bruge.
 paramOut.h_33=param.d_33/(param.S33E*param.epsilon33T); % Formel for h_33, som vi tror er Piezoelectric stiffness constant er regnet ud fra side 15 i https://link.springer.com/content/pdf/bbm%3A978-94-007-0579-1%2F1.pdf
 
 paramOut.lambda = param.v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz
