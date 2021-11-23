@@ -129,3 +129,4 @@ end
 
 %Matricer for piezodisc 1 og 2, hvilket er matrice T_2 og T_4 ergo T_24 .
  %why no push
+ %pls now
