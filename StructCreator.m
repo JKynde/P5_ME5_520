@@ -21,9 +21,9 @@ param.d_33 = 265*10^(-12);
 %Elastic compliance coefficients [10^-12m^2/N]
 param.S33E = 14.2*10^(-12);
 param.c33D = 16.6*10^10; % Elastic stiffness coefficient [10^10N/m^2]
-%c33D = ( d_33 / ( S33E * epsilon33T) )^2*epsilon33T + 1 / (S33E); %
-%Alternativ måde at regne c33D på
 param.C_0 = 0.104*10^(-9); % Kapacitans af pladen i farad 
+%c33D = ( d_33 / ( S33E * epsilon33T) )^2*epsilon33T + 1 / (S33E);
+%Alternativ måde at regne c33D på
 
 % Der er en antagelse at h_33 i Ultrasonic Nondestructive Evaluation
 % systems er den samme som i den artiklen hvor formlen for h_33 er fundet.
@@ -54,16 +54,21 @@ param.ElasticModolusMellem = 2.1*10^11;
 
 %Partikle parameters:
 %luft
-param.rho_p = 1.225; %kg/m^3 %rho luft = 1.225
-param.v_0p = 340.19744;% m/s eller 761 i retard units 
+% param.rho_p = 1.225; %kg/m^3 %rho luft = 1.225
+% param.v_0p = 340.19744;% m/s eller 761 i retard units 
 % brug disse for polysterene(tunge partikler)
-% param.rho_p = 1050; 
-% param.v_0p = 1700; % og denne
+param.rho_p = 1050; 
+param.v_0p = 1700; % og denne
 
-% Oil parameters ISO VG-32 ISO.
-param.rho_oil = 857; % Densitet af olien [kg/m^3]
-param.v_0Oil = 1493; % Lydens hastighed i olien.
-param.nu_oil = 32*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
+% Oil/fuidparameters parameters ISO VG-32 ISO.
+% param.rho_oil = 857; % Densitet af olien [kg/m^3]
+% param.v_0Oil = 1493; % Lydens hastighed i olien.
+% param.nu_oil = 32*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
+%Water
+param.rho_oil = 1000; % Densitet af vand [kg/m^3]
+param.v_0Oil = 1480; % Lydens hastighed i olien.
+param.nu_oil = 1*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
+
 
 %Cabel parameters
  param.l_c = 0.85; %Længde af kabel

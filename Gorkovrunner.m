@@ -4,14 +4,15 @@ fprintf('Initializing \n')
 %Parameters;
 param=StructCreator();
 %% Parameters og running options
-plotte = 4; % plotting option 1 er plot mellem F_AC og P-felt til t = 0 - 2 er plot af F_AC_ex og F_AC - 3 er normaliseret plot til at se faserne
+plotte = 1; % plotting option 1 er plot mellem v og P-felt til t = 0 - 2 er plot af F_AC_ex og F_AC - 3 er normaliseret plot til at se faserne
 generate_F_AC_ex_and_syms = 0; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
-Tlmode=1; % Front lag eller ejjjj. Vi elsker voooores børn,
+param.mode=3; % running options til Matricer2
+param.Tlmode=1; % Front lag eller ejjjj. Vi elsker voooores børn,
 f=10^6; % Frekvens
 V_in=150; % Spændingsfaser
 omega=2*pi*f; % Vinkelhastighed
 t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
-param.r_particle = 100*10^-6; % Particle radius should be r<<lambda
+param.r_particle = 50*10^-6; % Particle radius should be r<<lambda
 z_stepsize=1.2500e-05; %Stepsize til z.
 %% Initialisering
 V_particle=(4/3)*pi*(param.r_particle)^3; %Volumen af partikel
