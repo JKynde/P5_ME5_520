@@ -66,13 +66,16 @@ param.nu_oil = 32*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/
 param.mu_oil = param.nu_oil*param.rho_oil;
 
 %Cabel parameters
- param.l_c = 0; %Længde af kabel
+ param.l_c = 0.85; %Længde af kabel
  param.epsilon_c = 0; %Permativitet af kabel
  param.myh_c = 0; %Permabiliteten af kabel
  param.a_c = 0; %Indre radius af kabel
- param.b_c = 0; %Ydre radius af kabel
+ param.b_c = 1.5*10^(-3); %Ydre radius af kabel
  param.ElasticModolusCabel = 11.7*10^10; % Elastic Modolus af kobber
  param.rho_c = 8960; %kg/m3 af kobber
+ param.sigma_c = 58.5*10^6; %conductivity of copper
+ param.mu_c = 1.256629*10^-6; %permeability of copper
+ param.c_c = 2260; %wave speed of copper
  
 %Calculated parameters
 param.lambda = param.v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz
@@ -95,7 +98,6 @@ param.R_reflect = (param.rho_f*param.v_0f-param.rho_oil*param.v_0Oil) / (param.r
 param.f_1 = 1 - param.kappa_p/param.kappa_l; % En konstant der skal bruges i gorkov
 param.f_2 = (2*(param.rho_p-param.rho_oil)) / (2*param.rho_p + param.rho_oil); % Også en konstant der skal bruges i gorkov
 param.Contrast_factor = (5*param.rho_p-2*param.rho_oil) / (2*param.rho_p+param.rho_oil) - param.kappa_p/param.kappa_l; 
-
 
 
 end
