@@ -8,22 +8,24 @@ k=omega/param.v_0; % Wave number piezo.
 k_a = omega/param.v_0f;  % Wave number front layer
 N=1; % Remnent of old times. Must be 1, don't touch.
 %% 4x4 matrice konstruktion og produkt.
-theta = omega*param.d_p/param.v_0;
-sigma = param.C_0*param.h_33^2/(omega*param.Z0a);
-cosphi = (cos(theta)-sigma*sin(theta))/(1-sigma*sin(theta));
-phi = acos(cosphi);
-cosNphi = cos(N*phi);
-sinNphi = sin(N*phi);
-R = sqrt((sin(theta) - 2*sigma*(1-cos(theta)))/(sin(theta)));
+theta = omega*param.d_p/param.v_0; %random parameter fra bloomfield
+sigma = param.C_0*param.h_33^2/(omega*param.Z0a); %same
+cosphi = (cos(theta)-sigma*sin(theta))/(1-sigma*sin(theta)); %cos(phi) bygges
+phi = acos(cosphi); %phi defineres
+cosNphi = cos(N*phi); %cos(Nphi) defineres
+sinNphi = sin(N*phi); %sin(Nphi) defineres
+R = sqrt((sin(theta) - 2*sigma*(1-cos(theta)))/(sin(theta))); %R defineres
 
+% T_disc defineres ud fra bloomfield. Matrice er egenligt for flere ens
+% disce.
 T_disc = [cosNphi -j*param.Z0a*R*sinNphi -param.h_33*param.C_0*tan(1/2 * phi)*sinNphi 0
 -j*(param.Z0a)^(-1)*R^(-1)*sinNphi cosNphi -j*param.h_33*C_0*param.Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) 0
 0 0 (-1)^N 0
 -j*param.h_33*param.C_0*param.Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) -param.h_33*param.C_0*tan(1/2 * phi)*sinNphi j*(N*(-1)^N)*(1+2*sigma*R^(-1)*tan(1/2*phi)+sigma*R^(-1)*tan(1/2*phi)*tan(1/2*phi)*sinNphi)*omega*param.C_0 (-1)^N];
 
-if param.mode == 1
+if param.mode == 1 %Helt simpelt case hvor der kun er disce
 T = T_disc*T_disc;
-elseif param.mode == 2
+elseif param.mode == 2 %case med elektriske terminaler
 
     theta_g = omega * param.l_m / param.v_0m;
 
@@ -54,8 +56,8 @@ elseif param.mode == 4
     theta_a = omega * param.l_aa / param.v_0a;
     k_c = omega/param.c_c;
     delta_s = 1/sqrt(pi*f*param.mu_c*param.sigma_c);
-    %Z_c = (1+j)/(param.sigma_c*delta_s)*param.l_c/(2*pi*param.b_c);
-    Z_c = 0.1;
+    Z_c = (1+j)/(param.sigma_c*delta_s)*param.l_c/(2*pi*param.b_c);
+    
 
     T_terminal = [cos(theta_g) j*param.Zma*sin(theta_g) 0 0
     j*sin(theta_g)/param.Zma cos(theta_g) 0 0
