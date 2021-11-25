@@ -6,7 +6,7 @@ function [param] = StructCreator()
 % bruge structen.
 param = struct;
 param.Tlmode=1;
-param.mode = 1;
+param.mode = 4;
 %% Non-calculated parameters
 % Priezoelektriske Materiale konstanter (PIC181).
 param.rho_P = 7800; % Densitet i [kg/m^3]
@@ -47,10 +47,10 @@ param.l_aa = 0.015*10^(-3);
 param.rho_a = 1146;
 param.ElasticModolusAdhesive = 5.9*10^10;
 
-% %Mellem layer parameters.
+% %Mellem layer parameters. Er kobber nu, og ikke plain carbon steel.
 param.l_m =0.5*10^(-3);
-param.rho_m = 7800;
-param.ElasticModolusMellem = 2.1*10^11;
+param.rho_m = 8933;
+param.ElasticModolusMellem = 1.21*10^11;
 
 %Partikle parameters:
 %luft
@@ -75,7 +75,7 @@ param.nu_oil = 1*10^-6; % Vand kinematiske viskøsitet  https://eurol.com/da/pro
  param.epsilon_c = 0; %Permativitet af kabel
  param.myh_c = 0; %Permabiliteten af kabel
  param.a_c = 0; %Indre radius af kabel
- param.b_c = 1.5*10^(-3); %Ydre radius af kabel
+ param.b_c = 0.5*1.5*10^(-3); %Ydre radius af kabel
  param.ElasticModolusCabel = 11.7*10^10; % Elastic Modolus af kobber
  param.rho_c = 8960; %kg/m3 af kobber
  param.sigma_c = 58.5*10^6; %conductivity of copper
