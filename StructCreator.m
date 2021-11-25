@@ -6,7 +6,7 @@ function [param] = StructCreator()
 % bruge structen.
 param = struct;
 param.Tlmode=1;
-param.mode = 1;
+param.mode = 4;
 %% Non-calculated parameters
 % Priezoelektriske Materiale konstanter (PIC181).
 param.rho_P = 7800; % Densitet i [kg/m^3]
