@@ -37,7 +37,7 @@ l_a = 3.2*10^(-3); %layer thickness [m]
 rho_f = 2700; %Densitet af front layer. [kg/m^3]
 ElasticModolusFront = 6.9*10^10; %Young's modolus for front end materialet
 
-%adhesive parameters
+%adhesive parameters konstanter taget fra shorturl.at/uxGLM  
 l_aa = 0.015*10^(-3);
 rho_a = 1146;
 ElasticModolusAdhesive = 5.9*10^10;

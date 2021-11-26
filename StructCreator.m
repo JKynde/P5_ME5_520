@@ -66,8 +66,8 @@ param.v_0p = 1700; % og denne
 % param.nu_oil = 32*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
 %Water
 param.rho_oil = 1000; % Densitet af vand [kg/m^3]
-param.v_0Oil = 1480; % Lydens hastighed i olien.
-param.nu_oil = 1*10^-6; % Oliens kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
+param.v_0Oil = 1480; % Lydens hastighed i Vand.
+param.nu_oil = 1*10^-6; % Vand kinematiske viskøsitet  https://eurol.com/da/produkter/eurol-synmax-pao-iso-vg-320/
 
 
 %Cabel parameters
