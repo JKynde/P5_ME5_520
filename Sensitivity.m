@@ -12,7 +12,7 @@ Recalc = 1; % Hvis 0 så laver der bare om på parametrene uden at regne alle ud
     fields=fieldnames(param);
     fields=string(fields);
     fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
-scalingfactor = 0.2;
+scalingfactor = 0.01;
 f = 10^6;
 V_in = 150;
 param.mode=4;
@@ -80,9 +80,10 @@ elseif Difftype=="backward"
 end
 %plot=plot/max(plot);
 figure;
+B = sort(plot, "descend");
 X = categorical(fields);
 X = reordercats(X,fields);
-bar(X,plot)
+bar(X,B)
 figure;
 Bruh(1:length(fields))=BaseCase;
 Y = [Resultsup;Bruh;Resultsdown];
