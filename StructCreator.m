@@ -1,6 +1,5 @@
 function [param] = StructCreator()
-% This script creates a struct will all relevant parameters, such that it
-% can be passed to a function.
+% This script creates a struct will all relevant parameters, such that it can be passed to a function.
 %% Editable running options
 % Kan ændres efter structen er passet til det pågældende scribt som skal
 % bruge structen.
@@ -72,9 +71,6 @@ param.nu_oil = 1*10^-6; % Vand kinematiske viskøsitet  https://eurol.com/da/pro
 
 %Cabel parameters
  param.l_c = 0.85; %Længde af kabel
- param.epsilon_c = 0; %Permativitet af kabel
- param.myh_c = 0; %Permabiliteten af kabel
- param.a_c = 0; %Indre radius af kabel
  param.b_c = 0.5*1.5*10^(-3); %Ydre radius af kabel
  param.ElasticModolusCabel = 11.7*10^10; % Elastic Modolus af kobber
  param.rho_c = 8960; %kg/m3 af kobber
