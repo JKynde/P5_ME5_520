@@ -1,7 +1,6 @@
 function [F,v_t,ZinAe] = Matricer2(f,V_in,param)
 %Matricer Matricer bygger sittig matricerne og har Kraften og hastigheden
 %ved transducerhovedet samt den elektriske impedans som output.
-Parameters;
 j = sqrt(-1);
 omega = 2*pi*f; %Vinkelhastighed
 k=omega/param.v_0; % Wave number piezo.
@@ -19,7 +18,7 @@ R = sqrt((sin(theta) - 2*sigma*(1-cos(theta)))/(sin(theta))); %R defineres
 % T_disc defineres ud fra bloomfield. Matrice er egenligt for flere ens
 % disce.
 T_disc = [cosNphi -j*param.Z0a*R*sinNphi -param.h_33*param.C_0*tan(1/2 * phi)*sinNphi 0
--j*(param.Z0a)^(-1)*R^(-1)*sinNphi cosNphi -j*param.h_33*C_0*param.Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) 0
+-j*(param.Z0a)^(-1)*R^(-1)*sinNphi cosNphi -j*param.h_33*param.C_0*param.Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) 0
 0 0 (-1)^N 0
 -j*param.h_33*param.C_0*param.Z0a^(-1)*R^(-1)*tan(1/2*phi)*(cosNphi-(-1)^N) -param.h_33*param.C_0*tan(1/2 * phi)*sinNphi j*(N*(-1)^N)*(1+2*sigma*R^(-1)*tan(1/2*phi)+sigma*R^(-1)*tan(1/2*phi)*tan(1/2*phi)*sinNphi)*omega*param.C_0 (-1)^N];
 
@@ -94,8 +93,8 @@ end
 %% Nedkogning og 2x2 produkteri
 
 
-T_nedkogt = [T(3,1)-T(3,3)*((T(2,1)*param.Zba+T(1,1)))/(T(2,3)*Zba+T(1,3)) T(3,2)-T(3,3)*(T(2,2)*param.Zba+T(1,2))/(T(2,3)*Zba+T(1,3))
-T(4,1)-T(4,3)*(T(2,1)*param.Zba+T(1,1))/(T(2,3)*Zba+T(1,3)) T(4,2)-T(4,3)*(T(2,2)*param.Zba+T(1,2))/(T(2,3)*param.Zba+T(1,3))];
+T_nedkogt = [T(3,1)-T(3,3)*((T(2,1)*param.Zba+T(1,1)))/(T(2,3)*param.Zba+T(1,3)) T(3,2)-T(3,3)*(T(2,2)*param.Zba+T(1,2))/(T(2,3)*param.Zba+T(1,3))
+T(4,1)-T(4,3)*(T(2,1)*param.Zba+T(1,1))/(T(2,3)*param.Zba+T(1,3)) T(4,2)-T(4,3)*(T(2,2)*param.Zba+T(1,2))/(T(2,3)*param.Zba+T(1,3))];
  %if param.Tlmode==1
  %Tl = [cos(k_a*param.l_a) -j*param.Z0a_f*sin(k_a*param.l_a)
 %-j*sin(k_a*param.l_a)/param.Z0a_f cos(k_a*param.l_a)];
