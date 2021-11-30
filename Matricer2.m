@@ -110,30 +110,3 @@ S_vV = SvIA / ZinAe ; % v_t/V_in Transducer speed over input voltage.
 v_t = V_in * S_vV ; 
 F = V_in*S_VF; % Force from input voltage
 end
-%k_m = omega/v_0m; % Wave number mellem layer
-% f_piezo = v_0/(2*d_p); % f_mn fra sittig til piezolagene
-% gamma_piezo = k_a*d_p;
-% phi_piezo = k_33*sqrt(2*pi*f_piezo*C_0*Z0a/pi);
-% s_sittig = k_33^2*sin(gamma_piezo)/gamma_piezo;
-% c_sittig = (k_33^2*(1-cos(gamma_piezo)))/gamma_piezo;
-% gamma_mellem = k_m*l_m; 
-
-% T_24 = [(cos(gamma_piezo)-s_sittig)/(1-s_sittig) (j*Z0a*(sin(gamma_piezo)-2*c_sittig))/(1-s_sittig) -((cos(gamma_piezo)-1)*phi_piezo)/(1-s_sittig) 0
-% j*sin(gamma_piezo)/(Z0a*(1-s_sittig)) (cos(gamma_piezo)-s_sittig)/(1-s_sittig) (-j*phi_piezo*sin(gamma_piezo))/(1-s_sittig) 0
-% 0 0 1 0
-% (-j*sin(gamma_piezo)*phi_piezo)/(Z0a*(1-s_sittig)) -(cos(gamma_piezo)-1)*phi_piezo/(1-s_sittig) j*omega*C_0/(1-s_sittig) 1];
-% 
-% % Matricer for elektriske mellemlag
-% T_135 = [cos(gamma_mellem) j*Zma*sin(gamma_mellem) 0 0
-% j*sin(gamma_mellem)/(Zma) cos(gamma_mellem) 0 0
-% 0 0 1 0
-% 0 0 0 1];
-% 
-% T = T_135*T_24*T_135*T_24*T_135;
-% Vi skal have bygget 6 matricer i alt. Mellemlag elektrisk - Piezo -
-% Mellemlag elektrisk - Piezo - Mellem ikke tilsluttet terminal og frontlag til sidst de 5 første koges ned til 2x2 og ganges
-% med t_l som er front lag matricen som vi kender den.
-
-%Matricer for piezodisc 1 og 2, hvilket er matrice T_2 og T_4 ergo T_24 .
- %why no push
- %pls now
