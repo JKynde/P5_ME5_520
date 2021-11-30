@@ -6,7 +6,7 @@ function [param] = StructCreator()
 % bruge structen.
 param = struct;
 param.Tlmode=1;
-param.mode = 4;
+param.mode = 3;
 %% Non-calculated parameters
 % Priezoelektriske Materiale konstanter (PIC181).
 param.rho_P = 7800; % Densitet i [kg/m^3]
@@ -100,8 +100,8 @@ param.n=param.h_33*param.C_0; % ElectricMatrix parameter.
 
 param.Z0a = param.rho_P*param.v_0*param.Area; % plane wave acoustic impedance of the piezoelectric plate.
 param.Zba = param.rho_b*param.v_0b*param.Area; % <- vides ikke endnu, men det er: Corresponding acoustic impedance of the backing Z_b^A Vi gætter foreløbigt på =rho_backing*v_0,backing*S Problemet er at der står den er afhængig af frekvens. Plus den er cone-shaped.
-param.Zma = param.rho_m*param.v_0m*param.Area;
-param.Zaa = param.rho_a*param.v_0a*param.Area;
+param.Zma = param.rho_m*param.v_0m*param.Area; % Acoustic impedance mellemlag
+param.Zaa = param.rho_a*param.v_0a*param.Area; % Acoustic impedance adhesive.
 param.Z0a_f = param.rho_f*param.v_0f*param.Area; % Acoustic impedance front layer ;
 param.ZrAa =param.v_0Oil*param.rho_oil*param.Area; % Acoustic impedance of radiating medium. In this case the oil
 
@@ -113,9 +113,9 @@ param.R_reflect = (param.rho_f*param.v_0f-param.rho_oil*param.v_0Oil) / (param.r
 param.f_1 = 1 - param.kappa_p/param.kappa_l; % En konstant der skal bruges i gorkov
 param.f_2 = (2*(param.rho_p-param.rho_oil)) / (2*param.rho_p + param.rho_oil); % Også en konstant der skal bruges i gorkov
 
-param.Contrast_factor = (5*param.rho_p-2*param.rho_oil) / (2*param.rho_p+param.rho_oil) - param.kappa_p/param.kappa_l; 
+param.Contrast_factor = (5*param.rho_p-2*param.rho_oil) / (2*param.rho_p+param.rho_oil) - param.kappa_p/param.kappa_l; % Siger noget om hvor vidt partiklerne samles i nodes eller antinodes
 
-param.mu_oil = param.nu_oil*param.rho_oil;
+param.mu_oil = param.nu_oil*param.rho_oil; % nu fluid
 
 end
 

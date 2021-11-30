@@ -8,7 +8,7 @@ param=StructCreator();
 j = sqrt(-1);
 plotmodes = 4; % 1 = F   2 = Z    3 = v     4 = F Matricer2   5 = Z Matricer2   6 = S_VF Matricer2
 V_in = 150*exp(j*deg2rad(0)); % Indgangs spændingsvisor.
-param.mode = 4; % Running modes for Matricer2 1 = 2 diske 2 = 2 diske + terminaler 3 = 2 disk + terminaler + lim else 1 disk ligesom matricer 4 = Med alt (dvs også kabler)
+param.mode = 3; % Running modes for Matricer2 1 = 2 diske 2 = 2 diske + terminaler 3 = 2 disk + terminaler + lim else 1 disk ligesom matricer 4 = Med alt (dvs også kabler)
 param.Tlmode = 1; % Tlmode til Matricer.m functionen. Der er om front layer matricen er ganget på. 1 for ja else ikke.
 f = logspace(5,6.5,5000); % Lav en vektor logaritmisk fordelte indgange med n punkter.
 F_out = zeros(1,length(f)); % Lav en vektor med nuller lige så lang som vektor f.
