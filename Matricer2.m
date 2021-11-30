@@ -1,4 +1,4 @@
-function [F,v_t,ZinAe] = Matricer2(f,V_in,param)
+function [F,v_t,ZinAe,S_VF] = Matricer2(f,V_in,param)
 %Matricer Matricer bygger sittig matricerne og har Kraften og hastigheden
 %ved transducerhovedet samt den elektriske impedans som output.
 j = sqrt(-1);

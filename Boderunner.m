@@ -19,7 +19,7 @@ for n=1:length(f) % For loop som fylder F_out med resultaterne af modellen
     if plotmodes == 1 || plotmodes == 2 || plotmodes == 3
         [F_out(n),v_out(n),Z_out(n)]=Matricer(f(n),V_in,param); %for loopet løber over forskellige værdier af f og outputter tre vektorer som er F, Z, V
     elseif plotmodes == 4 || plotmodes == 5 || plotmodes == 6 
-        [F_out(n),Z_out(n),S_VF_out(n)] = Matricer2(f(n),V_in,param); % det samme som ovenover men for sittig2   
+        [F_out(n),v_out(n),Z_out(n),S_VF_out(n)] = Matricer2(f(n),V_in,param); % det samme som ovenover men for sittig2   
     else
     end
  end
