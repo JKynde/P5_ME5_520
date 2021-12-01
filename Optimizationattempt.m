@@ -9,8 +9,8 @@ OGparam.Tlmode=1; % Front lag eller eeeejjj.
 halvesmax=100; % Maksimale antal halveringer af stepsize
 itermax=5;
 scaling = 0.2; % Initial scaling factor to determine initial stepsize for each parameter
-Bounds = 1;
-Boundscale = 4; % Scaleringsfaktor hvormed bounds defineres
+Bounds = 0;
+Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
 fields = ["l_aa";"l_a";"l_m";'d_p']; % Parametre som varieres
 %% Initialization
 lengthfields = length(fields); %
@@ -54,7 +54,8 @@ while stop==0
         CurrentGuess=BaseCase;
         CurrentGuessResult=BaseCaseResult;
     end
-
+    CurrentGuess=BaseCase;
+    CurrentGuessResult=BaseCaseResult;
     for n=1:lengthfields
         CurrentGuess.(fields(n))=CurrentGuess.(fields(n))-stepsize(n); % Step down
         if Bounds==1
