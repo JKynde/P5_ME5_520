@@ -4,11 +4,11 @@ fprintf('Initializing \n')
 %Parameters;
 param=StructCreator();
 %% Parameters og running options
-plotte = 2; % plotting option 1 er plot mellem v og P-felt til t = 0 - 2 er plot af F_AC_ex og F_AC - 3 er normaliseret plot til at se faserne
-generate_F_AC_ex_and_syms = 1; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
+plotte = 1; % plotting option 1 er plot mellem v og P-felt til t = 0 - 2 er plot af F_AC_ex og F_AC - 3 er normaliseret plot til at se faserne
+generate_F_AC_ex_and_syms = 0; % Vælg om scriptet laver en function til kraften eller om den skal hoppe det over.
 param.mode=3; % running options til Matricer2
 param.Tlmode=1; % Front lag eller ejjjj. Vi elsker voooores børn,
-f=10^6; % Frekvens
+f=1*10^6; % Frekvens
 V_in=150; % Spændingsfaser
 omega=2*pi*f; % Vinkelhastighed
 t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
