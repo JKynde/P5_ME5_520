@@ -44,8 +44,8 @@ elseif param.mode == 3
     0 0 1 0
     0 0 0 1];
 
-T_adhesive = [cos(theta_a) j*param.Zaa*sin(theta_a) 0 0
-    j*sin(theta_a)/param.Zaa cos(theta_a) 0 0
+T_adhesive = [cos(theta_a) -j*param.Zaa*sin(theta_a) 0 0
+    -j*sin(theta_a)/param.Zaa cos(theta_a) 0 0
     0 0 1 0
     0 0 0 1];
 
@@ -63,8 +63,8 @@ elseif param.mode == 4
     0 0 1 0
     0 0 0 1];
 
-T_adhesive = [cos(theta_a) j*param.Zaa*sin(theta_a) 0 0
-    j*sin(theta_a)/param.Zaa cos(theta_a) 0 0
+T_adhesive = [cos(theta_a) -j*param.Zaa*sin(theta_a) 0 0
+    -j*sin(theta_a)/param.Zaa cos(theta_a) 0 0
     0 0 1 0
     0 0 0 1];
  
