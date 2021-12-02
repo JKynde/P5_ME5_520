@@ -4,7 +4,7 @@ clear
 %close all
  %% Running options
 param=StructCreator();
-Difftype = "forward"; % Vælg diff type. central, forward eller backward
+Difftype = "central"; % Vælg diff type. central, forward eller backward
 Recalc = 1; % Hvis 0 så laver der bare om på parametrene uden at regne alle udregnede konstanter. 
 % Hvis 1, så regner den det hele igennem igen.
 %fields = ["l_aa";"d_33";"l_a";"C_0";"ElasticModolusAdhesive";"l_c";"l_m";"d_p";"r_transducer"];
@@ -72,6 +72,44 @@ for n=1:length(fields)
     Forward(n) = abs( (Resultsup(n)-BaseCase)/(stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
     Backward(n) = abs( (BaseCase-Resultsdown(n))/(stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
 end
+figure;
+X = categorical(fields);
+X = reordercats(X,fields);
+Bruh(1:length(fields))=BaseCase;
+Y = [Resultsup;Bruh;Resultsdown];
+Y=Y.';
+bar(X,Y)
+%% Fjerner nuller
+m=1;
+for n=1:length(fields)
+    if Central(n) == 0
+        Delvect(m)=n;
+        m=m+1;
+    end
+end
+% for n=1:length(fields)
+%     if Delvect == 0
+%         Delvect(n) = []
+%     end
+% end
+
+Central(Delvect) = [];
+delfields = fields(Delvect);
+n=0;
+while 1
+    n=n+1;
+    for m=1:length(delfields)
+        if strcmp(fields(n),delfields(m))
+            fields(n) = [];
+            n=n-1;
+        end
+    end
+    if n == length(fields)
+        break
+    end
+end
+    
+%% plotting
 if Difftype=="central"
     plot=Central;
 elseif Difftype=="forward"
@@ -85,11 +123,11 @@ figure;
 X = categorical(fields);
 X = reordercats(X,fields);
 bar(X,plot)
-figure;
-Bruh(1:length(fields))=BaseCase;
-Y = [Resultsup;Bruh;Resultsdown];
-Y=Y.';
-bar(X,Y)
+% figure;
+% Bruh(1:length(fields))=BaseCase;
+% Y = [Resultsup;Bruh;Resultsdown];
+% Y=Y.';
+% bar(X,Y)
 
 
 
