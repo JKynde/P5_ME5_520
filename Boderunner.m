@@ -35,7 +35,7 @@ if findmax==1
         end
     end
     maxang=rad2deg(angle(F_out(maxn)));
-    fprintf('The maximum fforce is a f=%e, Where the force is %f and the angle is %f\n',f(maxn),max,maxang);
+    fprintf('The maximum fforce is a f=%e, where the force is %f and the angle is %f\n',f(maxn),max,maxang);
 end
 
 %F_DB = 20*log10(abs(F_out2)); 
