@@ -12,10 +12,11 @@ Recalc = 1; % Hvis 0 så laver der bare om på parametrene uden at regne alle ud
     fields=fieldnames(param);
     fields=string(fields);
     fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
-scalingfactor = 0.01;
+% fields=["Area"]
+scalingfactor = 0.1;
 f = 10^6;
 V_in = 150;
-param.mode=4;
+param.mode=3;
 param.Tlmode = 1;
 
 %% Initialisering
@@ -40,9 +41,9 @@ if Recalc == 0
         Resultsup(n) = abs(Matricer2(f,V_in,param));
         param.(fields(n))=OGparam.(fields(n))*downscale;
         fprintf("Downing %s with a factor %f Its value is now %e \n",fields(n),downscale,param.(fields(n)))
+        stepsize(n)=abs( OGparam.(fields(n))-param.(fields(n)) );
         fprintf("Evaluating resulting force output\n")
         Resultsdown(n)=abs(Matricer2(f,V_in,param));
-        stepsize(n)=abs( OGparam.(fields(n))-param.(fields(n)) );
         param=OGparam;
     end
 elseif Recalc==1
@@ -56,11 +57,11 @@ elseif Recalc==1
         Resultsup(n) = abs(Matricer2(f,V_in,param));
         param.(fields(n))=OGparam.(fields(n))*downscale;
         fprintf("Downing %s with a factor %f Its value is now %e \n",fields(n),downscale,param.(fields(n)))
+        stepsize(n)=abs( OGparam.(fields(n))-param.(fields(n)) );
         fprintf("Recalculating parameters")
         param=StructRecalculator(param);
         fprintf("Evaluating resulting force output\n")
         Resultsdown(n)=abs(Matricer2(f,V_in,param));
-        stepsize(n)=abs( OGparam.(fields(n))-param.(fields(n)) );
         param=OGparam;
     end
 
@@ -80,10 +81,10 @@ elseif Difftype=="backward"
 end
 %plot=plot/max(plot);
 figure;
-B = sort(plot, "descend");
+%B = sort(plot, "descend");
 X = categorical(fields);
 X = reordercats(X,fields);
-bar(X,B)
+bar(X,plot)
 figure;
 Bruh(1:length(fields))=BaseCase;
 Y = [Resultsup;Bruh;Resultsdown];
