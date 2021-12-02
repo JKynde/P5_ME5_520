@@ -6,10 +6,10 @@ V_in=150;
 f=1.14*10^6; % Creates a linear space of f values between
 OGparam.mode=3; % Indstil running mode for matricer 2
 OGparam.Tlmode=1; % Front lag eller eeeejjj.
-halvesmax=100; % Maksimale antal halveringer af stepsize
-itermax=2;
-scaling = 0.5; % Initial scaling factor to determine initial stepsize for each parameter
-Bounds = 0;
+halvesmax=1000; % Maksimale antal halveringer af stepsize
+itermax=1000;
+scaling = -0.1; % Initial scaling factor to determine initial stepsize for each parameter
+Bounds = 1;
 Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
 fields = ["l_aa";"l_a";"l_m";'d_p']; % Parametre som varieres
 %% Initialization
@@ -24,7 +24,7 @@ if Bounds==1
 end
 stepsize=zeros(1,lengthfields);
 for n=1:lengthfields % Der findes en individuel stepsize til hver parameter
-    stepsize(n)=OGparam.(fields(n))*scaling-OGparam.(fields(n));
+    stepsize(n)=OGparam.(fields(n))*scaling;%-OGparam.(fields(n));
 end
 stop = 0; % Stop value
 BaseCase=OGparam; % Best Case struct initialiseres til OGparam
@@ -40,17 +40,17 @@ while stop==0
     iter=iter + 1;
     for n=1:lengthfields % For loopet gennemløber alle valgte fields.
         CurrentGuess.(fields(n))=CurrentGuess.(fields(n))+stepsize(n); %Feltet steppes op med stepsize
-        if Bounds==1 % Hvis bound=1 er til så er der limits på 
+        if Bounds==1 % Hvis bound=1 er til så er der limits på
             if CurrentGuess.(fields(n))>Upperbound(n) %hvis current gæt er større end bounds, sæt current gæt til upper limit
                 CurrentGuess.(fields(n))=Upperbound(n);
             end
         end
         CurrentGuess=StructRecalculator(CurrentGuess); %Recalc params
         CurrentGuessResult=abs(Matricer2(f,V_in,CurrentGuess)); % Evaluer.
-            if CurrentGuessResult>BestGuessResult %hvis current gæt er bedre end det hidtil bedste, gem current gæt som det hidtil bedste
-                BestGuess=CurrentGuess;
-                BestGuessResult=CurrentGuessResult; %og gem resultat, hvor stor kraften er ved det bedste guess
-            end
+        if CurrentGuessResult>BestGuessResult %hvis current gæt er bedre end det hidtil bedste, gem current gæt som det hidtil bedste
+            BestGuess=CurrentGuess;
+            BestGuessResult=CurrentGuessResult; %og gem resultat, hvor stor kraften er ved det bedste guess
+        end
         CurrentGuess=BaseCase;
         CurrentGuessResult=BaseCaseResult;
     end
@@ -67,13 +67,13 @@ while stop==0
         CurrentGuessResult=abs(Matricer2(f,V_in,CurrentGuess)); %Evaluer
         if CurrentGuessResult>BestGuessResult %Hvis current gæt result er større end det hidtil største resultat, gem dette som det bedste resultat
             BestGuess=CurrentGuess;
-            BestGuessResult=CurrentGuessResult; % og gem selve resultatet så 
+            BestGuessResult=CurrentGuessResult; % og gem selve resultatet så
         end
         CurrentGuess=BaseCase; % current gæt resettes inde i forloopet
         CurrentGuessResult=BaseCaseResult; %current gæt resultat resettes inde i forloopet
     end
-        CurrentGuess=BaseCase; %current gæt resettes udenfor forloop
-        CurrentGuessResult=BaseCaseResult; %current gæt resultat resettes udenfor forloop
+    CurrentGuess=BaseCase; %current gæt resettes udenfor forloop
+    CurrentGuessResult=BaseCaseResult; %current gæt resultat resettes udenfor forloop
 
     if BaseCaseResult==BestGuessResult %hvis base er lig med det bedste, dsv ingen nye veje er bedre end der hvor vi er, halver stepsize
         stepsize=stepsize./2;
@@ -83,10 +83,10 @@ while stop==0
         stop=1;
     end
     if iter>=itermax %sæt max for iterationer
-stop=1;
+        stop=1;
     end
-     BaseCase=BestGuess; %gem det bedste resultat fra denne iteration, som den nye basecase
-     BaseCaseResult=BestGuessResult;
+    BaseCase=BestGuess; %gem det bedste resultat fra denne iteration, som den nye basecase
+    BaseCaseResult=BestGuessResult;
 end
 
 for n=1:lengthfields
@@ -97,4 +97,5 @@ for n=1:lengthfields
 end
 OGresult=abs(Matricer2(f,V_in,OGparam));
 fprintf('The original result was %f and the new result is %f\n',OGresult,BestGuessResult)
+
 
