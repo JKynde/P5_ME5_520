@@ -8,8 +8,9 @@ param=StructCreator();
 j = sqrt(-1);
 plotmodes = 4; % 1 = F   2 = Z    3 = v     4 = F Matricer2   5 = Z Matricer2   6 = S_VF Matricer2
 V_in = 150*exp(j*deg2rad(0)); % Indgangs spændingsvisor.
-param.mode = 3; % Running modes for Matricer2 1 = 2 diske 2 = 2 diske + terminaler 3 = 2 disk + terminaler + lim else 1 disk ligesom matricer 4 = Med alt (dvs også kabler)
+param.mode = 4; % Running modes for Matricer2 1 = 2 diske 2 = 2 diske + terminaler 3 = 2 disk + terminaler + lim else 1 disk ligesom matricer 4 = Med alt (dvs også kabler)
 param.Tlmode = 1; % Tlmode til Matricer.m functionen. Der er om front layer matricen er ganget på. 1 for ja else ikke.
+findmax=1; % Find max of F?
 f = logspace(5,6.5,5000); % Lav en vektor logaritmisk fordelte indgange med n punkter.
 F_out = zeros(1,length(f)); % Lav en vektor med nuller lige så lang som vektor f.
 Z_out = zeros(1,length(f)); 
@@ -22,7 +23,20 @@ for n=1:length(f) % For loop som fylder F_out med resultaterne af modellen
         [F_out(n),v_out(n),Z_out(n),S_VF_out(n)] = Matricer2(f(n),V_in,param); % det samme som ovenover men for sittig2   
     else
     end
- end
+end
+max=0;
+maxn=0;
+maxang=0;
+if findmax==1
+    for n=1:length(F_out)
+        if abs(F_out(n))>max
+            max=abs(F_out(n));
+            maxn=n;
+        end
+    end
+    maxang=rad2deg(angle(F_out(maxn)));
+    fprintf('The maximum fforce is a f=%e, Where the force is %f and the angle is %f\n',f(maxn),max,maxang);
+end
 
 %F_DB = 20*log10(abs(F_out2)); 
 %Z_in_DB = 20*log10(abs(Z_in));
