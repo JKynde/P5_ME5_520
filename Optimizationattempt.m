@@ -8,7 +8,7 @@ OGparam.mode=3; % Indstil running mode for matricer 2
 OGparam.Tlmode=1; % Front lag eller eeeejjj.
 halvesmax=100; % Maksimale antal halveringer af stepsize
 itermax=2;
-scaling = 0.2; % Initial scaling factor to determine initial stepsize for each parameter
+scaling = 0.5; % Initial scaling factor to determine initial stepsize for each parameter
 Bounds = 0;
 Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
 fields = ["l_aa";"l_a";"l_m";'d_p']; % Parametre som varieres
@@ -24,7 +24,7 @@ if Bounds==1
 end
 stepsize=zeros(1,lengthfields);
 for n=1:lengthfields % Der findes en individuel stepsize til hver parameter
-    stepsize(n)=OGparam.(fields(n))*scaling;%-OGparam.(fields(n));
+    stepsize(n)=OGparam.(fields(n))*scaling-OGparam.(fields(n));
 end
 stop = 0; % Stop value
 BaseCase=OGparam; % Best Case struct initialiseres til OGparam
@@ -40,50 +40,52 @@ while stop==0
     iter=iter + 1;
     for n=1:lengthfields % For loopet gennemløber alle valgte fields.
         CurrentGuess.(fields(n))=CurrentGuess.(fields(n))+stepsize(n); %Feltet steppes op med stepsize
-        if Bounds==1 % Hvis bound er til så limit 
-            if CurrentGuess.(fields(n))>Upperbound(n)
+        if Bounds==1 % Hvis bound=1 er til så er der limits på 
+            if CurrentGuess.(fields(n))>Upperbound(n) %hvis current gæt er større end bounds, sæt current gæt til upper limit
                 CurrentGuess.(fields(n))=Upperbound(n);
             end
         end
         CurrentGuess=StructRecalculator(CurrentGuess); %Recalc params
         CurrentGuessResult=abs(Matricer2(f,V_in,CurrentGuess)); % Evaluer.
-            if CurrentGuessResult>BestGuessResult
+            if CurrentGuessResult>BestGuessResult %hvis current gæt er bedre end det hidtil bedste, gem current gæt som det hidtil bedste
                 BestGuess=CurrentGuess;
-                BestGuessResult=CurrentGuessResult;
+                BestGuessResult=CurrentGuessResult; %og gem resultat, hvor stor kraften er ved det bedste guess
             end
         CurrentGuess=BaseCase;
         CurrentGuessResult=BaseCaseResult;
     end
-    CurrentGuess=BaseCase;
-    CurrentGuessResult=BaseCaseResult;
+    CurrentGuess=BaseCase; %reset current gæt til base gæt
+    CurrentGuessResult=BaseCaseResult; %reset current gæt resultat til base gæt
     for n=1:lengthfields
         CurrentGuess.(fields(n))=CurrentGuess.(fields(n))-stepsize(n); % Step down
-        if Bounds==1
+        if Bounds==1 %hvis bounds=1, sæt nedre grænse for current gæt
             if CurrentGuess.(fields(n))<Lowerbound(n)
                 CurrentGuess.(fields(n))=Lowerbound(n);
             end
         end
         CurrentGuess=StructRecalculator(CurrentGuess); % Recalc
         CurrentGuessResult=abs(Matricer2(f,V_in,CurrentGuess)); %Evaluer
-        if CurrentGuessResult>BestGuessResult
+        if CurrentGuessResult>BestGuessResult %Hvis current gæt result er større end det hidtil største resultat, gem dette som det bedste resultat
             BestGuess=CurrentGuess;
-            BestGuessResult=CurrentGuessResult;
+            BestGuessResult=CurrentGuessResult; % og gem selve resultatet så 
         end
-        CurrentGuess=BaseCase;
-        CurrentGuessResult=BaseCaseResult;
+        CurrentGuess=BaseCase; % current gæt resettes inde i forloopet
+        CurrentGuessResult=BaseCaseResult; %current gæt resultat resettes inde i forloopet
     end
+        CurrentGuess=BaseCase; %current gæt resettes udenfor forloop
+        CurrentGuessResult=BaseCaseResult; %current gæt resultat resettes udenfor forloop
 
-    if BaseCaseResult==BestGuessResult
+    if BaseCaseResult==BestGuessResult %hvis base er lig med det bedste, dsv ingen nye veje er bedre end der hvor vi er, halver stepsize
         stepsize=stepsize./2;
-        halves=halves+1;
+        halves=halves+1; %tæl halveringer
     end
-    if halves>=halvesmax
+    if halves>=halvesmax %sæt max for halveringer
         stop=1;
     end
-    if iter>=itermax
+    if iter>=itermax %sæt max for iterationer
 stop=1;
     end
-     BaseCase=BestGuess;
+     BaseCase=BestGuess; %gem det bedste resultat fra denne iteration, som den nye basecase
      BaseCaseResult=BestGuessResult;
 end
 
