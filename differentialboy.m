@@ -12,4 +12,4 @@ for n=1:m
         diffvect(n) = (x(n+1)-x(n-1)) / (2*stepsize) ;
     end
 end
-
+%Plez let me pull
