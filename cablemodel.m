@@ -28,6 +28,6 @@ end
 J_1=1/(2*pi)*j_1;
 
 ZprL=(k*rho_m)/(2*pi*R) * (J_0)/(J_1);
-Z=ZprL*param.l_c;
+Z=ZprL*param.l_c*2;
 end
 
