@@ -6,20 +6,23 @@ f_ex=Impedance(:,1);
 Z_ex=Impedance(:,2)./Impedance(:,3);
 %% Running options
 V_in=150;
-ZfitorF=0;
-    if ZfitorF==1
-        f=f_ex;
-    else
-        f=1.14*10^6; % Creates a linear space of f values between
-    end
+ZfitorF=1;
+if ZfitorF==1
+    f=f_ex;
+else
+    f=1.14*10^6; % Creates a linear space of f values between
+end
 OGparam.mode=3; % Indstil running mode for matricer 2
 OGparam.Tlmode=1; % Front lag eller eeeejjj.
 halvesmax=1000; % Maksimale antal halveringer af stepsize
-itermax=1000000000;
+itermax=50;
 scaling = 0.5; % Initial scaling factor to determine initial stepsize for each parameter
 Bounds = 1;
 Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
-fields = ["l_aa";"l_a";"l_m";'d_p']; % Parametre som varieres
+%fields = ["l_aa";"l_a";"l_m";'d_p']; % Parametre som varieres
+fields=fieldnames(OGparam);
+fields=string(fields);
+fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
 %% Initialization
 lengthfields = length(fields); %
 if Bounds==1
@@ -38,14 +41,18 @@ stop = 0; % Stop value
 BaseCase=OGparam; % Best Case struct initialiseres til OGparam
 CurrentGuess=OGparam; % Samme for nuværende gæt
 BestGuess=CurrentGuess; % Samme for beste gæt
-BaseCaseResult=abs(Matricer2(f,V_in,CurrentGuess)); %Samme for resultaterne
+if ZfitorF==1
+    BaseCaseResult=Zfit(f,V_in,CurrentGuess,Z_ex);
+elseif ZfitorF == 0
+    BaseCaseResult=abs(Matricer2(f,V_in,CurrentGuess)); %Samme for resultaterne
+end
 BestGuessResult=BaseCaseResult;
 CurrentGuessResult=BaseCaseResult;
 halves=0; % Antal halveringer af stepsize
 iter=0;
 %% Big ol' while loop
 while stop==0
-    iter=iter + 1;
+    iter=iter + 1
     for n=1:lengthfields % For loopet gennemløber alle valgte fields.
         CurrentGuess.(fields(n))=CurrentGuess.(fields(n))+stepsize(n); %Feltet steppes op med stepsize
         if Bounds==1 % Hvis bound=1 er til så er der limits på
@@ -54,10 +61,18 @@ while stop==0
             end
         end
         CurrentGuess=StructRecalculator(CurrentGuess); %Recalc params
-        CurrentGuessResult=abs(Matricer2(f,V_in,CurrentGuess)); % Evaluer.
-        if CurrentGuessResult>BestGuessResult %hvis current gæt er bedre end det hidtil bedste, gem current gæt som det hidtil bedste
-            BestGuess=CurrentGuess;
-            BestGuessResult=CurrentGuessResult; %og gem resultat, hvor stor kraften er ved det bedste guess
+        if ZfitorF==1
+            CurrentGuessResult=Zfit(f,V_in,CurrentGuess,Z_ex); % Evaluer
+            if CurrentGuessResult<BestGuessResult
+                BestGuess=CurrentGuess;
+                BestGuessResult=CurrentGuessResult; %og gem resultat, hvor stor kraften er ved det bedste guess
+            end
+        else
+            CurrentGuessResult=abs(Matricer2(f,V_in,CurrentGuess)); % Evaluer.
+            if CurrentGuessResult>BestGuessResult %hvis current gæt er bedre end det hidtil bedste, gem current gæt som det hidtil bedste
+                BestGuess=CurrentGuess;
+                BestGuessResult=CurrentGuessResult; %og gem resultat, hvor stor kraften er ved det bedste guess
+            end
         end
         CurrentGuess=BaseCase;
         CurrentGuessResult=BaseCaseResult;
@@ -72,10 +87,18 @@ while stop==0
             end
         end
         CurrentGuess=StructRecalculator(CurrentGuess); % Recalc
-        CurrentGuessResult=abs(Matricer2(f,V_in,CurrentGuess)); %Evaluer
-        if CurrentGuessResult>BestGuessResult %Hvis current gæt result er større end det hidtil største resultat, gem dette som det bedste resultat
-            BestGuess=CurrentGuess;
-            BestGuessResult=CurrentGuessResult; % og gem selve resultatet så
+        if ZfitorF==1
+            CurrentGuessResult=Zfit(f,V_in,CurrentGuess,Z_ex); % Evaluer
+            if CurrentGuessResult<BestGuessResult
+                BestGuess=CurrentGuess;
+                BestGuessResult=CurrentGuessResult; %og gem resultat, hvor stor kraften er ved det bedste guess
+            end
+        else
+            CurrentGuessResult=abs(Matricer2(f,V_in,CurrentGuess)); %Evaluer
+            if CurrentGuessResult>BestGuessResult %Hvis current gæt result er større end det hidtil største resultat, gem dette som det bedste resultat
+                BestGuess=CurrentGuess;
+                BestGuessResult=CurrentGuessResult; % og gem selve resultatet så
+            end
         end
         CurrentGuess=BaseCase; % current gæt resettes inde i forloopet
         CurrentGuessResult=BaseCaseResult; %current gæt resultat resettes inde i forloopet
@@ -103,7 +126,17 @@ for n=1:lengthfields
     end
 
 end
-OGresult=abs(Matricer2(f,V_in,OGparam));
+if ZfitorF==1
+    OGresult=Zfit(f,V_in,OGparam,Z_ex);
+    for n=1:length(f)
+        [F_sim(n),~,Z_sim(n)]=Matricer2(f(n),V_in,BestGuess);
+    end
+    Z_sim=abs(Z_sim);
+    F_sim=abs(F_sim);
+
+else
+    OGresult=abs(Matricer2(f,V_in,OGparam));
+end
 fprintf('The original result was %f and the new result is %f\n',OGresult,BestGuessResult)
 
 
