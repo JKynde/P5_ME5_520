@@ -1,13 +1,21 @@
 clc
 clear
 OGparam=StructCreator(); % Originale parametre indlæses
+load("ExImpedance.mat");
+f_ex=Impedance(:,1);
+Z_ex=Impedance(:,2)./Impedance(:,3);
 %% Running options
 V_in=150;
-f=1.14*10^6; % Creates a linear space of f values between
+ZfitorF=0;
+    if ZfitorF==1
+        f=f_ex;
+    else
+        f=1.14*10^6; % Creates a linear space of f values between
+    end
 OGparam.mode=3; % Indstil running mode for matricer 2
 OGparam.Tlmode=1; % Front lag eller eeeejjj.
 halvesmax=1000; % Maksimale antal halveringer af stepsize
-itermax=1000;
+itermax=1000000000;
 scaling = 0.5; % Initial scaling factor to determine initial stepsize for each parameter
 Bounds = 1;
 Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
