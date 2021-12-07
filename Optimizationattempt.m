@@ -16,10 +16,10 @@ OGparam.mode=3; % Indstil running mode for matricer 2
 OGparam.Tlmode=1; % Front lag eller eeeejjj.
 halvesmax=1000; % Maksimale antal halveringer af stepsize
 itermax=50;
-scaling = 0.5; % Initial scaling factor to determine initial stepsize for each parameter
+scaling = 0.1; % Initial scaling factor to determine initial stepsize for each parameter
 Bounds = 1;
 Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
-%fields = ["l_aa";"l_a";"l_m";'d_p']; % Parametre som varieres
+%fields = ["l_aa";"l_a";"l_m";'d_p';"rho_P"]; % Parametre som varieres
 fields=fieldnames(OGparam);
 fields=string(fields);
 fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
@@ -108,7 +108,7 @@ while stop==0
 
     if BaseCaseResult==BestGuessResult %hvis base er lig med det bedste, dsv ingen nye veje er bedre end der hvor vi er, halver stepsize
         stepsize=stepsize./2;
-        halves=halves+1; %tæl halveringer
+        halves=halves+1 %tæl halveringer
     end
     if halves>=halvesmax %sæt max for halveringer
         stop=1;
@@ -127,6 +127,8 @@ for n=1:lengthfields
 
 end
 if ZfitorF==1
+    F_sim=zeros(1,length(f));
+    Z_sim=zeros(1,length(f));
     OGresult=Zfit(f,V_in,OGparam,Z_ex);
     for n=1:length(f)
         [F_sim(n),~,Z_sim(n)]=Matricer2(f(n),V_in,BestGuess);
