@@ -10,19 +10,19 @@ ZfitorF=0;
 if ZfitorF==1
     f=f_ex;
 else
-    f=1.14*10^6; % Creates a linear space of f values between
+    f=1.124890e+06; % Creates a linear space of f values between
 end
 OGparam.mode=3; % Indstil running mode for matricer 2
 OGparam.Tlmode=1; % Front lag eller eeeejjj.
 halvesmax=1000; % Maksimale antal halveringer af stepsize
-itermax=50;
-scaling = 2; % Initial scaling factor to determine initial stepsize for each parameter
-Bounds = 1;
-Boundscale = 1.1; % Scaleringsfaktor hvormed bounds defineres
-%fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem"]; % Parametre som varieres
-fields=fieldnames(OGparam);
-fields=string(fields);
-fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
+itermax=100;
+scaling = 1; % Initial scaling factor to determine initial stepsize for each parameter
+Bounds = 1; % Bounds?
+Boundscale = 1.5; % Scaleringsfaktor hvormed bounds defineres
+fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem"]; % Parametre som varieres
+% fields=fieldnames(OGparam);
+% fields=string(fields);
+% fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
 %% Initialization
 lengthfields = length(fields); %
 if Bounds==1
@@ -119,9 +119,12 @@ while stop==0
     BaseCase=BestGuess; %gem det bedste resultat fra denne iteration, som den nye basecase
     BaseCaseResult=BestGuessResult;
 end
-
+bruh=1;
 for n=1:lengthfields
     if BestGuess.(fields(n))~=OGparam.(fields(n))
+        
+        indexchangedvalues(bruh)=n;
+        bruh=bruh+1;
         fprintf('A changed Value was %s, which originally was %e and now is %e\n',fields(n),OGparam.(fields(n)),BestGuess.(fields(n)))
     end
 
@@ -165,4 +168,22 @@ else
     OGresult=abs(Matricer2(f,V_in,OGparam));
 end
 fprintf('The original result was %f and the new result is %f\n',OGresult,BestGuessResult)
+
+for n=1:length(indexchangedvalues)
+changedfields(n)=fields(indexchangedvalues(n));
+end
+
+figure
+X=categorical(changedfields);
+X=reordercats(X,changedfields);
+for n=1:length(changedfields)
+Y(1,n)=OGparam.(changedfields(n)) / OGparam.(changedfields(n));
+Y(2,n)=BestGuess.(changedfields(n))/OGparam.(changedfields(n));
+end
+bar(Y');
+set(gca,'XtickLabel',changedfields)
+
+
+
+
 
