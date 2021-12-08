@@ -1,6 +1,5 @@
 clc %hi hi
 clear
-%Parameters;
 param=StructCreator();
 f = 10^6; % Input frequency
 V_in = 150; % Voltage phasor
@@ -8,6 +7,7 @@ omega = 2*pi*f; % Angular velocity
 param.mode = 2; % Modes for matricer 2.
 param.Tlmode = 1; %Front lag eller ej.
 t=[0:1*10^-8*2:2*10^-6*2]; % initialize time vector t_start:t_step:t_end
+param.lambda = param.v_0Oil/f;
 z=[param.r_transducer*2:0.0001*0.5:param.r_transducer*2+2*param.lambda]; %initialize distance from transducer. The model is valid from 2*r_transducer
 p_z=zeros(length(t),length(z)); %Pressure array.
 Wavesum = zeros(length(t),length(z));% Initialize waves 

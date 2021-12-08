@@ -20,11 +20,11 @@ Wave1A = P_tmax/(1-Decay_constant^2); % Deres amplituder regnes som en uende geo
 Wave2A =Decay_constant*P_tmax/(1-Decay_constant^2); % Her udregnes amplituderne for de to bølger der udgør den stående bølge
 
 
-Wave1P = Wave1A*exp(j*((2*pi/param.lambda)*z+omega*t)); % Bølgerne laves som fasere
-Wave2P = Wave2A*exp(j*((-2*pi/param.lambda)*z+omega*t));
+Wave1P = Wave1A*exp(j*((k)*z+omega*t)); % Bølgerne laves som fasere
+Wave2P = Wave2A*exp(j*((-k)*z+omega*t));
 
-Wave1v = 1/(param.rho_oil*param.v_0Oil) * Wave1A*exp(j*((2*pi/param.lambda)*z+omega*t));
-Wave2v = -1/(param.rho_oil*param.v_0Oil) * Wave2A*exp(j*((-2*pi/param.lambda)*z+omega*t));
+Wave1v = 1/(param.rho_oil*param.v_0Oil) * Wave1A*exp(j*((k)*z+omega*t));
+Wave2v = -1/(param.rho_oil*param.v_0Oil) * Wave2A*exp(j*((-k)*z+omega*t));
 
 WavesumP = real(Wave1P + Wave2P); %Standing wave equation. Summen af alle venstregående og højregående bølger.
 Wavesumv = real(Wave1v + Wave2v);
