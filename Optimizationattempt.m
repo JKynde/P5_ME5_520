@@ -18,7 +18,7 @@ halvesmax=1000; % Maksimale antal halveringer af stepsize
 itermax=50;
 scaling = 2; % Initial scaling factor to determine initial stepsize for each parameter
 Bounds = 1;
-Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
+Boundscale = 0.5; % Scaleringsfaktor hvormed bounds defineres
 fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem"]; % Parametre som varieres
 %fields=fieldnames(OGparam);
 fields=string(fields);
@@ -29,11 +29,8 @@ if Bounds==1
     Upperbound = zeros(1,length(fields));
     Lowerbound = zeros(1,length(fields));
     for n=1:lengthfields
-        Upperbound(n)=OGparam.(fields(n))+OGparam.(fields(n))*Boundscale; % Øvre og lower bounds laves (Bruge pt ikke)
-        Lowerbound(n)=OGparam.(fields(n))-OGparam.(fields(n))*Boundscale;
-        if Lowerbound(n) < 0
-            Lowerbound(n) = 0;
-        end
+        Upperbound(n)=OGparam.(fields(n))*Boundscale; % Øvre og lower bounds laves (Bruge pt ikke)
+        Lowerbound(n)=OGparam.(fields(n))./Boundscale;
     end
 end
 stepsize=zeros(1,lengthfields);
