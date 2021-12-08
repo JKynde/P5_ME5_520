@@ -6,7 +6,7 @@ f_ex=Impedance(:,1);
 Z_ex=Impedance(:,2)./Impedance(:,3);
 %% Running options
 V_in=150;
-ZfitorF=0;
+ZfitorF=1;
 if ZfitorF==1
     f=f_ex;
 else
@@ -15,14 +15,14 @@ end
 OGparam.mode=3; % Indstil running mode for matricer 2
 OGparam.Tlmode=1; % Front lag eller eeeejjj.
 halvesmax=1000; % Maksimale antal halveringer af stepsize
-itermax=100;
+itermax=50;
 scaling = 1; % Initial scaling factor to determine initial stepsize for each parameter
 Bounds = 1; % Bounds?
-Boundscale = 1.5; % Scaleringsfaktor hvormed bounds defineres
-fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem"]; % Parametre som varieres
-% fields=fieldnames(OGparam);
-% fields=string(fields);
-% fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
+Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
+%fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem";"C_0"]; % Parametre som varieres
+ fields=fieldnames(OGparam);
+ fields=string(fields);
+ fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
 %% Initialization
 lengthfields = length(fields); %
 if Bounds==1
@@ -134,13 +134,18 @@ end
 if ZfitorF==1
     F_sim=zeros(1,length(f));
     Z_sim=zeros(1,length(f));
+    OGZ_sim=zeros(1,length(f));
     OGresult=Zfit(f,V_in,OGparam,Z_ex);
+    for n=1:length(f)
+        [~,~,OGZ_sim(n)]=Matricer2(f(n),V_in,OGparam);
+    end
     for n=1:length(f)
         [F_sim(n),~,Z_sim(n)]=Matricer2(f(n),V_in,BestGuess);
     end
     Z_sim=abs(Z_sim);
     F_sim=abs(F_sim);
-    plot(f, Z_ex, f, Z_sim);
+    OGZ_sim=abs(OGZ_sim);
+    plot(f, Z_ex, f, Z_sim, f, OGZ_sim);
 
     f_b = logspace(5,6.5,5000);
     for n=1:length(f_b)
