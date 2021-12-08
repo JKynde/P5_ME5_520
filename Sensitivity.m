@@ -4,7 +4,7 @@ clear
 %close all
  %% Running options
 param=StructCreator();
-Difftype = "central"; % Vælg diff type. central, forward eller backward
+Difftype = "backward"; % Vælg diff type. central, forward eller backward
 Recalc = 1; % Hvis 0 så laver der bare om på parametrene uden at regne alle udregnede konstanter. 
 % Hvis 1, så regner den det hele igennem igen.
 %fields = ["l_aa";"d_33";"l_a";"C_0";"ElasticModolusAdhesive";"l_c";"l_m";"d_p";"r_transducer"];
@@ -72,13 +72,13 @@ for n=1:length(fields)
     Forward(n) = abs( (Resultsup(n)-BaseCase)/(stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
     Backward(n) = abs( (BaseCase-Resultsdown(n))/(stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
 end
-% figure;
-% X = categorical(fields);
-% X = reordercats(X,fields);
-% Bruh(1:length(fields))=BaseCase;
-% Y = [Resultsup;Bruh;Resultsdown];
-% Y=Y.';
-% bar(X,Y)
+figure;
+X = categorical(fields);
+X = reordercats(X,fields);
+Bruh(1:length(fields))=BaseCase;
+Y = [Resultsup;Bruh;Resultsdown];
+Y=Y.';
+bar(X,Y)
 %% Fjerner nuller
 m = 1; % initialisering af m og n
 n = 0;
@@ -164,9 +164,15 @@ elseif Difftype=="backward"
 end
 %plot=plot/max(plot);
 figure;
-B = sort(plot, "descend");
-X = categorical(fields);
-X = reordercats(X,fields);
+
+[B,index] = sort(plot, "descend");
+%X = categorical(fields);
+%X = reordercats(X,fields);
+for n=1:length(fields)
+sortedfields(n)=fields(index(n));
+end
+X = categorical(sortedfields);
+X = reordercats(X,sortedfields);
 bar(X,B)
 ylabel('Sensitivity coefficient \phi_i', 'FontSize', 20)
 title('Sensitivity of relevant parameters(central difference, \zeta=0.1)', 'FontSize', 20)

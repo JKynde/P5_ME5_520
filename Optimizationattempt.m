@@ -6,7 +6,7 @@ f_ex=Impedance(:,1);
 Z_ex=Impedance(:,2)./Impedance(:,3);
 %% Running options
 V_in=150;
-ZfitorF=1;
+ZfitorF=0;
 if ZfitorF==1
     f=f_ex;
 else
@@ -18,9 +18,9 @@ halvesmax=1000; % Maksimale antal halveringer af stepsize
 itermax=50;
 scaling = 2; % Initial scaling factor to determine initial stepsize for each parameter
 Bounds = 1;
-Boundscale = 0.5; % Scaleringsfaktor hvormed bounds defineres
-fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem"]; % Parametre som varieres
-%fields=fieldnames(OGparam);
+Boundscale = 1.1; % Scaleringsfaktor hvormed bounds defineres
+%fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem"]; % Parametre som varieres
+fields=fieldnames(OGparam);
 fields=string(fields);
 fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
 %% Initialization
