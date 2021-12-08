@@ -20,7 +20,7 @@ param.d_33 = 265*10^(-12);
 %Elastic compliance coefficients [10^-12m^2/N]
 param.S33E = 14.2*10^(-12);
 param.c33D = 16.6*10^10; % Elastic stiffness coefficient [10^10N/m^2]
-param.C_0 = 0.104*10^(-9); % Kapacitans af pladen i farad 
+%param.C_0 = 0.104*10^(-9); % Kapacitans af pladen i farad 
 %c33D = ( d_33 / ( S33E * epsilon33T) )^2*epsilon33T + 1 / (S33E);
 %Alternativ måde at regne c33D på
 
@@ -82,7 +82,7 @@ param.nu_oil = 1*10^-6; % Vand kinematiske viskøsitet  https://eurol.com/da/pro
 param.Area = (param.r_transducer)^2*pi; % Plate area
 param.epsilon33T = param.PermittivityPolarizationInDirection*param.epsilon_0; %epsilon 33T skal bruges senere til at udregnes h_33, som vi skal bruge.
 param.h_33=param.d_33/(param.S33E*param.epsilon33T); % Formel for h_33, som vi tror er Piezoelectric stiffness constant er regnet ud fra side 15 i https://link.springer.com/content/pdf/bbm%3A978-94-007-0579-1%2F1.pdf
-
+param.C_0 = param.Area/(1/(param.epsilon33T)*param.d_p);
 param.lambda = param.v_0Oil/10^6; % Bølgelængde v/f ved 10 MHz
 
 param.v_0 = sqrt(param.c33D/param.rho_P); % wave speed of compressional waves in the piezoelectric plate
