@@ -29,8 +29,11 @@ if Bounds==1
     Upperbound = zeros(1,length(fields));
     Lowerbound = zeros(1,length(fields));
     for n=1:lengthfields
-        Upperbound(n)=OGparam.(fields(n))*Boundscale; % Øvre og lower bounds laves (Bruge pt ikke)
-        Lowerbound(n)=OGparam.(fields(n))/Boundscale;
+        Upperbound(n)=OGparam.(fields(n))+OGparam.(fields(n))*Boundscale; % Øvre og lower bounds laves (Bruge pt ikke)
+        Lowerbound(n)=OGparam.(fields(n))-OGparam.(fields(n))*Boundscale;
+        if Lowerbound(n) < 0
+            Lowerbound(n) = 0;
+        end
     end
 end
 stepsize=zeros(1,lengthfields);
