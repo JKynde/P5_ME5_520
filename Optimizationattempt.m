@@ -16,11 +16,11 @@ OGparam.mode=3; % Indstil running mode for matricer 2
 OGparam.Tlmode=1; % Front lag eller eeeejjj.
 halvesmax=1000; % Maksimale antal halveringer af stepsize
 itermax=50;
-scaling = 0.1; % Initial scaling factor to determine initial stepsize for each parameter
+scaling = 2; % Initial scaling factor to determine initial stepsize for each parameter
 Bounds = 1;
 Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
-%fields = ["l_aa";"l_a";"l_m";'d_p';"rho_P"]; % Parametre som varieres
-fields=fieldnames(OGparam);
+fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem"]; % Parametre som varieres
+%fields=fieldnames(OGparam);
 fields=string(fields);
 fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
 %% Initialization
@@ -126,6 +126,8 @@ for n=1:lengthfields
     end
 
 end
+
+%% Plotting
 if ZfitorF==1
     F_sim=zeros(1,length(f));
     Z_sim=zeros(1,length(f));
@@ -135,10 +137,32 @@ if ZfitorF==1
     end
     Z_sim=abs(Z_sim);
     F_sim=abs(F_sim);
+    plot(f, Z_ex, f, Z_sim);
 
+    f_b = logspace(5,6.5,5000);
+    for n=1:length(f_b)
+        [F_sim(n),~,Z_sim(n)]=Matricer2(f_b(n),V_in,BestGuess);
+    end
+    F_db = 20*log10(abs(F_sim));
+    AngelFoutt = unwrap(rad2deg(angle(F_sim)));
+        figure;
+
+        t=tiledlayout(2,1); % Her plottes outputtet af matricer som bodeplot
+        xlabel(t,'log spaced f values')
+
+        nexttile
+        semilogx(f_b,F_db) % skriv enten F_DB, V_DB eller Z_DB
+        grid on
+        title('Magnitude plot of F(f)')
+        ylabel('Magnitude of F(dB)')
+
+        nexttile
+        semilogx(f_b,AngelFoutt)
+        grid on
+        title('Angle plot of F(f)')
+        ylabel('Angle of F(^\circ)')
 else
     OGresult=abs(Matricer2(f,V_in,OGparam));
 end
 fprintf('The original result was %f and the new result is %f\n',OGresult,BestGuessResult)
-
 
