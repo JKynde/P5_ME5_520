@@ -15,6 +15,7 @@ t_steps=50; % antal inddelinger i tid, skal bruges til num.int.
 param.r_particle = 100*10^-6; % Particle radius should be r<<lambda
 z_stepsize=1.2500e-05; %Stepsize til z.
 %% Initialisering
+param.lambda = param.v_0Oil/f;
 V_particle=(4/3)*pi*(param.r_particle)^3; %Volumen af partikel
 [F,v_t,~]=Matricer2(f,V_in,param); %Henter F og v fra matricer
 z=[param.r_transducer*2:z_stepsize:param.r_transducer*2+2*param.lambda]; %initaliserer afstandsvektoren fra 2 gange transducer radius, til 2 bølgelængder væk
