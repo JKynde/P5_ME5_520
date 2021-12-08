@@ -13,7 +13,7 @@ Recalc = 1; % Hvis 0 så laver der bare om på parametrene uden at regne alle ud
     fields=string(fields);
     fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
 % fields=["Area"]
-scalingfactor = 0.1; % hvor meget hver parameter scaleres med. Skal være 'lille'(definition mangler). Skal være mellem 0 og 1.
+scalingfactor = 0.8; % hvor meget hver parameter scaleres med. Skal være 'lille'(definition mangler). Skal være mellem 0 og 1.
 f = 1.14*10^6; %resonansfrekvensen
 V_in = 150; %input voltage
 param.mode=3; % hvor meget der er med i modellen 
@@ -72,13 +72,13 @@ for n=1:length(fields)
     Forward(n) = abs( (Resultsup(n)-BaseCase)/(stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
     Backward(n) = abs( (BaseCase-Resultsdown(n))/(stepsize(n)) * OGparam.(fields(n))/BaseCase ) ;
 end
-figure;
-X = categorical(fields);
-X = reordercats(X,fields);
-Bruh(1:length(fields))=BaseCase;
-Y = [Resultsup;Bruh;Resultsdown];
-Y=Y.';
-bar(X,Y)
+% figure;
+% X = categorical(fields);
+% X = reordercats(X,fields);
+% Bruh(1:length(fields))=BaseCase;
+% Y = [Resultsup;Bruh;Resultsdown];
+% Y=Y.';
+% bar(X,Y)
 %% Fjerner nuller
 m = 1; % initialisering af m og n
 n = 0;
@@ -164,10 +164,12 @@ elseif Difftype=="backward"
 end
 %plot=plot/max(plot);
 figure;
-%B = sort(plot, "descend");
+B = sort(plot, "descend");
 X = categorical(fields);
 X = reordercats(X,fields);
-bar(X,plot)
+bar(X,B)
+ylabel('Sensitivity coefficient \phi_i', 'FontSize', 20)
+title('Sensitivity of relevant parameters(central difference, \zeta=0.1)', 'FontSize', 20)
 % figure;
 % Bruh(1:length(fields))=BaseCase;
 % Y = [Resultsup;Bruh;Resultsdown];
