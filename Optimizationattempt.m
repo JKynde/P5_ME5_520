@@ -19,10 +19,10 @@ itermax=50;
 scaling = 1; % Initial scaling factor to determine initial stepsize for each parameter
 Bounds = 1; % Bounds?
 Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
-%fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem";"C_0"]; % Parametre som varieres
- fields=fieldnames(OGparam);
- fields=string(fields);
- fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
+fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem";"C_0"]; % Parametre som varieres
+% fields=fieldnames(OGparam);
+% fields=string(fields);
+% fields(1:2)=[]; %Fjerner param.mode og param.Tlmode fra variationen.
 %% Initialization
 lengthfields = length(fields); %
 if Bounds==1
@@ -131,21 +131,26 @@ for n=1:lengthfields
 end
 
 %% Plotting
+%Initialisering af plots
 if ZfitorF==1
     F_sim=zeros(1,length(f));
     Z_sim=zeros(1,length(f));
     OGZ_sim=zeros(1,length(f));
     OGresult=Zfit(f,V_in,OGparam,Z_ex);
     for n=1:length(f)
-        [~,~,OGZ_sim(n)]=Matricer2(f(n),V_in,OGparam);
+        [~,~,OGZ_sim(n)]=Matricer2(f(n),V_in,OGparam); % henter orignal simuleret impedans
     end
     for n=1:length(f)
-        [F_sim(n),~,Z_sim(n)]=Matricer2(f(n),V_in,BestGuess);
+        [F_sim(n),~,Z_sim(n)]=Matricer2(f(n),V_in,BestGuess); % nyt simuleret plot
     end
     Z_sim=abs(Z_sim);
     F_sim=abs(F_sim);
     OGZ_sim=abs(OGZ_sim);
+    figure;
     plot(f, Z_ex, f, Z_sim, f, OGZ_sim);
+    title('Result of Impedance curve fitting', 'FontSize', 20)
+    ylabel('Impedance [\omega]')
+    xlabel('Frequency [Hz]')
 
     f_b = logspace(5,6.5,5000);
     for n=1:length(f_b)
@@ -187,8 +192,11 @@ Y(2,n)=BestGuess.(changedfields(n))/OGparam.(changedfields(n));
 end
 bar(Y');
 set(gca,'XtickLabel',changedfields)
+title('Original parameters compared to changed parameters', 'FontSize', 20)
+ylabel('Normalized parameter values', 'FontSize', 18)
+legend('Original parameter', 'changed parameter')
 
-
+ 
 
 
 
