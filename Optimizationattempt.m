@@ -16,7 +16,7 @@ OGparam.mode=3; % Indstil running mode for matricer 2
 OGparam.Tlmode=1; % Front lag eller eeeejjj.
 halvesmax=1000; % Maksimale antal halveringer af stepsize
 itermax=50;
-scaling = 1; % Initial scaling factor to determine initial stepsize for each parameter
+scaling = 0.5; % Initial scaling factor to determine initial stepsize for each parameter
 Bounds = 1; % Bounds?
 Boundscale = 2; % Scaleringsfaktor hvormed bounds defineres
 fields = ["l_aa";"l_a";"l_m";"ElasticModolusBacking";"rho_b";"rho_f";"ElasticModolusFront";"rho_a";"ElasticModolusAdhesive";"rho_m";"ElasticModolusMellem";"C_0"]; % Parametre som varieres
@@ -151,7 +151,10 @@ if ZfitorF==1
     title('Result of impedance amplitude curve fitting', 'FontSize', 20)
     ylabel('Impedance [\Omega]', 'FontSize', 20)
     xlabel('Frequency [Hz]', 'FontSize', 20)
-    legend('Measured impedance', 'New simulated impedance', 'Original simulated impedance')
+    legend({'Measured impedance', 'New simulated impedance', 'Original simulated impedance'}, 'FontSize', 14)
+    xlim([10^5 1.2*10^6]);
+    xticks([10^5:10^5:1.2*10^6]);
+   
 
     f_b = logspace(5,6.5,5000);
     for n=1:length(f_b)
