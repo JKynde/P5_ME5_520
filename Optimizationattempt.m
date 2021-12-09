@@ -148,9 +148,10 @@ if ZfitorF==1
     OGZ_sim=abs(OGZ_sim);
     figure;
     plot(f, Z_ex, f, Z_sim, f, OGZ_sim);
-    title('Result of Impedance curve fitting', 'FontSize', 20)
-    ylabel('Impedance [\omega]')
-    xlabel('Frequency [Hz]')
+    title('Result of impedance amplitude curve fitting', 'FontSize', 20)
+    ylabel('Impedance [\Omega]', 'FontSize', 20)
+    xlabel('Frequency [Hz]', 'FontSize', 20)
+    legend('Measured impedance', 'New simulated impedance', 'Original simulated impedance')
 
     f_b = logspace(5,6.5,5000);
     for n=1:length(f_b)
