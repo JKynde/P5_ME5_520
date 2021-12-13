@@ -28,7 +28,7 @@ A = 20*log10(abs(A));
 B = 20*log10(abs(B));
 C = 20*log10(abs(C));
 figure;
-semilogx(f, A, f, B, f, C)
+semilogx(f, A,'black', f, B,'blue', f, C,'red')
 grid on
 legend({'original', 'scaled up', 'scaled down'}, 'FontSize', 14, 'Location', 'northwest');
 title('Amplitude of frequency response', 'FontSize', 20);
